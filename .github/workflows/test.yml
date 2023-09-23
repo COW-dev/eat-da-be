@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "corretto"
-          cache: "gradle"
+#          cache: "gradle"
 
       # Gradle test를 실행
       - name: Test with Gradle
