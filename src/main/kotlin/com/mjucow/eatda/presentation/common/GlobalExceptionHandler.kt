@@ -2,12 +2,11 @@ package com.mjucow.eatda.presentation.common
 
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 
 
-@RestControllerAdvice
+@GlobalControllerAdvice
 class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException::class)
