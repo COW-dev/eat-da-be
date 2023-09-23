@@ -29,7 +29,8 @@ jobs:
             
             const prefix_pattern = /^\[(Feature|Refactor|Test|Fix|Style|Etc)\]/;
             const labels = pull.labels.map( it => it.name )
-  
+            console.log(pull)
+            console.log(labels)
             if (!prefix_pattern.test(pull.title)) {
               core.setFailed('PR 이름이 규칙에 맞지 않습니다.')
               return 
