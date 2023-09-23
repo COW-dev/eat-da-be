@@ -1,0 +1,54 @@
+name: task category auto labeling
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+
+jobs:
+  pr-title-auto-labeling:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: check pr title and auto labeling
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const pull_number = context.issue.number
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            
+            const { data: pull } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number,
+            })
+            
+            const prefix_pattern = /^\[(feature|refactor|test|fix|style|etc)\]/
+            const labels = pull.labels.map( it => it.name )
+
+            if (!prefix_pattern.test(pull.title)) {
+              core.setFailed('PR 이름이 규칙에 맞지 않습니다.')
+              return 
+            }
+
+            const end_index = pull.title.indexOf("]")
+            const category_name = pull.title.substring(1, end_index)
+
+            if (labels.includes(category_name)) {
+              return // 이미 라벨이 붙어있음
+            }
+          
+            labels.push(category_name)
+            await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: pull_number,
+                labels
+            })           
