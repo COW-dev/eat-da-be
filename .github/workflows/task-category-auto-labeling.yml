@@ -36,7 +36,7 @@ jobs:
             }
 
             const end_index = pull.title.indexOf("]")
-            const category_name = pull.title.subString(1, end_index + 1)
+            const category_name = pull.title.substring(1, end_index + 1)
 
             if (labels.includes(category_name)) {
               return // 이미 라벨이 붙어있음
