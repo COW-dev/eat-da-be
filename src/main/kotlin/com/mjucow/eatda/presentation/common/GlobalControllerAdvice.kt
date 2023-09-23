@@ -9,5 +9,4 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @MustBeDocumented
 @Order(Ordered.LOWEST_PRECEDENCE)
 @RestControllerAdvice
-annotation class GlobalControllerAdvice {
-}
+annotation class GlobalControllerAdvice

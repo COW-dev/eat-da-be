@@ -8,5 +8,4 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @MustBeDocumented
 @Order(0)
 @RestControllerAdvice
-annotation class DomainControllerAdvice {
-}
+annotation class DomainControllerAdvice
