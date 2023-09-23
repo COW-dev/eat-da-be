@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: "19"
+          distribution: "correntto"
 
       # Gradle wrapper 파일 실행 권한주기
       - name: Grant execute permission for gradlew
