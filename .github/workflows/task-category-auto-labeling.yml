@@ -21,7 +21,7 @@ jobs:
             const owner = context.repo.owner
             const repo = context.repo.repo
             
-            const { data: pull } = await octokit.rest.pulls.get({
+            const { data: pull } = await github.rest.pulls.get({
                 owner,
                 repo,
                 pull_number,
