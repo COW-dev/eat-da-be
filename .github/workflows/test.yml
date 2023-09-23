@@ -24,4 +24,4 @@ jobs:
 
       # Gradle test를 실행
       - name: Test with Gradle
-        run: ./gradlew build --no-daemon
+        run: ./gradlew clean test
