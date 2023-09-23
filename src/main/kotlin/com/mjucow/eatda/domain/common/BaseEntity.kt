@@ -11,19 +11,28 @@ import java.time.ZoneId
 @EntityListeners(AuditingEntityListener::class)
 abstract class BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
         protected set
 
-    @CreatedDate
     @Column(nullable = false, updatable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
         protected set
 
-    @LastModifiedDate
     @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
         protected set
+
+    @PrePersist
+    fun initTimeColumns() {
+        createdAt = LocalDateTime.now(ZONE_ID)
+        updatedAt = LocalDateTime.now(ZONE_ID)
+    }
+
+    @PreUpdate
+    fun updateTimeColumn() {
+        updatedAt = LocalDateTime.now(ZONE_ID)
+    }
 
     companion object {
         val ZONE_ID: ZoneId = ZoneId.of("Asia/Seoul")
