@@ -43,7 +43,7 @@ jobs:
             }
           
             labels.push(category_name)
-            await github.rest.issue.addLabels({
+            await github.rest.issues.addLabels({
                 owner,
                 repo,
                 issue_number,
