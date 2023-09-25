@@ -41,6 +41,7 @@ dependencies {
 
     // database
     runtimeOnly("org.postgresql:postgresql")
+    implementation("org.liquibase:liquibase-core")
 
     // test
     testCompileOnly("org.testcontainers:postgresql")
