@@ -4,6 +4,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+        - .github/workflows/ktlint-check.yml
+        - 'src/**/*.kt'
+        - '**.kts'
 
 jobs:
   ktlint:
@@ -13,8 +17,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: check
-        uses: ScaCap/action-ktlint@master
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-check
+            java-version: "17"
+            distribution: "corretto"
+            cache: "gradle"
+
+        # Gradle test를 실행
+      - name: check style
+        run: ./gradlew ktlintCheck

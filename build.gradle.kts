@@ -41,13 +41,15 @@ dependencies {
 
     // database
     runtimeOnly("org.postgresql:postgresql")
+    implementation("org.liquibase:liquibase-core")
 
     // test
-    testCompileOnly("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:testcontainers:$testContainerVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testContainerVersion")
     testImplementation("org.testcontainers:jdbc:$testContainerVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
 }
 
 tasks.withType<KotlinCompile> {
