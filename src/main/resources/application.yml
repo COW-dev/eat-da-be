@@ -1,14 +1,14 @@
 spring:
-    jpa:
-        open-in-view: false
-        generate-ddl: false
-        hibernate:
-            ddl-auto: validate
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
 
-    web.resources.add-mappings: false
-    liquibase:
-        change-log: classpath:/db/changelog/changelog-master.yml
-        enabled: true
+  web.resources.add-mappings: false
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.yml
+    enabled: true
 
 logging.config: classpath:logback/logback-${spring.profiles.active}.xml
 
@@ -52,5 +52,3 @@ spring:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
-
-
