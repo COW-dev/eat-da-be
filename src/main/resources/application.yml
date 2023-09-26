@@ -15,44 +15,42 @@ logging.config: classpath:logback/logback-${spring.profiles.active}.xml
 ---
 
 spring:
-  config:
-    activate:
-      on-profile: local
+    config:
+        activate:
+            on-profile: local
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: true
 
-  datasource:
-    hikari:
-      driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://localhost:15432/eatda
-      username: local
-      password: local
-      maximum-pool-size: 5
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
+    datasource:
+        hikari:
+            driver-class-name: org.postgresql.Driver
+            jdbc-url: jdbc:postgresql://localhost:15432/eatda
+            username: local
+            password: local
+            maximum-pool-size: 5
+            connection-timeout: 1100
+            keepalive-time: 30000
+            validation-timeout: 1000
+            max-lifetime: 600000
 
 ---
 
 spring:
-  config:
-    activate:
-      on-profile: prod
+    config:
+        activate:
+            on-profile: prod
 
-  datasource:
-    hikari:
-      driver-class-name:
-      maximum-pool-size: 25
-      connection-timeout: 1100
-      keepalive-time: 30000
-      validation-timeout: 1000
-      max-lifetime: 600000
-
-
+    datasource:
+        hikari:
+            driver-class-name:
+            maximum-pool-size: 25
+            connection-timeout: 1100
+            keepalive-time: 30000
+            validation-timeout: 1000
+            max-lifetime: 600000
