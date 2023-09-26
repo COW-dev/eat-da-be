@@ -20,8 +20,6 @@ spring:
       on-profile: local
 
   jpa:
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
