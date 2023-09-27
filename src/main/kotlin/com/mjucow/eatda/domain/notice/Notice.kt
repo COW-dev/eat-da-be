@@ -8,14 +8,6 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "notice")
 class Notice(
-    title: String,
-    content: String,
-) : BaseEntity() {
-    @Column(nullable = false)
-    var title: String = title
-        protected set
-
-    @Column(nullable = false)
-    var content: String = content
-        protected set
-}
+    @Column(nullable = false) var title: String,
+    @Column(nullable = false) var content: String,
+) : BaseEntity()
