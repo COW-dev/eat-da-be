@@ -14,12 +14,11 @@ import java.time.ZoneId
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseEntity {
+abstract class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
-        protected set
-
+    val id: Long = 0L,
+) {
     @Column(nullable = false, updatable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
         protected set
