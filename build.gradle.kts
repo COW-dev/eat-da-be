@@ -76,7 +76,6 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
 tasks.test {
     extensions.configure(JacocoTaskExtension::class) {
         destinationFile = file("$buildDir/jacoco/jacoco.exec")
