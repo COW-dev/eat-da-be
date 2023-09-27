@@ -17,7 +17,7 @@ import java.time.ZoneId
 abstract class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0L
+    val id: Long = 0L,
 ) {
     @Column(nullable = false, updatable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
