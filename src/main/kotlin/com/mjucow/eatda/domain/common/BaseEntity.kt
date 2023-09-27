@@ -28,8 +28,8 @@ abstract class BaseEntity(
 
     @PrePersist
     fun initTimeColumns() {
-        createdAt = Instant.now()
-        updatedAt = Instant.now()
+        createdAt = LocalDateTime.now(ZONE_ID)
+        updatedAt = LocalDateTime.now(ZONE_ID)
     }
 
     @PreUpdate
