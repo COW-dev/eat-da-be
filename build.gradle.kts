@@ -1,9 +1,12 @@
+
+import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.epages.restdocs-api-spec")
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
@@ -14,6 +17,7 @@ version = "${property("applicationVersion")}"
 
 val javaVersion = "${property("javaVersion")}"
 val testContainerVersion = "${property("testContainerVersion")}"
+val restdocsApiVersion = "${property("restdocsApiVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -50,6 +54,8 @@ dependencies {
     testImplementation("org.testcontainers:jdbc:$testContainerVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testImplementation("com.epages:restdocs-api-spec-mockmvc:$restdocsApiVersion")
 }
 
 tasks.withType<KotlinCompile> {
@@ -61,4 +67,22 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register<Copy>("copyOasToSwagger") {
+    from("$buildDir/api-spec/openapi3.yaml")
+    into("src/main/resources/static/swagger-ui/.")
+    dependsOn("openapi3")
+}
+
+tasks.withType<OpenApi3Task> {
+    finalizedBy("copyOasToSwagger")
+}
+
+openapi3 {
+    setServer("http://localhost:8080")
+    title = "Eatda API Documentation"
+    description = "Eatda(잇다) 서비스의 API 명세서입니다."
+    version = "0.0.1"
+    format = "yaml"
 }
