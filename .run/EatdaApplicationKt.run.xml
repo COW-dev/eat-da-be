@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EatdaApplicationKt" type="JetRunConfigurationType" nameIsGenerated="true">
+    <envs>
+      <env name="--spring.profiles.active" value="local" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.mjucow.eatda.EatdaApplicationKt" />
+    <module name="eatda.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

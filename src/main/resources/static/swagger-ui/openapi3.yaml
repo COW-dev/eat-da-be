@@ -1,0 +1,45 @@
+openapi: 3.0.1
+info:
+  title: Eatda API Documentation
+  description: Eatda(잇다) 서비스의 API 명세서입니다.
+  version: 0.0.1
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /api/v1/sample/{sampleId}:
+    post:
+      tags:
+      - Sample
+      summary: Get a sample by id
+      description: Get a sample by id
+      operationId: sample
+      parameters:
+      - name: sampleId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-sample-sampleId486549215'
+            examples:
+              sample:
+                value: "{\"name\":\"name\"}"
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-sample-sampleId486549215'
+              examples:
+                sample:
+                  value: "{\"id\":\"id\",\"name\":\"name\"}"
+components:
+  schemas:
+    api-v1-sample-sampleId486549215:
+      type: object
