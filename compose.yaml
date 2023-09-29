@@ -10,8 +10,6 @@ services:
       POSTGRES_DB: eatda
       POSTGRES_USER: local
       POSTGRES_PASSWORD: local
-      TZ: Asia/Seoul
-      PGTZ: Asia/Seoul
     ports:
       - "15432:5432"
     restart: always
