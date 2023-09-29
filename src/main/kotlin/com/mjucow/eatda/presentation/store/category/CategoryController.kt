@@ -54,8 +54,7 @@ class CategoryController(
     fun updateNameById(
         @PathVariable("categoryId") id: Long,
         @RequestBody command: UpdateNameCommand
-    ) : ApiResponse<Unit> {
+    ) {
         categoryCommandService.updateName(id, command)
-        return ApiResponse.success()
     }
 }
