@@ -39,6 +39,21 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
+    @DisplayName("이름이 중복될 경우 예외를 던진다")
+    @Test
+    fun throwExceptionWhenDuplicatedName() {
+        // given
+        val name = "validName"
+        repository.save(Category(name))
+        val command = CreateCommand(name)
+
+        // when
+        val throwable = catchThrowable { categoryCommandService.create(command) }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+    }
+
     @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
     @Test
     fun throwExceptionWhenNameLengthGreaterThanMaxLength() {
@@ -82,7 +97,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("새로운 이름이 최소 길이 이상일 경우 에외를 던진다")
     @Test
     fun throwExceptionWhenNewNameLengthGreaterThanMaxLength() {
         // given
@@ -97,7 +112,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("이름을 수정하려는 대상의 조회되지 않을 경우 예외를 던진다")
+    @DisplayName("새로운 이름을 수정하려는 대상의 조회되지 않을 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNotFoundTarget() {
         // given
@@ -107,6 +122,23 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
 
         // when
         val throwable = catchThrowable { categoryCommandService.updateName(id, command) }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+    }
+
+    @DisplayName("새로운 이름이 중복될 경우 예외를 던진다")
+    @Test
+    fun throwExceptionWhenDuplicatedNewName() {
+        // given
+        val name = "validName"
+        val duplicatedName = "duplicatedName"
+        val targetId = repository.save(Category(name)).id
+        repository.save(Category(duplicatedName))
+        val command = UpdateNameCommand(duplicatedName)
+
+        // when
+        val throwable = catchThrowable { categoryCommandService.updateName(targetId, command) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
