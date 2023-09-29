@@ -12,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 
 @Import(CategoryQueryService::class)
-class CategoryQueryServiceDataTest: AbstractDataTest() {
+class CategoryQueryServiceDataTest : AbstractDataTest() {
     @Autowired
     lateinit var categoryQueryService: CategoryQueryService
+
     @Autowired
     lateinit var repository: CategoryRepository
 
@@ -23,7 +24,6 @@ class CategoryQueryServiceDataTest: AbstractDataTest() {
     @AutoKotlinSource
     fun returnNullWhenNotFoundId(id: Long) {
         // given
-
 
         // when
         val domain = categoryQueryService.findById(id)
@@ -69,5 +69,4 @@ class CategoryQueryServiceDataTest: AbstractDataTest() {
         // then
         assertThat(categories).isNotEmpty
     }
-
 }

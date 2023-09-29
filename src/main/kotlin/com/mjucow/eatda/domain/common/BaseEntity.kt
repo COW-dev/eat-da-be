@@ -22,6 +22,7 @@ abstract class BaseEntity(
     @Column(nullable = false, updatable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
         protected set
+
     @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
         protected set

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.data.repository.findByIdOrNull
 
 @Import(CategoryCommandService::class)
-class CategoryCommandServiceDataTest: AbstractDataTest() {
+class CategoryCommandServiceDataTest : AbstractDataTest() {
 
     @Autowired
     lateinit var categoryCommandService: CategoryCommandService

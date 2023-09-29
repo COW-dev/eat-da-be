@@ -53,7 +53,7 @@ class CategoryController(
     @ResponseStatus(HttpStatus.OK)
     fun updateNameById(
         @PathVariable("categoryId") id: Long,
-        @RequestBody command: UpdateNameCommand
+        @RequestBody command: UpdateNameCommand,
     ) {
         categoryCommandService.updateName(id, command)
     }

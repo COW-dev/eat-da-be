@@ -32,6 +32,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
 
     @MockBean
     lateinit var categoryQueryService: CategoryQueryService
+
     @MockBean
     lateinit var categoryCommandService: CategoryCommandService
 
@@ -60,7 +61,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
                             fieldWithPath("body").type(JsonFieldType.ARRAY).description("카테고리 데이터들"),
                             fieldWithPath("body[].id").type(JsonFieldType.NUMBER).description("카테고리 식별자"),
-                            fieldWithPath("body[].name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                            fieldWithPath("body[].name").type(JsonFieldType.STRING).description("카테고리 이름")
                         )
                 )
             )
@@ -93,7 +94,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
                             fieldWithPath("body").type(JsonFieldType.OBJECT).description("카테고리 데이터"),
                             fieldWithPath("body.id").type(JsonFieldType.NUMBER).description("카테고리 식별자"),
-                            fieldWithPath("body.name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                            fieldWithPath("body.name").type(JsonFieldType.STRING).description("카테고리 이름")
                         )
                 )
             )
@@ -179,7 +180,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                             parameterWithName("category-id").description("카테고리 식별자")
                         )
                         .requestFields(
-                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
                         )
                 )
             )

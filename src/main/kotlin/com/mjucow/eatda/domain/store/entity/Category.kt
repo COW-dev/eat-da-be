@@ -26,5 +26,4 @@ class Category() : BaseEntity() {
     companion object {
         const val MAX_NAME_LENGTH = 31
     }
-
 }
