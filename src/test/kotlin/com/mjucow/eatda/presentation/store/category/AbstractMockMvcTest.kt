@@ -1,4 +1,4 @@
-package com.mjucow.eatda
+package com.mjucow.eatda.presentation.store.category
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach

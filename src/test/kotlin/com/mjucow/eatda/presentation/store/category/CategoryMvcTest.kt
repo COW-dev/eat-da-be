@@ -4,7 +4,6 @@ import autoparams.kotlin.AutoKotlinSource
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
-import com.mjucow.eatda.AbstractMockMvcTest
 import com.mjucow.eatda.domain.store.service.command.CategoryCommandService
 import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
 import com.mjucow.eatda.domain.store.service.query.CategoryQueryService
