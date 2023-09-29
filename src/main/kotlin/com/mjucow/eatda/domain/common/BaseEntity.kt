@@ -9,8 +9,7 @@ import jakarta.persistence.MappedSuperclass
 import jakarta.persistence.PrePersist
 import jakarta.persistence.PreUpdate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.time.Instant
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
@@ -20,25 +19,21 @@ abstract class BaseEntity(
     val id: Long = 0L,
 ) {
     @Column(nullable = false, updatable = false)
-    var createdAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
+    var createdAt: Instant = Instant.now()
         protected set
 
     @Column(nullable = false)
-    var updatedAt: LocalDateTime = LocalDateTime.now(ZONE_ID)
+    var updatedAt: Instant = Instant.now()
         protected set
 
     @PrePersist
     fun initTimeColumns() {
-        createdAt = LocalDateTime.now(ZONE_ID)
-        updatedAt = LocalDateTime.now(ZONE_ID)
+        createdAt = Instant.now()
+        updatedAt = Instant.now()
     }
 
     @PreUpdate
     fun updateTimeColumn() {
-        updatedAt = LocalDateTime.now(ZONE_ID)
-    }
-
-    companion object {
-        val ZONE_ID: ZoneId = ZoneId.of("Asia/Seoul")
+        updatedAt = Instant.now()
     }
 }
