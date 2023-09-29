@@ -24,7 +24,7 @@ jobs:
 
       # Gradle test를 실행
       - name: Test with Gradle
-        run: ./gradlew clean test --no-daemon
+        run: ./gradlew clean testCoverage --no-daemon
 
       # Report upload
       - name: Upload coverage reports to Codecov
