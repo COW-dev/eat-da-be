@@ -5,6 +5,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
 import com.mjucow.eatda.domain.store.service.command.CategoryCommandService
+import com.mjucow.eatda.domain.store.service.command.dto.CreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
 import com.mjucow.eatda.domain.store.service.query.CategoryQueryService
 import com.mjucow.eatda.domain.store.service.query.dto.Categories
@@ -21,6 +22,7 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -28,7 +30,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(CategoryController::class)
 class CategoryMvcTest : AbstractMockMvcTest() {
-
     @MockBean
     lateinit var categoryQueryService: CategoryQueryService
 
@@ -99,38 +100,39 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             )
     }
 
-//    @ParameterizedTest
-//    @AutoKotlinSource
-//    fun create(id: Long) {
-//        // given
-//        val createCommand = CreateCommand("validName")
-//        val content = objectMapper.writeValueAsString(createCommand)
-//        `when`(categoryCommandService.create(any())).thenReturn(id)
-//
-//        // when & then
-//        mockMvc.perform(
-//            post(BASE_URI)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(content)
-//        )
-//            .andExpect(status().isCreated)
-//            .andExpect(jsonPath("body", `is`(id)))
-//            .andDo(
-//                MockMvcRestDocumentationWrapper.document(
-//                    identifier = "Category",
-//                    resourceDetails = ResourceSnippetParametersBuilder()
-//                        .tag("category")
-//                        .description("카테고리 생성")
-//                        .requestFields(
-//                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름"),
-//                        )
-//                        .responseFields(
-//                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
-//                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 카테고리 식별자"),
-//                        )
-//                )
-//            )
-//    }
+    @ParameterizedTest
+    @AutoKotlinSource
+    fun create(id: Long) {
+        // given
+        val createCommand = CreateCommand("validName")
+        val content = objectMapper.writeValueAsString(createCommand)
+
+        `when`(categoryCommandService.create(createCommand)).thenReturn(id)
+
+        // when & then
+        mockMvc.perform(
+            post(BASE_URI)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        )
+            .andExpect(status().isCreated)
+            .andExpect(jsonPath("body", `is`(id)))
+            .andDo(
+                MockMvcRestDocumentationWrapper.document(
+                    identifier = "Category",
+                    resourceDetails = ResourceSnippetParametersBuilder()
+                        .tag("category")
+                        .description("카테고리 생성")
+                        .requestFields(
+                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                        )
+                        .responseFields(
+                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 카테고리 식별자"),
+                        )
+                )
+            )
+    }
 
     @Test
     fun delete() {
