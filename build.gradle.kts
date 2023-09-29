@@ -129,7 +129,6 @@ tasks.jacocoTestCoverageVerification {
 
         rule {
             enabled = true
-
             // 룰을 체크할 단위는 클래스 단위
             element = "CLASS"
 
