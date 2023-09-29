@@ -29,7 +29,7 @@ class Category() : BaseEntity() {
     @JoinTable(
         name = "store_category",
         joinColumns = [JoinColumn(name = "category_id")],
-        inverseJoinColumns = [JoinColumn(name = "store_id")],
+        inverseJoinColumns = [JoinColumn(name = "store_id")]
     )
     protected val mutableStores: MutableSet<Store> = mutableSetOf()
 

@@ -21,7 +21,6 @@ class CategoryTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-
     @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
     @Test
     fun throwExceptionWhenNameLengthGreaterThanMaxLength() {
@@ -34,7 +33,6 @@ class CategoryTest {
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
-
 
     @DisplayName("새로운 이름이 빈 값일 경우 예외를 던진다")
     @ParameterizedTest
