@@ -107,7 +107,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
         val createCommand = CreateCommand("validName")
         val content = objectMapper.writeValueAsString(createCommand)
 
-        every { categoryCommandService.create(any()) }  returns id
+        every { categoryCommandService.create(any()) } returns id
 
         // when & then
         mockMvc.perform(
@@ -124,11 +124,11 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                         .tag("category")
                         .description("카테고리 생성")
                         .requestFields(
-                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                            fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
                         )
                         .responseFields(
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
-                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 카테고리 식별자"),
+                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 카테고리 식별자")
                         )
                 )
             )
