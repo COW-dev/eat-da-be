@@ -2,9 +2,11 @@ coverage:
   status:
     project:
       default:
-        if_ci_failed: success
+        target: 80%
+        threshold: 20%
     patch:
-      if_ci_failed: success
+      target: 80%
+      threshold: 20%
 
 comment: # this is a top-level key
   layout: "diff,flags,files"
