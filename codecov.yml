@@ -1,5 +1,10 @@
-codecov:
-  require_ci_to_pass: false
+coverage:
+  status:
+    project:
+      default:
+        if_ci_failed: success
+    patch:
+      if_ci_failed: success
 
 comment: # this is a top-level key
   layout: "diff,flags,files"
