@@ -9,7 +9,7 @@ spring:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         database: postgresql
     liquibase:
-      change-log: classpath:/db/changelog/changelog-master.yml
+      change-log: classpath:/db/changelog-master.yml
       enabled: true
 
     datasource:
