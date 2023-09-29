@@ -92,6 +92,35 @@ class StoreTest {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
+    @DisplayName("보이는 이름이 없다면 이름이 보여진다")
+    @Test
+    fun returnNameWhenDisplayNameIsNull() {
+        // given
+        val name = "validName"
+        val store = Store(name)
+
+        // when
+        val displayedName = store.getDisplayedName()
+
+        // then
+        Assertions.assertThat(displayedName).isEqualTo(name)
+    }
+
+    @DisplayName("보이는 이름이 있다면 보이는 이름이 보여진다")
+    @Test
+    fun returnDisplayNameWhenDisplayNameIsNotNull() {
+        // given
+        val name = "validName"
+        val displayName = "validDisplayName"
+        val store = Store(name, displayName)
+
+        // when
+        val displayedName = store.getDisplayedName()
+
+        // then
+        Assertions.assertThat(displayedName).isEqualTo(displayName)
+    }
+
     @DisplayName("정상적인 경우 객체가 생성된다")
     @Test
     fun createInstantWhenValidInput() {

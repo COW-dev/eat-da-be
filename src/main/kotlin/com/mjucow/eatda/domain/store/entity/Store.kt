@@ -53,6 +53,8 @@ class Store() : BaseEntity() {
         mutableCategories.add(category)
     }
 
+    fun getDisplayedName() = displayName ?: name
+
     private fun validateName(name: String) {
         require(name.isNotBlank() && name.trim().length <= MAX_NAME_LENGTH)
     }
