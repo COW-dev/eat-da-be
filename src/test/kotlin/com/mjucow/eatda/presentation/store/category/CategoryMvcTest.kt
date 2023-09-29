@@ -10,14 +10,14 @@ import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
 import com.mjucow.eatda.domain.store.service.query.CategoryQueryService
 import com.mjucow.eatda.domain.store.service.query.dto.Categories
 import com.mjucow.eatda.domain.store.service.query.dto.CategoryDto
+import com.mjucow.eatda.presentation.AbstractMockMvcTest
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.mockito.Mockito.anyLong
-import org.mockito.Mockito.`when`
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
@@ -30,17 +30,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(CategoryController::class)
 class CategoryMvcTest : AbstractMockMvcTest() {
-    @MockBean
+    @MockkBean(relaxUnitFun = true)
     lateinit var categoryQueryService: CategoryQueryService
 
-    @MockBean
+    @MockkBean(relaxUnitFun = true)
     lateinit var categoryCommandService: CategoryCommandService
 
     @ParameterizedTest
     @AutoKotlinSource
     fun findAll(categories: Categories) {
         // given
-        `when`(categoryQueryService.findAll()).thenReturn(categories)
+        every { categoryQueryService.findAll() } returns categories
 
         // when & then
         mockMvc.perform(
@@ -71,7 +71,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
     @AutoKotlinSource
     fun findById(categoryDto: CategoryDto) {
         // given
-        `when`(categoryQueryService.findById(anyLong())).thenReturn(categoryDto)
+        every { categoryQueryService.findById(any()) } returns categoryDto
 
         // when & then
         mockMvc.perform(
@@ -107,7 +107,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
         val createCommand = CreateCommand("validName")
         val content = objectMapper.writeValueAsString(createCommand)
 
-        `when`(categoryCommandService.create(createCommand)).thenReturn(id)
+        every { categoryCommandService.create(any()) }  returns id
 
         // when & then
         mockMvc.perform(
@@ -140,7 +140,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
 
         // when & then
         mockMvc.perform(
-            delete("$BASE_URI/{category-id}", "1")
+            delete("$BASE_URI/{category-id}", 1)
         )
             .andExpect(status().isNoContent)
             .andDo(
