@@ -19,6 +19,7 @@ val javaVersion = "${property("javaVersion")}"
 val testContainerVersion = "${property("testContainerVersion")}"
 val restdocsApiVersion = "${property("restdocsApiVersion")}"
 val springMockkVersion = "${property("springMockkVersion")}"
+val autoParamsVersion = "${property("autoParamsVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -60,6 +61,7 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:$restdocsApiVersion")
     testImplementation("com.ninja-squad:springmockk:$springMockkVersion")
+    testImplementation("io.github.autoparams:autoparams-kotlin:$autoParamsVersion")
 }
 
 tasks.withType<KotlinCompile> {

@@ -1,5 +1,6 @@
 package com.mjucow.eatda
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.restdocs.RestDocumentationContextProvider
@@ -14,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext
 @ExtendWith(RestDocumentationExtension::class, SpringExtension::class)
 abstract class AbstractMockMvcTest {
     protected lateinit var mockMvc: MockMvc
+    protected val objectMapper = ObjectMapper()
 
     @BeforeEach
     protected fun setUpMockMvc(

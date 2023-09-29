@@ -8,5 +8,7 @@ data class ApiResponse<T>(
         fun error(message: String?): ApiResponse<Unit> = ApiResponse(message = message)
 
         fun <T> success(body: T?): ApiResponse<T> = ApiResponse(body = body)
+
+        fun success(): ApiResponse<Unit> = ApiResponse(body = Unit)
     }
 }
