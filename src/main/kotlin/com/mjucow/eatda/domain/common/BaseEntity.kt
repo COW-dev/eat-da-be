@@ -16,7 +16,7 @@ import java.time.Instant
 abstract class BaseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0L,
+    val id: Long = DEFAULT_ID,
 ) {
     @Column(nullable = false, updatable = false)
     var createdAt: Instant = Instant.now()
@@ -35,5 +35,23 @@ abstract class BaseEntity(
     @PreUpdate
     fun updateTimeColumn() {
         updatedAt = Instant.now()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (id == DEFAULT_ID) return false
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BaseEntity
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    companion object {
+        const val DEFAULT_ID = 0L
     }
 }

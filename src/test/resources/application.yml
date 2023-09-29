@@ -1,7 +1,7 @@
 spring:
     jpa:
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: validate
         properties:
           hibernate:
             format_sql: true
@@ -9,8 +9,8 @@ spring:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         database: postgresql
     liquibase:
-        change-log: classpath:/db/changelog/changelog-master.yml
-        enabled: true
+      change-log: classpath:/db/changelog/changelog-master.yml
+      enabled: true
 
     datasource:
         url: jdbc:tc:postgresql:///test-database
