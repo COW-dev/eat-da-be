@@ -34,6 +34,7 @@ class CategoryController(
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody command: CreateCommand): ApiResponse<Long> {
         val id = categoryCommandService.create(command)
+        
         return ApiResponse.success(id)
     }
 

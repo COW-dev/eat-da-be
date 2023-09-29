@@ -27,11 +27,13 @@ class NoticeCommandService(
             if (newTitle != null) it.title = newTitle
             if (newContent != null) it.content = newContent
         }
+
         repository.save(notice)
     }
 
     fun deleteById(noticeId: Long) {
         val notice = repository.findByIdOrNull(noticeId) ?: throw IllegalArgumentException()
+
         repository.delete(notice)
     }
 }
