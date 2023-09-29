@@ -18,6 +18,7 @@ version = "${property("applicationVersion")}"
 val javaVersion = "${property("javaVersion")}"
 val testContainerVersion = "${property("testContainerVersion")}"
 val restdocsApiVersion = "${property("restdocsApiVersion")}"
+val springMockkVersion = "${property("springMockkVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -52,10 +53,13 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers:$testContainerVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testContainerVersion")
     testImplementation("org.testcontainers:jdbc:$testContainerVersion")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "mockito-core")
+    }
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("com.epages:restdocs-api-spec-mockmvc:$restdocsApiVersion")
+    testImplementation("com.ninja-squad:springmockk:$springMockkVersion")
 }
 
 tasks.withType<KotlinCompile> {
