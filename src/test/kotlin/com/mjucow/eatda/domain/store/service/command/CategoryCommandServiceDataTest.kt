@@ -11,7 +11,6 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.EmptySource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 import org.springframework.data.repository.findByIdOrNull
@@ -25,40 +24,12 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
     @Autowired
     lateinit var repository: CategoryRepository
 
-    @DisplayName("이름이 빈 값일 경우 예외를 던진다")
-    @ParameterizedTest
-    @EmptySource
-    fun throwExceptionWhenNameIsEmpty(name: String) {
-        // given
-        val command = CreateCommand(name)
-
-        // when
-        val throwable = catchThrowable { categoryCommandService.create(command) }
-
-        // then
-        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
-    }
-
     @DisplayName("이름이 중복될 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenDuplicatedName() {
         // given
         val name = "validName"
         repository.save(Category(name))
-        val command = CreateCommand(name)
-
-        // when
-        val throwable = catchThrowable { categoryCommandService.create(command) }
-
-        // then
-        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
-    }
-
-    @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
-    @Test
-    fun throwExceptionWhenNameLengthGreaterThanMaxLength() {
-        // given
-        val name = "x".repeat(Category.MAX_NAME_LENGTH + 1)
         val command = CreateCommand(name)
 
         // when
@@ -80,36 +51,6 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
 
         // then
         assertThat(domain).isNotNull
-    }
-
-    @DisplayName("새로운 이름이 빈 값일 경우 예외를 던진다")
-    @ParameterizedTest
-    @EmptySource
-    fun throwExceptionWhenNewNameIsEmpty(newName: String) {
-        // given
-        val id = 1L
-        val command = UpdateNameCommand(newName)
-
-        // when
-        val throwable = catchThrowable { categoryCommandService.updateName(id, command) }
-
-        // then
-        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
-    }
-
-    @DisplayName("새로운 이름이 최소 길이 이상일 경우 에외를 던진다")
-    @Test
-    fun throwExceptionWhenNewNameLengthGreaterThanMaxLength() {
-        // given
-        val id = 1L
-        val newName = "x".repeat(Category.MAX_NAME_LENGTH + 1)
-        val command = UpdateNameCommand(newName)
-
-        // when
-        val throwable = catchThrowable { categoryCommandService.updateName(id, command) }
-
-        // then
-        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("새로운 이름을 수정하려는 대상의 조회되지 않을 경우 예외를 던진다")

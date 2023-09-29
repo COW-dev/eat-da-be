@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: /db/changelog/230925-init.sql
+  - include:
+      file: /db/changelog/230929-store.sql
