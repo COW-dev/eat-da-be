@@ -14,10 +14,10 @@ class CategoryCommandService(
     private val repository: CategoryRepository,
 ) {
     fun create(command: CreateCommand): Long {
-        val newName = command.name.trim()
-        require(repository.existsByName(newName).not())
+        val name = command.name.trim()
+        checkDuplicatedName(name)
 
-        return repository.save(Category(newName)).id
+        return repository.save(Category(name)).id
     }
 
     fun updateName(id: Long, command: UpdateNameCommand) {
@@ -27,6 +27,7 @@ class CategoryCommandService(
         if (domain.name == newName) {
             return
         }
+        checkDuplicatedName(newName)
         domain.name = newName
 
         repository.save(domain)
@@ -39,5 +40,8 @@ class CategoryCommandService(
 
     private fun getById(id: Long): Category {
         return repository.findByIdOrNull(id) ?: throw IllegalArgumentException()
+    }
+    private fun checkDuplicatedName(name: String) {
+        require(repository.existsByName(name).not())
     }
 }

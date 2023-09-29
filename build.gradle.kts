@@ -10,6 +10,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
+    jacoco
 }
 
 group = "${property("projectGroup")}"
@@ -20,6 +21,7 @@ val testContainerVersion = "${property("testContainerVersion")}"
 val restdocsApiVersion = "${property("restdocsApiVersion")}"
 val springMockkVersion = "${property("springMockkVersion")}"
 val autoParamsVersion = "${property("autoParamsVersion")}"
+val jacocoVersion = "${property("jacocoVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -75,6 +77,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.test {
+    extensions.configure(JacocoTaskExtension::class) {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
+
+    finalizedBy(tasks.jacocoTestReport)
+}
+
 tasks.register<Copy>("copyOasToSwagger") {
     from("$buildDir/api-spec/openapi3.yaml")
     into("src/main/resources/static/swagger-ui/.")
@@ -91,4 +101,78 @@ openapi3 {
     description = "Eatda(잇다) 서비스의 API 명세서입니다."
     version = "0.0.1"
     format = "yaml"
+}
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+tasks.jacocoTestReport {
+    reports {
+        html.required = true
+        xml.required = false
+        csv.required = false
+    }
+
+    dependsOn(tasks.test)
+    finalizedBy("jacocoTestCoverageVerification")
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            // 'element'가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 한다.
+            limit {
+                // 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
+                // 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
+                minimum = "0.30".toBigDecimal()
+            }
+        }
+
+        rule {
+            enabled = true
+
+            // 룰을 체크할 단위는 클래스 단위
+            element = "CLASS"
+
+            // 브랜치 커버리지를 최소한 90% 만족시켜야 한다.
+            limit {
+                counter = "BRANCH"
+                value = "COVEREDRATIO"
+                minimum = "0.90".toBigDecimal()
+            }
+
+            // 라인 커버리지를 최소한 80% 만족시켜야 한다.
+            limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
+                minimum = "0.70".toBigDecimal()
+            }
+
+            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한한다.
+            limit {
+                counter = "LINE"
+                value = "TOTALCOUNT"
+                maximum = "200".toBigDecimal()
+            }
+
+            // 커버리지 체크를 제외할 클래스들
+            excludes = listOf(
+                    "com.mjucow.eatda.EatdaApplicationKt",
+                    "*.common.*",
+            )
+        }
+    }
+}
+
+val testCoverage by tasks.registering {
+    group = "verification"
+    description = "Runs the unit tests with coverage"
+
+    dependsOn(":test",
+        ":jacocoTestReport",
+        ":jacocoTestCoverageVerification")
+
+    tasks["jacocoTestReport"].mustRunAfter(tasks["test"])
+    tasks["jacocoTestCoverageVerification"].mustRunAfter(tasks["jacocoTestReport"])
 }
