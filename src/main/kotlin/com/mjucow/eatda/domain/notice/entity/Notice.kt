@@ -1,4 +1,4 @@
-package com.mjucow.eatda.domain.notice
+package com.mjucow.eatda.domain.notice.entity
 
 import com.mjucow.eatda.domain.common.BaseEntity
 import jakarta.persistence.Column
