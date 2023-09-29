@@ -101,7 +101,6 @@ openapi3 {
     version = "0.0.1"
     format = "yaml"
 }
-
 jacoco {
     toolVersion = jacocoVersion
 }
