@@ -41,13 +41,16 @@ class PhoneNumberTest(
         fun validNumbers(): List<String> {
             return listOf(
                 "010-2885-9314",
-                "031-330-6010"
+                "031-330-6010",
             )
         }
 
         @JvmStatic
         fun invalidNumbers(): List<String> {
-            return listOf("01028859314", "02-13230-6010")
+            return listOf(
+                "01028859314",
+                "02-13230-6010",
+            )
         }
     }
 }
