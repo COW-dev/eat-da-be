@@ -50,6 +50,7 @@ class StoreTest {
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
+
     @DisplayName("새로운 이름이 빈 값일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
@@ -86,7 +87,7 @@ class StoreTest {
         val newDisplayName = "x".repeat(Store.MAX_NAME_LENGTH + 1)
 
         // when
-        val throwable = catchThrowable {  store.displayName = newDisplayName }
+        val throwable = catchThrowable { store.displayName = newDisplayName }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -156,5 +157,4 @@ class StoreTest {
         // then
         assertThat(category).isNotNull
     }
-
 }

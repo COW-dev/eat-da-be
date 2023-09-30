@@ -4,10 +4,7 @@ import com.mjucow.eatda.common.vo.PhoneNumber
 import com.mjucow.eatda.domain.store.entity.Store
 import org.springframework.data.geo.Point
 
-
-
-
-object StoreMother:  ObjectMother<Store>() {
+object StoreMother : ObjectMother<Store>() {
     const val NAME = "명지대학교"
     const val ADDRESS = "서울특별시 서대문구 거북골로 34"
     const val DISPLAY_NAME = "띵지대"
@@ -19,14 +16,14 @@ object StoreMother:  ObjectMother<Store>() {
         address = ADDRESS,
         displayName = null,
         phoneNumber = null,
-        location = null,
+        location = null
     )
 
-     override val fillInstance = Store(
+    override val fillInstance = Store(
         name = NAME,
         address = ADDRESS,
         displayName = DISPLAY_NAME,
         phoneNumber = PHONE_NUMBER,
-        location = LOCATION,
+        location = LOCATION
     )
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class PhoneNumberTest(
     override val voTestStandardInstance: PhoneNumber = PhoneNumber("010-2345-6789"),
-    override val voTestSameValueInstance: PhoneNumber = PhoneNumber("010-2345-6789")
+    override val voTestSameValueInstance: PhoneNumber = PhoneNumber("010-2345-6789"),
 ) : VOTest<PhoneNumber>() {
 
     @DisplayName("정확한 전화번호를 입력하면 객체가 생성된다")
@@ -44,6 +44,7 @@ class PhoneNumberTest(
                 "031-330-6010"
             )
         }
+
         @JvmStatic
         fun invalidNumbers(): List<String> {
             return listOf("01028859314", "02-13230-6010")

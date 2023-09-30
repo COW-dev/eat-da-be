@@ -21,7 +21,7 @@ class Store() : BaseEntity() {
         address: String,
         displayName: String? = null,
         phoneNumber: PhoneNumber? = null,
-        location: Point? = null
+        location: Point? = null,
     ) : this() {
         this.name = name.also { validateName(name) }
         this.address = address.also { validateAddress(address) }
@@ -48,6 +48,7 @@ class Store() : BaseEntity() {
                 it.trim()
             }
         }
+
     @Column(nullable = false)
     var address: String = ""
         set(value) {
@@ -91,7 +92,7 @@ class Store() : BaseEntity() {
         validateString(address, MAX_ADDRESS_LENGTH)
     }
 
-    private fun validateString(value: String, maxLength: Int, minLength: Int  = 0) {
+    private fun validateString(value: String, maxLength: Int, minLength: Int = 0) {
         require(value.isNotBlank() && value.trim().length in minLength..maxLength)
     }
 
