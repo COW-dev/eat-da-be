@@ -31,6 +31,6 @@ class Notice() : BaseEntity() {
         }
 
     private fun validateValue(value: String) {
-        require(value.isNotEmpty() && value.isNotBlank())
+        require(value.isNotBlank())
     }
 }
