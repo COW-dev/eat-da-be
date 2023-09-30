@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-class PhoneNumberTest: VOTest {
+class PhoneNumberTest : VOTest {
 
     @DisplayName("정확한 전화번호를 입력하면 객체가 생성된다")
     @ParameterizedTest
@@ -39,7 +39,7 @@ class PhoneNumberTest: VOTest {
         fun validNumbers(): List<String> {
             return listOf(
                 "010-2885-9314",
-                "031-330-6010",
+                "031-330-6010"
             )
         }
 
@@ -47,7 +47,7 @@ class PhoneNumberTest: VOTest {
         fun invalidNumbers(): List<String> {
             return listOf(
                 "01028859314",
-                "02-13230-6010",
+                "02-13230-6010"
             )
         }
     }
@@ -60,8 +60,8 @@ class PhoneNumberTest: VOTest {
         val sameValueInstance = PhoneNumber(value)
 
         // when
-        val isEqaulsAndSameHashcode = (standardInstance == sameValueInstance)
-            && (sameValueInstance.hashCode() == sameValueInstance.hashCode())
+        val isEqaulsAndSameHashcode = (standardInstance == sameValueInstance) &&
+            (sameValueInstance.hashCode() == sameValueInstance.hashCode())
 
         // then
         assertThat(isEqaulsAndSameHashcode).isTrue()
