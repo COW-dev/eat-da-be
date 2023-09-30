@@ -7,7 +7,6 @@ import com.mjucow.eatda.domain.notice.service.query.NoticeQueryService
 import com.mjucow.eatda.domain.notice.service.query.dto.NoticeDto
 import com.mjucow.eatda.domain.notice.service.query.dto.Notices
 import com.mjucow.eatda.presentation.common.ApiResponse
-import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,8 +27,7 @@ class NoticeController(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(
-        @RequestBody @Valid
-        command: CreateNoticeCommand,
+        @RequestBody command: CreateNoticeCommand,
     ): ApiResponse<Long> {
         return ApiResponse.success(noticeCommandService.create(command))
     }

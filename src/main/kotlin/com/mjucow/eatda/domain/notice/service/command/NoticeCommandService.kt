@@ -18,21 +18,20 @@ class NoticeCommandService(
         return repository.save(Notice(request.title, request.content)).id
     }
 
-    @Throws(EntityNotFoundException::class)
-    fun update(noticeId: Long, request: UpdateNoticeCommand) {
+    fun update(noticeId: Long, command: UpdateNoticeCommand) {
         val notice = repository.findByIdOrNull(noticeId)
             ?: throw EntityNotFoundException("공지사항이 존재하지 않습니다.")
-        val (newTitle, newContent) = request
+        val (newTitle, newContent) = command
         notice.let {
-            if (newTitle != null) it.title = newTitle
-            if (newContent != null) it.content = newContent
+            it.title = newTitle
+            it.content = newContent
         }
 
         repository.save(notice)
     }
 
     fun deleteById(noticeId: Long) {
-        val notice = repository.findByIdOrNull(noticeId) ?: throw IllegalArgumentException()
+        val notice = repository.findByIdOrNull(noticeId) ?: return
 
         repository.delete(notice)
     }

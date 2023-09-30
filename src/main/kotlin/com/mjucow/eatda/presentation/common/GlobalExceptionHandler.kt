@@ -2,18 +2,11 @@ package com.mjucow.eatda.presentation.common
 
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @GlobalControllerAdvice
 class GlobalExceptionHandler {
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ApiResponse<Unit> {
-        return ApiResponse.error(exception.bindingResult.allErrors.joinToString(" ") { it.defaultMessage.toString() })
-    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(exception: IllegalArgumentException): ApiResponse<Unit> {
