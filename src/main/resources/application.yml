@@ -7,7 +7,7 @@ spring:
 
   web.resources.add-mappings: false
   liquibase:
-    change-log: classpath:/db/changelog/changelog-master.yml
+    change-log: classpath:/db/changelog-master.yml
     enabled: true
 
 logging.config: classpath:logback/logback-${spring.profiles.active}.xml
