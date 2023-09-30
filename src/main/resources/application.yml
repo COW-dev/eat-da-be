@@ -4,6 +4,7 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: validate
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
 
   web.resources.add-mappings: false
   liquibase:

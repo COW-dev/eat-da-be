@@ -1,6 +1,8 @@
 package com.mjucow.eatda.domain.store.entity
 
-import org.assertj.core.api.Assertions
+import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,10 +16,10 @@ class StoreTest {
         // given
 
         // when
-        val throwable = Assertions.catchThrowable { Store(name) }
+        val throwable = catchThrowable { Store(name = name, address = StoreMother.ADDRESS) }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
@@ -27,10 +29,10 @@ class StoreTest {
         val name = "x".repeat(Store.MAX_NAME_LENGTH + 1)
 
         // when
-        val throwable = Assertions.catchThrowable { Store(name) }
+        val throwable = catchThrowable { Store(name = name, address = StoreMother.ADDRESS) }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("보이는 이름이 최소 길이 이상일 경우 에외를 던진다")
@@ -41,81 +43,105 @@ class StoreTest {
         val displayName = "x".repeat(Store.MAX_NAME_LENGTH + 1)
 
         // when
-        val throwable = Assertions.catchThrowable { Store(name, displayName) }
+        val throwable = catchThrowable {
+            Store(name = name, address = StoreMother.ADDRESS, displayName = displayName)
+        }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
-
     @DisplayName("새로운 이름이 빈 값일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
     fun throwExceptionWhenNewNameIsEmpty(newName: String) {
         // given
-        val store = Store("validName")
+        val store = StoreMother.get()
 
         // when
-        val throwable = Assertions.catchThrowable { store.name = newName }
+        val throwable = catchThrowable { store.name = newName }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("새로운 이름이 최소 길이 이상일 경우 에외를 던진다")
     @Test
     fun throwExceptionWhenNewNameLengthGreaterThanMaxLength() {
         // given
-        val store = Store("validName")
+        val store = StoreMother.get()
         val newName = "x".repeat(Store.MAX_NAME_LENGTH + 1)
 
         // when
-        val throwable = Assertions.catchThrowable { store.name = newName }
+        val throwable = catchThrowable { store.name = newName }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("새로운 보이는 이름이 최소 길이 이상일 경우 에외를 던진다")
     @Test
     fun throwExceptionWhenNewDisplayNameLengthGreaterThanMaxLength() {
         // given
-        val store = Store("validName", "validDisplayName")
+        val store = StoreMother.get()
         val newDisplayName = "x".repeat(Store.MAX_NAME_LENGTH + 1)
 
         // when
-        val throwable = Assertions.catchThrowable { store.displayName = newDisplayName }
+        val throwable = catchThrowable {  store.displayName = newDisplayName }
 
         // then
-        Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("보이는 이름이 없다면 이름이 보여진다")
     @Test
     fun returnNameWhenDisplayNameIsNull() {
         // given
-        val name = "validName"
-        val store = Store(name)
+        val store = StoreMother.get(autoFill = false)
 
         // when
-        val displayedName = store.getDisplayedName()
 
         // then
-        Assertions.assertThat(displayedName).isEqualTo(name)
+        assertThat(store.displayedName).isEqualTo(store.name)
     }
 
     @DisplayName("보이는 이름이 있다면 보이는 이름이 보여진다")
     @Test
     fun returnDisplayNameWhenDisplayNameIsNotNull() {
         // given
-        val name = "validName"
-        val displayName = "validDisplayName"
-        val store = Store(name, displayName)
+        val store = StoreMother.get()
 
         // when
-        val displayedName = store.getDisplayedName()
 
         // then
-        Assertions.assertThat(displayedName).isEqualTo(displayName)
+        assertThat(store.displayedName).isEqualTo(store.displayName)
+    }
+
+    @DisplayName("새로운 주소가 빈 값일 경우 예외를 던진다")
+    @ParameterizedTest
+    @EmptySource
+    fun throwExceptionWhenNewAddressIsEmpty(address: String) {
+        // given
+        val store = StoreMother.get()
+
+        // when
+        val throwable = catchThrowable { store.address = address }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+    }
+
+    @DisplayName("새로운 주소가 최소 길이 이상일 경우 에외를 던진다")
+    @Test
+    fun throwExceptionWhenNewAddressLengthGreaterThanMaxLength() {
+        // given
+        val store = StoreMother.get()
+        val address = "x".repeat(Store.MAX_ADDRESS_LENGTH + 1)
+
+        // when
+        val throwable = catchThrowable { store.address = address }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
     @DisplayName("정상적인 경우 객체가 생성된다")
@@ -125,9 +151,10 @@ class StoreTest {
         val name = "validName"
 
         // when
-        val category = Store(name)
+        val category = StoreMother.get { it.name = name }
 
         // then
-        Assertions.assertThat(category).isNotNull
+        assertThat(category).isNotNull
     }
+
 }
