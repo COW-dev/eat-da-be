@@ -22,7 +22,6 @@ val restdocsApiVersion = "${property("restdocsApiVersion")}"
 val springMockkVersion = "${property("springMockkVersion")}"
 val autoParamsVersion = "${property("autoParamsVersion")}"
 val jacocoVersion = "${property("jacocoVersion")}"
-val hibernateVersion = "${property("hibernateVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -51,7 +50,6 @@ dependencies {
     // database
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.liquibase:liquibase-core")
-    implementation("org.hibernate:hibernate-spatial:$hibernateVersion")
 
     // test
     testImplementation("org.testcontainers:postgresql")

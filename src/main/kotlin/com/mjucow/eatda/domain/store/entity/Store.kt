@@ -1,6 +1,7 @@
 package com.mjucow.eatda.domain.store.entity
 
 import com.mjucow.eatda.common.vo.PhoneNumber
+import com.mjucow.eatda.common.vo.Point
 import com.mjucow.eatda.domain.common.BaseEntity
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -11,7 +12,6 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.Table
-import org.springframework.data.geo.Point
 
 @Entity
 @Table(name = "store")
@@ -62,7 +62,7 @@ class Store() : BaseEntity() {
     @Column(nullable = true)
     var imageAddress: String? = null
 
-    @Column(nullable = true, columnDefinition = "geometry(Point, 4326)")
+    @Embedded
     var location: Point? = null
 
     val displayedName: String
