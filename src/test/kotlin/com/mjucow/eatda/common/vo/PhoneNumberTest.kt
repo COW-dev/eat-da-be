@@ -39,7 +39,9 @@ class PhoneNumberTest : VOTest {
         fun validNumbers(): List<String> {
             return listOf(
                 "010-2885-9314",
-                "031-330-6010"
+                "031-330-6010",
+                "02)123-4567",
+                "02-123-4567"
             )
         }
 

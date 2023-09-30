@@ -14,6 +14,6 @@ data class PhoneNumber(@Column(name = "phone_number") val value: String) {
     }
 
     companion object {
-        val NUMBER_REGEX = Regex("^0\\d{1,2}-\\d{3,4}-\\d{4}\$")
+        val NUMBER_REGEX = Regex("^0\\d{1,2}[-)]\\d{3,4}-\\d{4}\$")
     }
 }
