@@ -18,16 +18,12 @@ enum class DayOfWeek(
     /**
      * 객체가 인자의 다음 요일인지 확인합니다.
      */
-    fun isNextDayOf(dayOfWeek: DayOfWeek): Boolean {
-        return ((VALUES.size + ordinal - 1) % VALUES.size) == dayOfWeek.ordinal
-    }
+    fun isNextDayOf(dayOfWeek: DayOfWeek) = of(this.ordinal + 1) == dayOfWeek
 
     /**
      * 객체가 인자의 전 요일인지 확인합니다
      */
-    fun isPrevDayOf(dayOfWeek: DayOfWeek): Boolean {
-        return ((ordinal + 1) % VALUES.size) == dayOfWeek.ordinal
-    }
+    fun isPrevDayOf(dayOfWeek: DayOfWeek) = of(this.ordinal - 1) == dayOfWeek
 
     companion object {
         val VALUES = entries.toTypedArray()
