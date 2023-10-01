@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
+import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
@@ -68,6 +69,26 @@ class Store() : BaseEntity() {
     val displayedName: String
         get() = displayName ?: name
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "store_id")
+    protected val mutableStoreHours: MutableList<StoreHours> = mutableListOf()
+
+    fun getStoreHours(): List<StoreHours> = mutableStoreHours.toList()
+
+    fun addStoreHour(newHours: StoreHours) {
+        // TODO: 겹치는 시간이 있는 지 확인하기
+        if (mutableStoreHours.any {
+            // 같은 날에 시간이 겹치는 경우, 날짜는 다르지만 새벽 영업(36시간 제도)으로 시간이 겹치는 경우
+            (it.dayOfWeek == newHours.dayOfWeek && (it.openAt <= newHours.closeAt || newHours.openAt <= it.closeAt))
+                || (it.dayOfWeek.isNextDayOf(newHours.dayOfWeek) && (newHours.openAt + StoreHours.ONE_DAY_MINUTE) <= it.closeAt)
+                || (it.dayOfWeek.isPrevtDayOf(newHours.dayOfWeek) && (it.openAt + StoreHours.ONE_DAY_MINUTE) <= newHours.closeAt)
+        }) {
+            throw IllegalArgumentException()
+        }
+
+        mutableStoreHours.add(newHours)
+    }
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JoinTable(
         name = "store_category",
@@ -76,9 +97,7 @@ class Store() : BaseEntity() {
     )
     protected val mutableCategories: MutableSet<Category> = mutableSetOf()
 
-    fun getCategories(): Set<Category> {
-        return mutableCategories.toSet()
-    }
+    fun getCategories(): Set<Category> = mutableCategories.toSet()
 
     fun addCategory(category: Category) {
         mutableCategories.add(category)
