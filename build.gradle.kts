@@ -44,6 +44,9 @@ dependencies {
     // convert
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    // container
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
     // database
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.liquibase:liquibase-core")
