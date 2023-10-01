@@ -6,6 +6,6 @@ abstract class ObjectMother<T> {
         return instance.apply(apply)
     }
 
-    abstract fun createFillInstance(): T
-    abstract fun createDefaultInstance(): T
+    protected abstract fun createFillInstance(): T
+    protected abstract fun createDefaultInstance(): T
 }

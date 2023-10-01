@@ -86,7 +86,7 @@ class Store() : BaseEntity() {
             // 같은 날에 시간이 겹치는 경우, 날짜는 다르지만 새벽 영업(36시간 제도)으로 시간이 겹치는 경우
             (it.dayOfWeek == newHours.dayOfWeek && (it.openAt <= newHours.closeAt || newHours.openAt <= it.closeAt)) ||
                 (it.dayOfWeek.isNextDayOf(newHours.dayOfWeek) && (newHours.openAt + StoreHours.ONE_DAY_MINUTE) <= it.closeAt) ||
-                (it.dayOfWeek.isPrevtDayOf(newHours.dayOfWeek) && (it.openAt + StoreHours.ONE_DAY_MINUTE) <= newHours.closeAt)
+                (it.dayOfWeek.isPrevDayOf(newHours.dayOfWeek) && (it.openAt + StoreHours.ONE_DAY_MINUTE) <= newHours.closeAt)
         }
         if (result.isNotEmpty()) {
             throw IllegalArgumentException()

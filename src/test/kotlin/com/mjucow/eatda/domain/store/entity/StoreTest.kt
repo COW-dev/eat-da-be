@@ -1,5 +1,6 @@
 package com.mjucow.eatda.domain.store.entity
 
+import com.mjucow.eatda.common.vo.DayOfWeek
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreHoursMother
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
 import org.assertj.core.api.Assertions.assertThat
@@ -210,15 +211,123 @@ class StoreTest {
         ).isTrue()
     }
 
+    @DisplayName("새로운 이미지 주소가 빈 값일 경우 예외를 던진다")
+    @ParameterizedTest
+    @EmptySource
+    fun throwExceptionWhenNewImageAddressIsEmpty(newImageAddress: String) {
+        // given
+        val store = StoreMother.create()
+
+        // when
+        val throwable = catchThrowable { store.imageAddress = newImageAddress }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+    }
+
+    @DisplayName("새로운 주소가 최소 길이 이상일 경우 에외를 던진다")
+    @Test
+    fun throwExceptionWhenNewImageAddressLengthGreaterThanMaxLength() {
+        // given
+        val store = StoreMother.create()
+        val newImageAddress = "x".repeat(Store.MAX_IMAGE_ADDRESS_LENGTH + 1)
+
+        // when
+        val throwable = catchThrowable { store.imageAddress = newImageAddress }
+
+        // then
+        assertThat(throwable).isInstanceOf(RuntimeException::class.java)
+    }
+
+    @DisplayName("새로운 연락처를 추가할 수 있다")
+    @Test
+    fun addNewPhoneNumber() {
+        // given
+        val store = StoreMother.createWithId()
+        val newPhoneNumber = StoreMother.PHONE_NUMBER
+
+        // when
+        store.phoneNumber = newPhoneNumber
+
+        // then
+        assertThat(store.phoneNumber).isEqualTo(newPhoneNumber)
+    }
+
+    @DisplayName("새로운 이미지 주소를 추가할 수 있다")
+    @Test
+    fun addNewImageAddress() {
+        // given
+        val store = StoreMother.createWithId()
+        val newImageAddress = StoreMother.IMAGE_ADDRESS
+
+        // when
+        store.imageAddress = newImageAddress
+
+        // then
+        assertThat(store.imageAddress).isEqualTo(newImageAddress)
+    }
+
+    @DisplayName("새로운 위치 정보를 추가할 수 있다")
+    @Test
+    fun addNewLocation() {
+        // given
+        val store = StoreMother.createWithId()
+        val newLocation = StoreMother.LOCATION
+
+        // when
+        store.location = newLocation
+
+        // then
+        assertThat(store.location).isEqualTo(newLocation)
+    }
+
     @DisplayName("이미 존재하는 시간과 겹친다면 운영시간은 추가되지 않는다: 같은 날짜")
     @Test
-    fun throwExceptionWhenNewStoreHoursOverlapTime() {
+    fun throwExceptionWhenNewSameDayOfWeekStoreHoursOverlapTime() {
         // given
         val storeHours = StoreHoursMother.create()
         val store = StoreMother.create { it.addStoreHour(storeHours) }
 
         // when
         val throwable = catchThrowable { store.addStoreHour(storeHours) }
+
+        // then
+        assertThat(throwable).isNotNull()
+    }
+
+    @DisplayName("이미 존재하는 시간과 겹친다면 운영시간은 추가되지 않는다: 하루 전 새벽 운영")
+    @Test
+    fun throwExceptionWhenNewPrevDayOfWeekStoreHoursOverlapTime() {
+        // given
+        val currentStoreHours = StoreHoursMother.create()
+        val store = StoreMother.create(autoFill = true) { it.addStoreHour(currentStoreHours) }
+        val newStoreHours = StoreHours(
+            DayOfWeek.of(currentStoreHours.dayOfWeek.ordinal - 1),
+            openAt = StoreHours.MIN_TIME_MINUTE,
+            closeAt = currentStoreHours.openAt + StoreHours.ONE_DAY_MINUTE + 1
+        )
+
+        // when
+        val throwable = catchThrowable { store.addStoreHour(newStoreHours) }
+
+        // then
+        assertThat(throwable).isNotNull()
+    }
+
+    @DisplayName("이미 존재하는 시간과 겹친다면 운영시간은 추가되지 않는다: 기존 시간이 새벽운영")
+    @Test
+    fun throwExceptionWhenNewNextDayOfWeekStoreHoursOverlapTime() {
+        // given
+        val currentStoreHours = StoreHoursMother.create { it.closeAt = StoreHours.MAX_TIME_MINUTE }
+        val store = StoreMother.create { it.addStoreHour(currentStoreHours) }
+        val newStoreHours = StoreHours(
+            DayOfWeek.of(currentStoreHours.dayOfWeek.ordinal + 1),
+            openAt = currentStoreHours.closeAt - StoreHours.ONE_DAY_MINUTE,
+            closeAt = StoreHours.MAX_TIME_MINUTE
+        )
+
+        // when
+        val throwable = catchThrowable { store.addStoreHour(newStoreHours) }
 
         // then
         assertThat(throwable).isNotNull()

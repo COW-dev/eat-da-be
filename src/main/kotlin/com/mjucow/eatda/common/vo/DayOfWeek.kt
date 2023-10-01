@@ -25,11 +25,18 @@ enum class DayOfWeek(
     /**
      * 객체가 인자의 전 요일인지 확인합니다
      */
-    fun isPrevtDayOf(dayOfWeek: DayOfWeek): Boolean {
+    fun isPrevDayOf(dayOfWeek: DayOfWeek): Boolean {
         return ((ordinal + 1) % VALUES.size) == dayOfWeek.ordinal
     }
 
     companion object {
         val VALUES = entries.toTypedArray()
+
+        fun of(ordinal: Int): DayOfWeek {
+            if (ordinal + VALUES.size < 0) {
+                throw IllegalArgumentException()
+            }
+            return VALUES[(ordinal + VALUES.size) % VALUES.size]
+        }
     }
 }
