@@ -82,13 +82,13 @@ class Store() : BaseEntity() {
     fun getStoreHours(): List<StoreHours> = mutableStoreHours.toList()
 
     fun addStoreHour(newHours: StoreHours) {
-        val result = mutableStoreHours.filter {
+        if (mutableStoreHours.any {
             // 같은 날에 시간이 겹치는 경우, 날짜는 다르지만 새벽 영업(36시간 제도)으로 시간이 겹치는 경우
             (it.dayOfWeek == newHours.dayOfWeek && (it.openAt <= newHours.closeAt || newHours.openAt <= it.closeAt)) ||
                 (it.dayOfWeek.isNextDayOf(newHours.dayOfWeek) && (newHours.openAt + StoreHours.ONE_DAY_MINUTE) <= it.closeAt) ||
                 (it.dayOfWeek.isPrevDayOf(newHours.dayOfWeek) && (it.openAt + StoreHours.ONE_DAY_MINUTE) <= newHours.closeAt)
         }
-        if (result.isNotEmpty()) {
+        ) {
             throw IllegalArgumentException()
         }
 
