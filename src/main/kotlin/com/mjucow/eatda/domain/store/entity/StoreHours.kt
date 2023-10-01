@@ -7,13 +7,12 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Table
 
-
 @Entity
 @Table(name = "store_hours")
 class StoreHours(
     @Enumerated
     @Column(nullable = false, updatable = false)
-    val dayOfWeek: DayOfWeek = DayOfWeek.MON
+    val dayOfWeek: DayOfWeek = DayOfWeek.MON,
 ) : BaseEntity() {
     constructor(dayOfWeek: DayOfWeek, openAt: Int, closeAt: Int) : this(dayOfWeek) {
         this.openAt = openAt

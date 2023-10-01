@@ -8,12 +8,12 @@ object StoreHoursMother : ObjectMother<StoreHours>() {
     override val minimumInstance = StoreHours(
         dayOfWeek = DayOfWeek.MON,
         openAt = StoreHours.MIN_TIME_MINUTE,
-        closeAt = StoreHours.ONE_DAY_MINUTE,
+        closeAt = StoreHours.ONE_DAY_MINUTE
     )
 
-    override val fillInstance = StoreHours (
+    override val fillInstance = StoreHours(
         dayOfWeek = DayOfWeek.MON,
         openAt = StoreHours.MIN_TIME_MINUTE,
-        closeAt = StoreHours.MAX_TIME_MINUTE,
+        closeAt = StoreHours.MAX_TIME_MINUTE
     )
 }

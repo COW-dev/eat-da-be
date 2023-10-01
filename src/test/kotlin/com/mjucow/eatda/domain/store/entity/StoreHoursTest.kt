@@ -17,7 +17,7 @@ class StoreHoursTest {
     @AutoKotlinSource
     fun throwExceptionWhenNegativeOpenAt(
         @Max(-1)
-        openAt: Int
+        openAt: Int,
     ) {
         // given
         val closeAt = StoreHours.MAX_TIME_MINUTE
@@ -37,7 +37,7 @@ class StoreHoursTest {
     fun throwExceptionWhenOpenAtOverOneDay(
         @Min(StoreHours.ONE_DAY_MINUTE.toLong())
         @Max(StoreHours.MAX_TIME_MINUTE.toLong())
-        openAt: Int
+        openAt: Int,
     ) {
         // given
         val closeAt = StoreHours.MAX_TIME_MINUTE
@@ -56,7 +56,7 @@ class StoreHoursTest {
     @AutoKotlinSource
     fun throwExceptionWhenNegativeCloseAt(
         @Max(-1)
-        closeAt: Int
+        closeAt: Int,
     ) {
         // given
         val openAt = StoreHours.MIN_TIME_MINUTE
@@ -75,7 +75,7 @@ class StoreHoursTest {
     @AutoKotlinSource
     fun throwExceptionWhenCloseAtOverMaxValue(
         @Min((StoreHours.MAX_TIME_MINUTE + 1).toLong())
-        closeAt: Int
+        closeAt: Int,
     ) {
         // given
         val openAt = StoreHours.MIN_TIME_MINUTE

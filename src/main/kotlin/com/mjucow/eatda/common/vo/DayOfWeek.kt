@@ -18,14 +18,14 @@ enum class DayOfWeek(
     /**
      * 객체가 인자의 다음 요일인지 확인합니다.
      */
-    fun isNextDayOf(dayOfWeek: DayOfWeek) : Boolean{
+    fun isNextDayOf(dayOfWeek: DayOfWeek): Boolean {
         return ((VALUES.size + ordinal - 1) % VALUES.size) == dayOfWeek.ordinal
     }
 
     /**
      * 객체가 인자의 전 요일인지 확인합니다
      */
-    fun isPrevtDayOf(dayOfWeek: DayOfWeek) : Boolean{
+    fun isPrevtDayOf(dayOfWeek: DayOfWeek): Boolean {
         return ((ordinal + 1) % VALUES.size) == dayOfWeek.ordinal
     }
 
