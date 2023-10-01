@@ -22,6 +22,7 @@ class Store() : BaseEntity() {
         address: String,
         displayName: String? = null,
         phoneNumber: PhoneNumber? = null,
+        imageAddress: String? = null,
         location: Point? = null,
     ) : this() {
         this.name = name.also { validateName(name) }
@@ -30,6 +31,7 @@ class Store() : BaseEntity() {
             validateName(displayName)
             displayName.trim()
         }
+        this.imageAddress = imageAddress.also { validateImageAddress() }
         this.phoneNumber = phoneNumber
         this.location = location
     }
@@ -62,6 +64,10 @@ class Store() : BaseEntity() {
 
     @Column(nullable = true)
     var imageAddress: String? = null
+        set(value) {
+            field = value
+            validateImageAddress()
+        }
 
     @Embedded
     var location: Point? = null
@@ -76,14 +82,13 @@ class Store() : BaseEntity() {
     fun getStoreHours(): List<StoreHours> = mutableStoreHours.toList()
 
     fun addStoreHour(newHours: StoreHours) {
-        // TODO: 겹치는 시간이 있는 지 확인하기
-        if (mutableStoreHours.any {
+        val result = mutableStoreHours.filter {
             // 같은 날에 시간이 겹치는 경우, 날짜는 다르지만 새벽 영업(36시간 제도)으로 시간이 겹치는 경우
             (it.dayOfWeek == newHours.dayOfWeek && (it.openAt <= newHours.closeAt || newHours.openAt <= it.closeAt)) ||
                 (it.dayOfWeek.isNextDayOf(newHours.dayOfWeek) && (newHours.openAt + StoreHours.ONE_DAY_MINUTE) <= it.closeAt) ||
                 (it.dayOfWeek.isPrevtDayOf(newHours.dayOfWeek) && (it.openAt + StoreHours.ONE_DAY_MINUTE) <= newHours.closeAt)
         }
-        ) {
+        if (result.isNotEmpty()) {
             throw IllegalArgumentException()
         }
 
@@ -111,6 +116,11 @@ class Store() : BaseEntity() {
     private fun validateAddress(address: String) {
         validateString(address, MAX_ADDRESS_LENGTH)
     }
+    private fun validateImageAddress() {
+        if (imageAddress != null) {
+            validateString(imageAddress!!, MAX_IMAGE_ADDRESS_LENGTH)
+        }
+    }
 
     private fun validateString(value: String, maxLength: Int, minLength: Int = 0) {
         require(value.isNotBlank() && value.trim().length in minLength..maxLength)
@@ -119,5 +129,6 @@ class Store() : BaseEntity() {
     companion object {
         const val MAX_NAME_LENGTH = 31
         const val MAX_ADDRESS_LENGTH = 63
+        const val MAX_IMAGE_ADDRESS_LENGTH = 255
     }
 }

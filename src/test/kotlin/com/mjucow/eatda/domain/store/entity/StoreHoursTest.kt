@@ -24,7 +24,7 @@ class StoreHoursTest {
 
         // when
         val createThrowable = catchThrowable { StoreHours(DayOfWeek.MON, openAt, closeAt) }
-        val setterThrowable = catchThrowable { StoreHoursMother.get { it.openAt = openAt } }
+        val setterThrowable = catchThrowable { StoreHoursMother.create { it.openAt = openAt } }
 
         // then
         assertThat(createThrowable).isNotNull()
@@ -44,7 +44,7 @@ class StoreHoursTest {
 
         // when
         val createThrowable = catchThrowable { StoreHours(DayOfWeek.MON, openAt, closeAt) }
-        val setterThrowable = catchThrowable { StoreHoursMother.get { it.openAt = openAt } }
+        val setterThrowable = catchThrowable { StoreHoursMother.create { it.openAt = openAt } }
 
         // then
         assertThat(createThrowable).isNotNull()
@@ -63,7 +63,7 @@ class StoreHoursTest {
 
         // when
         val createThrowable = catchThrowable { StoreHours(DayOfWeek.MON, openAt, closeAt) }
-        val setterThrowable = catchThrowable { StoreHoursMother.get { it.closeAt = closeAt } }
+        val setterThrowable = catchThrowable { StoreHoursMother.create { it.closeAt = closeAt } }
 
         // then
         assertThat(createThrowable).isNotNull()
@@ -82,7 +82,7 @@ class StoreHoursTest {
 
         // when
         val createThrowable = catchThrowable { StoreHours(DayOfWeek.MON, openAt, closeAt) }
-        val setterThrowable = catchThrowable { StoreHoursMother.get { it.closeAt = closeAt } }
+        val setterThrowable = catchThrowable { StoreHoursMother.create { it.closeAt = closeAt } }
 
         // then
         assertThat(createThrowable).isNotNull()
@@ -102,8 +102,8 @@ class StoreHoursTest {
 
         // when
         val createThrowable = catchThrowable { StoreHours(DayOfWeek.MON, openAt, closeAt) }
-        val openAtSetterThrowable = catchThrowable { StoreHoursMother.get { it.openAt = it.closeAt } }
-        val closeAtSetterThrowable = catchThrowable { StoreHoursMother.get { it.closeAt = it.openAt } }
+        val openAtSetterThrowable = catchThrowable { StoreHoursMother.create { it.openAt = it.closeAt } }
+        val closeAtSetterThrowable = catchThrowable { StoreHoursMother.create { it.closeAt = it.openAt } }
 
         // then
         assertThat(createThrowable).isNotNull()
