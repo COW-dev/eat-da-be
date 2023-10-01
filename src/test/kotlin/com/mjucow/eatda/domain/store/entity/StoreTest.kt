@@ -203,9 +203,9 @@ class StoreTest {
         // then
         assertThat(
             store.getStoreHours().any {
-                it.dayOfWeek == storeHours.dayOfWeek
-                    && it.openAt == storeHours.openAt
-                    && it.closeAt == storeHours.closeAt
+                it.dayOfWeek == storeHours.dayOfWeek &&
+                    it.openAt == storeHours.openAt &&
+                    it.closeAt == storeHours.closeAt
             }
         ).isTrue()
     }
