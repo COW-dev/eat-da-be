@@ -16,8 +16,8 @@ class StoreHours(
 ) : BaseEntity() {
     constructor(dayOfWeek: DayOfWeek, openAt: Int, closeAt: Int) : this(dayOfWeek) {
         this.openAt = openAt
-        validateOpenAt()
         this.closeAt = closeAt
+        validateOpenAt()
         validateCloseAt()
     }
 
