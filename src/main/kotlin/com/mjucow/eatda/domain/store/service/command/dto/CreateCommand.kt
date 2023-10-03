@@ -1,3 +1,3 @@
 package com.mjucow.eatda.domain.store.service.command.dto
 
-data class CategoryUpdateNameCommand(val name: String)
+data class CreateCommand(val name: String)

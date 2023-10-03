@@ -1,8 +1,8 @@
 package com.mjucow.eatda.presentation.store.category
 
 import com.mjucow.eatda.domain.store.service.command.CategoryCommandService
-import com.mjucow.eatda.domain.store.service.command.dto.CategoryCreateCommand
-import com.mjucow.eatda.domain.store.service.command.dto.CategoryUpdateNameCommand
+import com.mjucow.eatda.domain.store.service.command.dto.CreateCommand
+import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
 import com.mjucow.eatda.domain.store.service.query.CategoryQueryService
 import com.mjucow.eatda.domain.store.service.query.dto.Categories
 import com.mjucow.eatda.domain.store.service.query.dto.CategoryDto
@@ -32,7 +32,7 @@ class CategoryController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody command: CategoryCreateCommand): ApiResponse<Long> {
+    fun create(@RequestBody command: CreateCommand): ApiResponse<Long> {
         val id = categoryCommandService.create(command)
         return ApiResponse.success(id)
     }
@@ -53,7 +53,7 @@ class CategoryController(
     @ResponseStatus(HttpStatus.OK)
     fun updateNameById(
         @PathVariable("categoryId") id: Long,
-        @RequestBody command: CategoryUpdateNameCommand,
+        @RequestBody command: UpdateNameCommand,
     ) {
         categoryCommandService.updateName(id, command)
     }
