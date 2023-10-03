@@ -1,4 +1,4 @@
-package com.mjucow.eatda.domain.store.entity.objectmother
+package com.mjucow.eatda.common.objectmother
 
 import com.mjucow.eatda.domain.common.BaseEntity
 import org.springframework.test.util.ReflectionTestUtils
@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 abstract class EntityMother<T : BaseEntity> : ObjectMother<T>() {
 
-    protected val idGenerator = AtomicLong(BaseEntity.DEFAULT_ID + 1)
+    private val idGenerator = AtomicLong(BaseEntity.DEFAULT_ID + 1)
 
     fun createWithId(
         autoFill: Boolean = false,
@@ -19,6 +19,6 @@ abstract class EntityMother<T : BaseEntity> : ObjectMother<T>() {
             "id",
             if (id != BaseEntity.DEFAULT_ID) id else idGenerator.getAndIncrement()
         )
-        return instance.apply(apply)
+        return instance
     }
 }

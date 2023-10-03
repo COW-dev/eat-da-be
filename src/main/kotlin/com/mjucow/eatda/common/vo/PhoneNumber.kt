@@ -1,5 +1,8 @@
 package com.mjucow.eatda.common.vo
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.mjucow.eatda.common.vo.deseializer.PhoneNumberDeserializer
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
@@ -8,7 +11,12 @@ import jakarta.persistence.Embeddable
  * <p>전화번호의 형식만 검증하기 때문에 실제 존재하는 전화번호가 아닐 수 있다</p>
  */
 @Embeddable
-data class PhoneNumber(@Column(name = "phone_number") val value: String) {
+@JsonDeserialize(using = PhoneNumberDeserializer::class)
+data class PhoneNumber(
+    @JsonProperty(value = "phoneNumber")
+    @Column(name = "phone_number")
+    val value: String,
+) {
     init {
         NUMBER_REGEX.matchEntire(value) ?: throw IllegalArgumentException()
     }

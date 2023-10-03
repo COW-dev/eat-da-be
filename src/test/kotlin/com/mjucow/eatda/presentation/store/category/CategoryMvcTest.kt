@@ -5,8 +5,8 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
 import com.mjucow.eatda.domain.store.service.command.CategoryCommandService
-import com.mjucow.eatda.domain.store.service.command.dto.CreateCommand
-import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
+import com.mjucow.eatda.domain.store.service.command.dto.CategoryCreateCommand
+import com.mjucow.eatda.domain.store.service.command.dto.CategoryUpdateNameCommand
 import com.mjucow.eatda.domain.store.service.query.CategoryQueryService
 import com.mjucow.eatda.domain.store.service.query.dto.Categories
 import com.mjucow.eatda.domain.store.service.query.dto.CategoryDto
@@ -104,8 +104,8 @@ class CategoryMvcTest : AbstractMockMvcTest() {
     @AutoKotlinSource
     fun create(id: Long) {
         // given
-        val createCommand = CreateCommand("validName")
-        val content = objectMapper.writeValueAsString(createCommand)
+        val categoryCreateCommand = CategoryCreateCommand("validName")
+        val content = objectMapper.writeValueAsString(categoryCreateCommand)
 
         every { categoryCommandService.create(any()) } returns id
 
@@ -161,8 +161,8 @@ class CategoryMvcTest : AbstractMockMvcTest() {
         // given
         val id = 1L
         val newName = "newName"
-        val updateNameCommand = UpdateNameCommand(newName)
-        val content = objectMapper.writeValueAsString(updateNameCommand)
+        val categoryUpdateNameCommand = CategoryUpdateNameCommand(newName)
+        val content = objectMapper.writeValueAsString(categoryUpdateNameCommand)
 
         // when & then
         mockMvc.perform(

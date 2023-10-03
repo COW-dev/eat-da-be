@@ -3,8 +3,8 @@ package com.mjucow.eatda.domain.store.service.command
 import autoparams.kotlin.AutoKotlinSource
 import com.mjucow.eatda.domain.AbstractDataTest
 import com.mjucow.eatda.domain.store.entity.Category
-import com.mjucow.eatda.domain.store.service.command.dto.CreateCommand
-import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
+import com.mjucow.eatda.domain.store.service.command.dto.CategoryCreateCommand
+import com.mjucow.eatda.domain.store.service.command.dto.CategoryUpdateNameCommand
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
@@ -30,7 +30,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         // given
         val name = "validName"
         repository.save(Category(name))
-        val command = CreateCommand(name)
+        val command = CategoryCreateCommand(name)
 
         // when
         val throwable = catchThrowable { categoryCommandService.create(command) }
@@ -44,7 +44,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
     fun createCategoryWhenValidInput() {
         // given
         val name = "validName"
-        val command = CreateCommand(name)
+        val command = CategoryCreateCommand(name)
 
         // when
         val domain = categoryCommandService.create(command)
@@ -59,7 +59,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         // given
         val id = 1L
         val name = "validName"
-        val command = UpdateNameCommand(name)
+        val command = CategoryUpdateNameCommand(name)
 
         // when
         val throwable = catchThrowable { categoryCommandService.updateName(id, command) }
@@ -76,7 +76,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         val duplicatedName = "duplicatedName"
         val targetId = repository.save(Category(name)).id
         repository.save(Category(duplicatedName))
-        val command = UpdateNameCommand(duplicatedName)
+        val command = CategoryUpdateNameCommand(duplicatedName)
 
         // when
         val throwable = catchThrowable { categoryCommandService.updateName(targetId, command) }
@@ -92,7 +92,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         val prevName = "validName"
         val id = repository.save(Category(prevName)).id
         val newName = prevName
-        val command = UpdateNameCommand(newName)
+        val command = CategoryUpdateNameCommand(newName)
 
         // when
         categoryCommandService.updateName(id, command)
@@ -108,7 +108,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         val prevName = "validName"
         val id = repository.save(Category(prevName)).id
         val newName = "valid"
-        val command = UpdateNameCommand(newName)
+        val command = CategoryUpdateNameCommand(newName)
 
         // when
         categoryCommandService.updateName(id, command)
