@@ -64,7 +64,7 @@ class StoreCommandServiceDataTest : AbstractDataTest() {
             displayName = StoreMother.DISPLAY_NAME,
             phoneNumber = StoreMother.PHONE_NUMBER,
             imageAddress = StoreMother.IMAGE_ADDRESS,
-            location = StoreMother.LOCATION,
+            location = StoreMother.LOCATION
         )
 
         // when
@@ -116,7 +116,7 @@ class StoreCommandServiceDataTest : AbstractDataTest() {
             displayName = null,
             phoneNumber = null,
             imageAddress = null,
-            location = null,
+            location = null
         )
 
         // when
@@ -139,7 +139,7 @@ class StoreCommandServiceDataTest : AbstractDataTest() {
             displayName = StoreMother.DISPLAY_NAME,
             phoneNumber = StoreMother.PHONE_NUMBER,
             imageAddress = StoreMother.IMAGE_ADDRESS,
-            location = StoreMother.LOCATION,
+            location = StoreMother.LOCATION
         )
 
         // when
@@ -153,7 +153,7 @@ class StoreCommandServiceDataTest : AbstractDataTest() {
             { assertThat(updatedStore.displayName).isEqualTo(command.displayName) },
             { assertThat(updatedStore.phoneNumber).isEqualTo(command.phoneNumber) },
             { assertThat(updatedStore.imageAddress).isEqualTo(command.imageAddress) },
-            { assertThat(updatedStore.location).isEqualTo(command.location) },
+            { assertThat(updatedStore.location).isEqualTo(command.location) }
         )
     }
 }

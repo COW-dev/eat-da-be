@@ -27,7 +27,6 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
     fun returnNullWhenNotExistEntity(id: Long) {
         // given
 
-
         // when
         val dto = storeQueryService.findById(id)
 
