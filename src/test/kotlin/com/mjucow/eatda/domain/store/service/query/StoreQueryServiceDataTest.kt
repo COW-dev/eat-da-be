@@ -48,6 +48,24 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         assertThat(dto!!.id).isEqualTo(store.id)
     }
 
+    @DisplayName("id값이 없다면 최신 데이터를 조회한다")
+    @Test
+    fun findAllByCursorWithNullId() {
+        // given
+        val pageSize = Store.MAX_NAME_LENGTH
+        repeat(Store.MAX_NAME_LENGTH) {
+            repository.save(Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS))
+        }
+        val page = Pageable.ofSize(pageSize)
+
+        // when
+        val result = storeQueryService.findAllByCursor(page = page)
+
+        // then
+        assertThat(result.content.size).isEqualTo(pageSize)
+        assertThat(result.hasNext()).isTrue()
+    }
+
     @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기만큼만 조회된다")
     @Test
     fun findAllByCursorWithPage() {

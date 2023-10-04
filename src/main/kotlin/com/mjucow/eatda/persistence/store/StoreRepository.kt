@@ -6,6 +6,7 @@ import org.springframework.data.domain.Slice
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface StoreRepository : JpaRepository<Store, Long> {
+    fun findAllByOrderByIdDesc(page: Pageable): Slice<Store>
     fun findByIdLessThanOrderByIdDesc(id: Long, page: Pageable): Slice<Store>
     fun existsByName(name: String): Boolean
 }

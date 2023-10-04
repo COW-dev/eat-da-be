@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional
 class StoreQueryService(
     val repository: StoreRepository,
 ) {
-    fun findAllByCursor(id: Long, page: Pageable): Slice<StoreDto> {
-        return repository.findByIdLessThanOrderByIdDesc(id, page).map(StoreDto::from)
+    fun findAllByCursor(id: Long? = null, page: Pageable): Slice<StoreDto> {
+        return if (id == null) {
+            repository.findAllByOrderByIdDesc(page).map(StoreDto::from)
+        } else {
+            repository.findByIdLessThanOrderByIdDesc(id, page).map(StoreDto::from)
+        }
     }
 
     fun findById(storeId: Long): StoreDetailDto? {

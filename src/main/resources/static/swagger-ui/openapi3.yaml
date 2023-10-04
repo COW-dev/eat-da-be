@@ -7,15 +7,102 @@ servers:
 - url: http://localhost:8080
 tags: []
 paths:
-  /api/v1/sample/{sampleId}:
+  /api/v1/categories:
+    get:
+      tags:
+      - category
+      summary: 카테고리 전체조회
+      description: 카테고리 전체조회
+      operationId: category-findAll
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                category-findAll:
+                  value: "{\"message\":null,\"body\":[{\"id\":7398367990945369557,\"\
+                    name\":\"2398912e-8b1d-44f8-939e-a6165c3ea07e\"},{\"id\":7993124867354092135,\"\
+                    name\":\"c23c3adf-5480-4d2e-bfc8-0ffce1a08618\"},{\"id\":335171977239929502,\"\
+                    name\":\"db0df761-721c-4911-aa27-4b6a6ecdebcb\"}]}"
     post:
       tags:
-      - Sample
-      summary: Get a sample by id
-      description: Get a sample by id
-      operationId: sample
+      - category
+      summary: 카테고리 생성
+      description: 카테고리 생성
+      operationId: category-create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              category-create:
+                value: "{\"name\":\"validName\"}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                category-create:
+                  value: "{\"message\":null,\"body\":577942185856768261}"
+  /api/v1/stores:
+    post:
+      tags:
+      - Store
+      summary: 가게 생성
+      description: 가게 생성
+      operationId: store-create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              store-create:
+                value: "{\"name\":\"명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"\
+                  displayName\":null,\"phoneNumber\":null,\"imageAddress\":null,\"\
+                  location\":null}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                store-create:
+                  value: "{\"message\":null,\"body\":1}"
+  /api/v1/categories/{category-id}:
+    delete:
+      tags:
+      - category
+      summary: 카테고리 삭제
+      description: 카테고리 삭제
+      operationId: category-delete
       parameters:
-      - name: sampleId
+      - name: category-id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+    patch:
+      tags:
+      - category
+      summary: 카테고리 이름 수정
+      description: 카테고리 이름 수정
+      operationId: category-updateName
+      parameters:
+      - name: category-id
         in: path
         description: ""
         required: true
@@ -25,21 +112,91 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/api-v1-sample-sampleId486549215'
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
             examples:
-              sample:
-                value: "{\"name\":\"name\"}"
+              category-updateName:
+                value: "{\"name\":\"newName\"}"
+      responses:
+        "200":
+          description: "200"
+  /api/v1/categories/{categoryId}:
+    get:
+      tags:
+      - category
+      summary: 카테고리 단건 조회
+      description: 카테고리 단건 조회
+      operationId: category-findById
+      parameters:
+      - name: categoryId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           description: "200"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/api-v1-sample-sampleId486549215'
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
-                sample:
-                  value: "{\"id\":\"id\",\"name\":\"name\"}"
+                category-findById:
+                  value: "{\"message\":null,\"body\":{\"id\":2583496916376048931,\"\
+                    name\":\"0f8fc7a3-02bc-43f4-abce-bb360d4d7f00\"}}"
+  /api/v1/stores/{store-id}:
+    get:
+      tags:
+      - store
+      summary: 특정 가게 조회
+      description: 특정 가게 조회
+      operationId: store-updateById
+      parameters:
+      - name: store-id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                store-updateById:
+                  value: "{\"message\":null,\"body\":{\"id\":6,\"displayedName\":\"\
+                    명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null,\"categories\":[],\"storeHours\":[]}}"
+  /api/v1/stores/{storeId}:
+    get:
+      tags:
+      - Store
+      summary: 특정 가게 조회
+      description: 특정 가게 조회
+      operationId: store-findById
+      parameters:
+      - name: storeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                store-findById:
+                  value: "{\"message\":null,\"body\":{\"id\":5,\"displayedName\":\"\
+                    명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null,\"categories\":[],\"storeHours\":[]}}"
 components:
   schemas:
-    api-v1-sample-sampleId486549215:
+    api-v1-categories-category-id486549215:
       type: object
