@@ -34,8 +34,7 @@ class CategoryCommandService(
     }
 
     fun delete(id: Long) {
-        val domain = repository.findByIdOrNull(id) ?: return
-        repository.delete(domain)
+        repository.deleteById(id)
     }
 
     private fun getById(id: Long): Category {

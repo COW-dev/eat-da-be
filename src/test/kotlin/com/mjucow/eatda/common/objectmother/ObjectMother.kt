@@ -1,4 +1,4 @@
-package com.mjucow.eatda.domain.store.entity.objectmother
+package com.mjucow.eatda.common.objectmother
 
 abstract class ObjectMother<T> {
     fun create(autoFill: Boolean = false, apply: (T) -> Unit = {}): T {

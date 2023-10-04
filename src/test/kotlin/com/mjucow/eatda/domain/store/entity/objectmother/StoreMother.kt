@@ -1,5 +1,6 @@
 package com.mjucow.eatda.domain.store.entity.objectmother
 
+import com.mjucow.eatda.common.objectmother.EntityMother
 import com.mjucow.eatda.common.vo.PhoneNumber
 import com.mjucow.eatda.common.vo.Point
 import com.mjucow.eatda.domain.store.entity.Store
