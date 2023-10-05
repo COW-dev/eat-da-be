@@ -12,8 +12,8 @@ data class StoreDetailDto(
     @JsonUnwrapped val phoneNumber: PhoneNumber? = null,
     val imageAddress: String? = null,
     val location: Point? = null,
-    val categories: Categories? = null,
-    val storeHours: StoreHoursList? = null,
+    @JsonUnwrapped val categories: Categories? = null,
+    @JsonUnwrapped val storeHours: StoreHoursList? = null,
 ) {
     companion object {
         fun from(entity: Store) = StoreDetailDto(
