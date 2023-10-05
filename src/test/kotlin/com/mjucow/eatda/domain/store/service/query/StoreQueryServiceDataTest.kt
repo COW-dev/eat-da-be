@@ -12,6 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 import org.springframework.data.domain.Pageable
+import java.util.stream.IntStream
 
 @Import(value = [StoreQueryService::class])
 class StoreQueryServiceDataTest : AbstractDataTest() {
@@ -53,17 +54,16 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
     fun findAllByCursorWithNullId() {
         // given
         val pageSize = Store.MAX_NAME_LENGTH
-        repeat(Store.MAX_NAME_LENGTH) {
-            repository.save(Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS))
-        }
+        val latestId = IntStream.range(0, pageSize * 2).mapToLong {
+            repository.save(Store(name = "validName$it", address = StoreMother.ADDRESS)).id
+        }.max().asLong
         val page = Pageable.ofSize(pageSize)
 
         // when
         val result = storeQueryService.findAllByCursor(page = page)
 
         // then
-        assertThat(result.content.size).isEqualTo(pageSize)
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result.content[0].id).isEqualTo(latestId)
     }
 
     @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기만큼만 조회된다")
