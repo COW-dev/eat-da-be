@@ -1,12 +1,16 @@
 
 import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jooq.meta.jaxb.Logging
+import java.io.FileInputStream
+import java.util.*
 
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
     id("com.epages.restdocs-api-spec")
+    id("nu.studer.jooq")
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
@@ -22,6 +26,10 @@ val restdocsApiVersion = "${property("restdocsApiVersion")}"
 val springMockkVersion = "${property("springMockkVersion")}"
 val autoParamsVersion = "${property("autoParamsVersion")}"
 val jacocoVersion = "${property("jacocoVersion")}"
+val jooqVersion = "${property("jooqVersion")}"
+val resourceProperties = Properties().apply {
+    load(FileInputStream(File("${rootProject.rootDir}/src/main/resources/application.yml")))
+}
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -50,6 +58,7 @@ dependencies {
     // database
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.liquibase:liquibase-core")
+    jooqGenerator("org.postgresql:postgresql")
 
     // test
     testImplementation("org.testcontainers:postgresql")
@@ -70,6 +79,40 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
         jvmTarget = javaVersion
+    }
+}
+
+jooq {
+    version.set(dependencyManagement.importedProperties["jooq.version"])
+
+    configurations {
+        create("main") {
+            jooqConfiguration.apply {
+                logging = Logging.WARN
+                jdbc.apply {
+                    url = resourceProperties["url"] as String
+                    user = resourceProperties["username"] as String
+                    password = resourceProperties["password"] as String
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    target.apply {
+                        packageName = "${group}.${rootProject.name}"
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
     }
 }
 

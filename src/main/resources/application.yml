@@ -26,17 +26,19 @@ spring:
         show_sql: true
 
   datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:15432/eatda
+    username: local
+    password: local
     hikari:
-      driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://localhost:15432/eatda
-      username: local
-      password: local
       maximum-pool-size: 5
       connection-timeout: 1100
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
 
+  jooq:
+    sql-dialect: postgres
 ---
 
 spring:
