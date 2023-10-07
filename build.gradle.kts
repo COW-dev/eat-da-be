@@ -99,6 +99,7 @@ jooq {
                     database.apply {
                         name = "org.jooq.meta.postgres.PostgresDatabase"
                         inputSchema = "public"
+                        excludes = "databasechangelog|databasechangeloglock"
                     }
                     generate.apply {
                         isDeprecated = false
@@ -107,7 +108,7 @@ jooq {
                         isFluentSetters = true
                     }
                     target.apply {
-                        packageName = "${group}.${rootProject.name}"
+                        packageName = "com.mjucow.eatda"
                     }
                     strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
                 }
@@ -203,7 +204,8 @@ tasks.jacocoTestCoverageVerification {
             excludes = listOf(
                 "com.mjucow.eatda.EatdaApplicationKt",
                 "*.common.*",
-                "*.dto.*"
+                "*.dto.*",
+                "*.tables.*",
             )
         }
     }

@@ -79,14 +79,15 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
             )
         }.toList()
 
-        every { storeQueryService.findAllByCursor(any(), any()) } returns SliceImpl(storeDtos)
+        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns SliceImpl(storeDtos)
 
         // when & then
         mockMvc.perform(
             RestDocumentationRequestBuilders.get(
-                "$BASE_URI?id={storeId}&size={pageSize}",
+                "$BASE_URI?storeId={storeId}&size={size}&categoryId={categoryId}",
                 storeDtos.size + 1,
-                pageSize
+                pageSize,
+                null
             )
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
@@ -97,10 +98,11 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                     identifier = "store-findAllByCursor",
                     resourceDetails = ResourceSnippetParametersBuilder()
                         .tag("Store")
-                        .description("커서 기반 가게 조회")
+                        .description("커서 기반 카테고리 가게 조회")
                         .queryParameters(
-                            ResourceDocumentation.parameterWithName("storeId").description("조회한 마지막 가게 식별자"),
-                            ResourceDocumentation.parameterWithName("pageSize").description("조회할 페이지 사이즈")
+                            ResourceDocumentation.parameterWithName("storeId").description("조회한 마지막 가게 식별자").optional(),
+                            ResourceDocumentation.parameterWithName("categoryId").description("조회하는 가게의 카테고리의 식별자").optional(),
+                            ResourceDocumentation.parameterWithName("size").description("조회할 페이지 사이즈").optional()
                         )
                         .responseFields(
                             PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),

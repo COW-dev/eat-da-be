@@ -1,10 +1,17 @@
 package com.mjucow.eatda.common.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.persistence.Entity
+import org.jooq.Record
+import org.jooq.RecordMapper
+import org.jooq.RecordMapperProvider
+import org.jooq.RecordType
 import org.jooq.SQLDialect
 import org.jooq.impl.DataSourceConnectionProvider
 import org.jooq.impl.DefaultConfiguration
 import org.jooq.impl.DefaultDSLContext
 import org.jooq.impl.DefaultExecuteListenerProvider
+import org.jooq.impl.DefaultRecordMapper
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 import org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration
 import org.springframework.context.annotation.Bean
@@ -18,6 +25,7 @@ import javax.sql.DataSource
 @ImportAutoConfiguration(JooqAutoConfiguration::class)
 class JooqContextConfiguration(
     private val dataSource: DataSource,
+    private val objectMapper: ObjectMapper,
 ) {
 
     @Bean
@@ -32,17 +40,34 @@ class JooqContextConfiguration(
         val settings = jooqConfiguration.settings()
             .withExecuteWithOptimisticLocking(true)
             .withExecuteLogging(true)
+            .withMapConstructorParameterNamesInKotlin(true)
 
         jooqConfiguration.set(settings)
         jooqConfiguration.set(connectionProvider())
         jooqConfiguration.set(DefaultExecuteListenerProvider(jooqToSpringExceptionTransformer()))
         jooqConfiguration.setSQLDialect(SQLDialect.POSTGRES)
+        jooqConfiguration.setRecordMapperProvider(object : RecordMapperProvider {
+            override fun <R : Record?, E : Any?> provide(
+                recordType: RecordType<R>?,
+                type: Class<out E>?,
+            ): RecordMapper<R, E> {
+                if (type?.annotations?.any { it.annotationClass == Entity::class } == true) {
+                    return getEntityRecordMapper(type)
+                }
+
+                return DefaultRecordMapper(recordType, type)
+            }
+        })
 
         return jooqConfiguration
     }
 
     @Bean
     fun jooqToSpringExceptionTransformer() = JooqToSpringExceptionTransformer()
+
+    private fun <R : Record?, E : Any?> getEntityRecordMapper(type: Class<out E>): RecordMapper<R, E> {
+        return RecordMapper<R, E> { objectMapper.convertValue(it!!.intoMap(), type) }
+    }
 
 }
 

@@ -38,11 +38,12 @@ class StoreController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAllByCursor(
-        @RequestParam("id", required = false) id: Long,
+    fun findAllByCategoryIdAndCursor(
+        @RequestParam("storeId", required = false) id: Long?,
+        @RequestParam("categoryId", required = false) categoryId: Long?,
         @PageableDefault(size = 20) page: Pageable,
     ): ApiResponse<Slice<StoreDto>> {
-        val storeDtos = storeQueryService.findAllByCursor(id, page)
+        val storeDtos = storeQueryService.findAllByCategoryAndCursor(id, categoryId, page)
         return ApiResponse.success(storeDtos)
     }
 

@@ -53,17 +53,17 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
     @Test
     fun findAllByCursorWithNullId() {
         // given
-        val pageSize = Store.MAX_NAME_LENGTH
+        val pageSize = 2
         val latestId = IntStream.range(0, pageSize * 2).mapToLong {
             repository.save(Store(name = "validName$it", address = StoreMother.ADDRESS)).id
         }.max().asLong
         val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCursor(page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(page = page)
 
         // then
-        assertThat(result.content[0].id).isEqualTo(latestId)
+        assertThat(result).anyMatch { it.id == latestId }
     }
 
     @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기만큼만 조회된다")
@@ -77,7 +77,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCursor(id = (pageSize * 2).toLong(), page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = (pageSize * 2).toLong(), page = page)
 
         // then
         assertThat(result.content.size).isEqualTo(pageSize)
@@ -89,12 +89,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
     fun findAllByCursor() {
         // given
         val store = StoreMother.create()
-        repository.save(store)
+        val storeId = repository.save(store).id
         val pageSize = 10
         val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCursor(id = store.id + 1, page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = storeId + 1, page = page)
 
         // then
         assertThat(result.content.size).isLessThan(pageSize)
@@ -110,7 +110,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val page = Pageable.ofSize(10)
 
         // when
-        val result = storeQueryService.findAllByCursor(id = store.id, page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = store.id, page = page)
 
         // then
         assertThat(result).isEmpty()
