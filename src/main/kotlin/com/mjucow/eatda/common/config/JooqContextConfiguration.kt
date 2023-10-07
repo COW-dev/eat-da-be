@@ -65,6 +65,10 @@ class JooqContextConfiguration(
     @Bean
     fun jooqToSpringExceptionTransformer() = JooqToSpringExceptionTransformer()
 
+    /**
+     * JPA Entity의 Secondary Constrcutor로 DefaultRecordMapper가 Mapping되지 않아
+     * CustomerRecordMapper로 mapping 해야함. 클래스별로 따로 만들지 않고 map으로 변환 후 objectMapper로 mapping 처리
+     */
     private fun <R : Record?, E : Any?> getEntityRecordMapper(type: Class<out E>): RecordMapper<R, E> {
         return RecordMapper<R, E> { objectMapper.convertValue(it!!.intoMap(), type) }
     }
