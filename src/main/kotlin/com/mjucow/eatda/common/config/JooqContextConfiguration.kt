@@ -68,6 +68,4 @@ class JooqContextConfiguration(
     private fun <R : Record?, E : Any?> getEntityRecordMapper(type: Class<out E>): RecordMapper<R, E> {
         return RecordMapper<R, E> { objectMapper.convertValue(it!!.intoMap(), type) }
     }
-
 }
-

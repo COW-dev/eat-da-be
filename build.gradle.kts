@@ -3,7 +3,7 @@ import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("org.springframework.boot")
@@ -205,7 +205,7 @@ tasks.jacocoTestCoverageVerification {
                 "com.mjucow.eatda.EatdaApplicationKt",
                 "*.common.*",
                 "*.dto.*",
-                "*.tables.*",
+                "*.tables.*"
             )
         }
     }

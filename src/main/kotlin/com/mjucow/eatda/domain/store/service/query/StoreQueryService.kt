@@ -19,7 +19,7 @@ class StoreQueryService(
         return if (categoryId == null) {
             repository.findAllByIdLessThanOrderByIdDesc(page, id).map(StoreDto::from)
         } else {
-            //FIXME(cache): store 캐시 처리 이후 store 조회 개선하기
+            // FIXME(cache): store 캐시 처리 이후 store 조회 개선하기
             val storeIds = repository.findIdsByCategoryIdOrderByIdDesc(categoryId, page, id)
             val stores = repository.findAllByIdInOrderByIdDesc(storeIds.content).map(StoreDto::from)
             SliceImpl(stores, page, storeIds.hasNext())

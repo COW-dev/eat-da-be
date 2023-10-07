@@ -17,8 +17,10 @@ import java.util.stream.IntStream
 class StoreCustomRepositoryImplTest : AbstractDataTest() {
     @Autowired
     lateinit var storeCustomRepositoryImpl: StoreCustomRepositoryImpl
+
     @Autowired
     lateinit var categoryRepository: CategoryRepository
+
     @Autowired
     lateinit var storeRepository: StoreRepository
 
