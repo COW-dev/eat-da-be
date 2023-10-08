@@ -4,7 +4,6 @@ import com.mjucow.eatda.domain.notice.entity.Notice
 import com.mjucow.eatda.domain.notice.service.command.dto.CreateNoticeCommand
 import com.mjucow.eatda.domain.notice.service.command.dto.UpdateNoticeCommand
 import com.mjucow.eatda.persistence.notice.NoticeRepository
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,7 +19,7 @@ class NoticeCommandService(
 
     fun update(noticeId: Long, command: UpdateNoticeCommand) {
         val notice = repository.findByIdOrNull(noticeId)
-            ?: throw EntityNotFoundException("공지사항이 존재하지 않습니다.")
+            ?: throw IllegalArgumentException()
         val (newTitle, newContent) = command
         notice.let {
             it.title = newTitle

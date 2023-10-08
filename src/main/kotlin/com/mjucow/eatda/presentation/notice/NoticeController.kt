@@ -1,4 +1,4 @@
-package com.mjucow.eatda.presentation.notice.controller
+package com.mjucow.eatda.presentation.notice
 
 import com.mjucow.eatda.domain.notice.service.command.NoticeCommandService
 import com.mjucow.eatda.domain.notice.service.command.dto.CreateNoticeCommand

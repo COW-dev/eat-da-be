@@ -6,9 +6,7 @@ import com.mjucow.eatda.persistence.notice.NoticeRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
-@Transactional
 @Service
 class NoticeQueryService(
     private val repository: NoticeRepository,
