@@ -53,9 +53,9 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             .andExpect(jsonPath("body[0].name", `is`(categories[0].name)))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
-                    identifier = "Category",
+                    identifier = "category-findAll",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("category")
+                        .tag("Category")
                         .description("카테고리 전체조회")
                         .responseFields(
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
@@ -75,7 +75,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
 
         // when & then
         mockMvc.perform(
-            get("$BASE_URI/{cateogory-id}", categoryDto.id)
+            get("$BASE_URI/{categoryId}", categoryDto.id)
         )
             .andExpect(status().isOk)
             .andExpect(jsonPath("body").exists())
@@ -83,12 +83,12 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             .andExpect(jsonPath("body.name", `is`(categoryDto.name)))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
-                    identifier = "Category",
+                    identifier = "category-findById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("category")
+                        .tag("Category")
                         .description("카테고리 단건 조회")
                         .pathParameters(
-                            parameterWithName("category-id").description("카테고리 식별자")
+                            parameterWithName("categoryId").description("카테고리 식별자")
                         )
                         .responseFields(
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
@@ -119,9 +119,9 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             .andExpect(jsonPath("body", `is`(id)))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
-                    identifier = "Category",
+                    identifier = "category-create",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("category")
+                        .tag("Category")
                         .description("카테고리 생성")
                         .requestFields(
                             fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
@@ -145,9 +145,9 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             .andExpect(status().isNoContent)
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
-                    identifier = "Category",
+                    identifier = "category-delete",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("category")
+                        .tag("Category")
                         .description("카테고리 삭제")
                         .pathParameters(
                             parameterWithName("category-id").description("카테고리 식별자")
@@ -173,9 +173,9 @@ class CategoryMvcTest : AbstractMockMvcTest() {
             .andExpect(status().isOk)
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
-                    identifier = "Category",
+                    identifier = "category-updateName",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("category")
+                        .tag("Category")
                         .description("카테고리 이름 수정")
                         .pathParameters(
                             parameterWithName("category-id").description("카테고리 식별자")

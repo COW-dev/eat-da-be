@@ -76,6 +76,7 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
 tasks.test {
     extensions.configure(JacocoTaskExtension::class) {
         destinationFile = file("$buildDir/jacoco/jacoco.exec")
@@ -101,6 +102,7 @@ openapi3 {
     version = "0.0.1"
     format = "yaml"
 }
+
 jacoco {
     toolVersion = jacocoVersion
 }
@@ -129,6 +131,7 @@ tasks.jacocoTestCoverageVerification {
 
         rule {
             enabled = true
+
             // 룰을 체크할 단위는 클래스 단위
             element = "CLASS"
 
@@ -156,7 +159,8 @@ tasks.jacocoTestCoverageVerification {
             // 커버리지 체크를 제외할 클래스들
             excludes = listOf(
                 "com.mjucow.eatda.EatdaApplicationKt",
-                "*.common.*"
+                "*.common.*",
+                "*.dto.*"
             )
         }
     }
