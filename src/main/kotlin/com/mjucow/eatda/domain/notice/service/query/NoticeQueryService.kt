@@ -6,14 +6,16 @@ import com.mjucow.eatda.persistence.notice.NoticeRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
 
 @Service
-@Transactional(readonly=true)
+@Transactional(readOnly = true)
 class NoticeQueryService(
     private val repository: NoticeRepository,
 ) {
     fun findAll(): Notices {
-        return Notices(repository.findAllByOrderByCreatedAtDesc().map(NoticeDto::from))
+        return Notices(repository.findAllByOrderByIdDesc().map(NoticeDto::from))
     }
 
     fun findById(noticeId: Long): NoticeDto {
