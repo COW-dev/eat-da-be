@@ -8,6 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
+@Transactional(readonly=true)
 class NoticeQueryService(
     private val repository: NoticeRepository,
 ) {
