@@ -18,13 +18,11 @@ class NoticeCommandService(
     }
 
     fun update(noticeId: Long, command: UpdateNoticeCommand) {
-        val notice = repository.findByIdOrNull(noticeId)
-            ?: throw IllegalArgumentException()
         val (newTitle, newContent) = command
-        notice.let {
-            it.title = newTitle
-            it.content = newContent
-        }
+        val notice = repository.findByIdOrNull(noticeId)?.apply {
+            title = newTitle
+            content = newContent
+        } ?: throw IllegalArgumentException()
 
         repository.save(notice)
     }
