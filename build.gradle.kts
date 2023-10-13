@@ -3,7 +3,6 @@ import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
-import java.util.Properties
 
 plugins {
     id("org.springframework.boot")
@@ -204,7 +203,7 @@ tasks.jacocoTestCoverageVerification {
                 "com.mjucow.eatda.EatdaApplicationKt",
                 "*.common.*",
                 "*.dto.*",
-                "com.mjucow.eatda.jooq.*",
+                "com.mjucow.eatda.jooq.*"
             )
         }
     }
