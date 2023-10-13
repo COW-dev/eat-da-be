@@ -1,8 +1,8 @@
 package com.mjucow.eatda.persistence.store
 
-import com.mjucow.eatda.Tables.STORE
-import com.mjucow.eatda.Tables.STORE_CATEGORY
 import com.mjucow.eatda.domain.store.entity.Store
+import com.mjucow.eatda.jooq.Tables.STORE
+import com.mjucow.eatda.jooq.Tables.STORE_CATEGORY
 import org.jooq.DSLContext
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
