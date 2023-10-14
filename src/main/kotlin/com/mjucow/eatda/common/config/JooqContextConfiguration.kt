@@ -7,6 +7,7 @@ import org.jooq.RecordMapper
 import org.jooq.RecordMapperProvider
 import org.jooq.RecordType
 import org.jooq.SQLDialect
+import org.jooq.conf.RenderNameCase
 import org.jooq.impl.DataSourceConnectionProvider
 import org.jooq.impl.DefaultConfiguration
 import org.jooq.impl.DefaultDSLContext
@@ -41,6 +42,7 @@ class JooqContextConfiguration(
             .withExecuteWithOptimisticLocking(true)
             .withExecuteLogging(true)
             .withMapConstructorParameterNamesInKotlin(true)
+            .withRenderNameCase(RenderNameCase.LOWER)
 
         jooqConfiguration.set(settings)
         jooqConfiguration.set(connectionProvider())
