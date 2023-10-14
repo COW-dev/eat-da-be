@@ -7,17 +7,18 @@ object MenuMother : EntityMother<Menu>() {
     const val NAME = "menu"
     const val PRICE = 1000
     const val IMAGE_ADDRESS = "/eatda/public/menu/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.jpg"
+    var store = StoreMother.create()
 
     override fun createFillInstance() = Menu(
         name = NAME,
         price = PRICE,
         imageAddress = IMAGE_ADDRESS,
-        store = StoreMother.create()
+        store = store
     )
 
     override fun createDefaultInstance() = Menu(
         name = NAME,
         price = PRICE,
-        store = StoreMother.create()
+        store = store
     )
 }
