@@ -1,9 +1,13 @@
 package com.mjucow.eatda.presentation.store
 
+import com.mjucow.eatda.domain.store.service.command.MenuCommandService
 import com.mjucow.eatda.domain.store.service.command.StoreCommandService
+import com.mjucow.eatda.domain.store.service.command.dto.MenuCreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.StoreCreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.StoreUpdateCommand
+import com.mjucow.eatda.domain.store.service.query.MenuQueryService
 import com.mjucow.eatda.domain.store.service.query.StoreQueryService
+import com.mjucow.eatda.domain.store.service.query.dto.MenuList
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDetailDto
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.presentation.common.ApiResponse
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController
 class StoreController(
     val storeQueryService: StoreQueryService,
     val storeCommandService: StoreCommandService,
+    val menuQueryService: MenuQueryService,
+    val menuCommandService: MenuCommandService,
 ) {
 
     @PostMapping
@@ -64,5 +70,20 @@ class StoreController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteById(@PathVariable("storeId") id: Long) {
         storeCommandService.delete(id)
+    }
+
+    @GetMapping("/{storeId}/menu")
+    @ResponseStatus(HttpStatus.OK)
+    fun findAllMenu(@PathVariable("storeId") id: Long): ApiResponse<MenuList> {
+        return ApiResponse.success(menuQueryService.findAll(id))
+    }
+
+    @PostMapping("/{storeId}/menu")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createMenu(
+        @PathVariable("storeId") id: Long,
+        @RequestBody menuCreateCommand: MenuCreateCommand,
+    ): ApiResponse<Long> {
+        return ApiResponse.success(menuCommandService.create(id, menuCreateCommand))
     }
 }

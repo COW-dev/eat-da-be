@@ -37,14 +37,14 @@ class MenuCommandServiceTest : AbstractDataTest() {
     @Test
     fun test1() {
         // given
+        val storeId = Long.MAX_VALUE
         val command = MenuCreateCommand(
-            storeId = Long.MAX_VALUE,
             name = MenuMother.NAME,
             price = MenuMother.PRICE
         )
 
         // when
-        val throwable = catchThrowable { commandService.create(command) }
+        val throwable = catchThrowable { commandService.create(storeId, command) }
 
         // then
         assertThat(throwable).isNotNull()
@@ -56,13 +56,12 @@ class MenuCommandServiceTest : AbstractDataTest() {
         // given
         val store = storeRepository.save(StoreMother.create())
         val command = MenuCreateCommand(
-            storeId = store.id,
             name = MenuMother.NAME,
             price = MenuMother.PRICE
         )
 
         // when
-        val menuId = commandService.create(command)
+        val menuId = commandService.create(store.id, command)
 
         // then
         assertThat(repository.getReferenceById(menuId)).isNotNull()
@@ -72,14 +71,14 @@ class MenuCommandServiceTest : AbstractDataTest() {
     @Test
     fun test3() {
         // given
+        val id = Long.MAX_VALUE
         val command = MenuUpdateCommand(
-            id = 1L,
             name = MenuMother.NAME,
             price = MenuMother.PRICE
         )
 
         // when
-        val throwable = catchThrowable { commandService.update(command) }
+        val throwable = catchThrowable { commandService.update(id, command) }
 
         // then
         assertThat(throwable).isNotNull()
@@ -93,13 +92,12 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val updatedName = "updateName"
         val updatedPrice = MenuMother.PRICE * 2
         val command = MenuUpdateCommand(
-            id = menu.id,
             name = updatedName,
             price = updatedPrice
         )
 
         // when
-        commandService.update(command)
+        commandService.update(menu.id, command)
 
         // then
         val updatedMenu = repository.getReferenceById(menu.id)
