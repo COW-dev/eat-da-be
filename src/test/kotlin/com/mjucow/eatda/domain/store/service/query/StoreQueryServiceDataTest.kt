@@ -157,7 +157,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
-            page = page,
+            page = page
         )
 
         // then
@@ -180,7 +180,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
             id = storeId + 1,
-            page = page,
+            page = page
         )
 
         // then
@@ -202,7 +202,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
             id = store.id,
-            page = page,
+            page = page
         )
 
         // then
