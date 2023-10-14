@@ -21,7 +21,7 @@ class MenuCommandService(
             name = command.name,
             price = command.price,
             imageAddress = command.imageAddress,
-            store = store,
+            store = store
         )
         return repository.save(menu).id
     }

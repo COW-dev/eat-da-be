@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional
 class MenuQueryService(
     private val repository: MenuRepository,
 ) {
-    fun findById(id: Long) : MenuDto {
+    fun findById(id: Long): MenuDto {
         return MenuDto.from(repository.getReferenceById(id))
     }
 
-    fun findAll(storeId: Long) : MenuList {
+    fun findAll(storeId: Long): MenuList {
         return MenuList(repository.findAllByStoreId(storeId).map(MenuDto::from))
     }
 }

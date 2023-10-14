@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
 import org.springframework.data.repository.findByIdOrNull
 
-private const val i = MenuMother.PRICE * 2
-
 @Import(value = [MenuCommandService::class])
 class MenuCommandServiceTest : AbstractDataTest() {
     @Autowired
@@ -42,7 +40,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val command = MenuCreateCommand(
             storeId = Long.MAX_VALUE,
             name = MenuMother.NAME,
-            price = MenuMother.PRICE,
+            price = MenuMother.PRICE
         )
 
         // when
@@ -60,7 +58,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val command = MenuCreateCommand(
             storeId = store.id,
             name = MenuMother.NAME,
-            price = MenuMother.PRICE,
+            price = MenuMother.PRICE
         )
 
         // when
@@ -77,7 +75,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val command = MenuUpdateCommand(
             id = 1L,
             name = MenuMother.NAME,
-            price = MenuMother.PRICE,
+            price = MenuMother.PRICE
         )
 
         // when
@@ -97,7 +95,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val command = MenuUpdateCommand(
             id = menu.id,
             name = updatedName,
-            price = updatedPrice,
+            price = updatedPrice
         )
 
         // when
@@ -107,7 +105,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         val updatedMenu = repository.getReferenceById(menu.id)
         assertAll(
             { assertThat(updatedMenu.name).isEqualTo(updatedName) },
-            { assertThat(updatedMenu.price).isEqualTo(updatedPrice) },
+            { assertThat(updatedMenu.price).isEqualTo(updatedPrice) }
         )
     }
 
@@ -115,7 +113,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
     @Test
     fun test5() {
         // given
-        val menuId = Long.MAX_VALUE;
+        val menuId = Long.MAX_VALUE
 
         // when
         commandService.delete(menuId)
@@ -137,4 +135,3 @@ class MenuCommandServiceTest : AbstractDataTest() {
         assertThat(repository.findByIdOrNull(menu.id)).isNull()
     }
 }
-

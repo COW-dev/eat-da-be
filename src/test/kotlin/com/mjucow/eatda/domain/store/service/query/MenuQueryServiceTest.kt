@@ -38,7 +38,6 @@ class MenuQueryServiceTest : AbstractDataTest() {
     fun test1() {
         // given
 
-
         // when
         val throwable = catchThrowable { queryService.findById(Long.MAX_VALUE) }
 
