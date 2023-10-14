@@ -11,5 +11,10 @@
     <appender-ref ref="STDOUT"/>
   </root>
 
+  <!-- Other jOOQ related debug log output -->
+  <Logger name="org.jooq" level="debug">
+    <AppenderRef ref="Console"/>
+  </Logger>
+
   <logger name="org.testcontainers" level="INFO"/>
 </configuration>

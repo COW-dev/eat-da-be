@@ -1,12 +1,15 @@
 
 import com.epages.restdocs.apispec.gradle.OpenApi3Task
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jooq.meta.jaxb.Logging
 
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
     id("com.epages.restdocs-api-spec")
+    id("nu.studer.jooq")
     kotlin("jvm")
     kotlin("plugin.spring")
     kotlin("plugin.jpa")
@@ -22,6 +25,7 @@ val restdocsApiVersion = "${property("restdocsApiVersion")}"
 val springMockkVersion = "${property("springMockkVersion")}"
 val autoParamsVersion = "${property("autoParamsVersion")}"
 val jacocoVersion = "${property("jacocoVersion")}"
+val jooqVersion = "${property("jooqVersion")}"
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
@@ -50,6 +54,8 @@ dependencies {
     // database
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.liquibase:liquibase-core")
+    jooqGenerator("org.jooq:jooq-meta-extensions-liquibase")
+    jooqGenerator("org.liquibase:liquibase-core")
 
     // test
     testImplementation("org.testcontainers:postgresql")
@@ -70,6 +76,42 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
         jvmTarget = javaVersion
+    }
+}
+
+jooq {
+    version.set(dependencyManagement.importedProperties["jooq.version"])
+
+    configurations {
+        create("main") {
+            jooqConfiguration.apply {
+                logging = Logging.WARN
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.extensions.liquibase.LiquibaseDatabase"
+                        properties.add(
+                            org.jooq.meta.jaxb.Property().withKey("rootPath")
+                                .withValue("${project.projectDir}/src/main/resources")
+                        )
+                        properties.add(
+                            org.jooq.meta.jaxb.Property().withKey("scripts")
+                                .withValue("/db/changelog-master.yml")
+                        )
+                    }
+                    generate.apply {
+                        isDeprecated = false
+                        isRecords = true
+                        isImmutablePojos = true
+                        isFluentSetters = true
+                    }
+                    target.apply {
+                        packageName = "com.mjucow.eatda.jooq"
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
     }
 }
 
@@ -160,7 +202,8 @@ tasks.jacocoTestCoverageVerification {
             excludes = listOf(
                 "com.mjucow.eatda.EatdaApplicationKt",
                 "*.common.*",
-                "*.dto.*"
+                "*.dto.*",
+                "com.mjucow.eatda.jooq.*"
             )
         }
     }

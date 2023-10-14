@@ -5,6 +5,7 @@ import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.persistence.store.StoreRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
+import org.springframework.data.domain.SliceImpl
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional
 class StoreQueryService(
     val repository: StoreRepository,
 ) {
-    fun findAllByCursor(id: Long? = null, page: Pageable): Slice<StoreDto> {
-        return if (id == null) {
-            repository.findAllByOrderByIdDesc(page).map(StoreDto::from)
+    fun findAllByCategoryAndCursor(id: Long? = null, categoryId: Long? = null, page: Pageable): Slice<StoreDto> {
+        return if (categoryId == null) {
+            repository.findAllByIdLessThanOrderByIdDesc(page, id).map(StoreDto::from)
         } else {
-            repository.findByIdLessThanOrderByIdDesc(id, page).map(StoreDto::from)
+            // FIXME(cache): store 캐시 처리 이후 store 조회 개선하기
+            val storeIds = repository.findIdsByCategoryIdOrderByIdDesc(categoryId, page, id)
+            val stores = repository.findAllByIdInOrderByIdDesc(storeIds.content).map(StoreDto::from)
+            SliceImpl(stores, page, storeIds.hasNext())
         }
     }
 
