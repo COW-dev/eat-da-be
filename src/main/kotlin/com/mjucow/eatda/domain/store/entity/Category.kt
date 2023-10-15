@@ -23,6 +23,7 @@ class Category() : BaseEntity() {
     private fun validateName(name: String) {
         require(name.isNotBlank() && name.trim().length <= MAX_NAME_LENGTH)
     }
+
     companion object {
         const val MAX_NAME_LENGTH = 31
     }
