@@ -23,10 +23,10 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-findAll:
-                  value: "{\"message\":null,\"body\":[{\"id\":5486325113359742151,\"\
-                    name\":\"6859f4e2-14e4-461d-b3c0-c967546d1de3\"},{\"id\":1901568389749687503,\"\
-                    name\":\"93893828-666d-4770-9cf8-84308863c1be\"},{\"id\":7411770755663057165,\"\
-                    name\":\"8a1854b8-6fd5-4aa8-b804-4d3c17170f11\"}]}"
+                  value: "{\"message\":null,\"body\":[{\"id\":6003997120884358728,\"\
+                    name\":\"3d84e31c-7aeb-4f49-bd41-4bec2ac5e2c0\"},{\"id\":1319124374454579397,\"\
+                    name\":\"bad46b25-51b5-40e6-a3e5-bb5b2626c1f8\"},{\"id\":2540042240158473045,\"\
+                    name\":\"f28319bb-72dc-41b1-b3d5-d5555142559e\"}]}"
     post:
       tags:
       - category
@@ -50,7 +50,7 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-create:
-                  value: "{\"message\":null,\"body\":2838394242025513366}"
+                  value: "{\"message\":null,\"body\":6618719034599165780}"
   /api/v1/notices:
     get:
       tags:
@@ -68,7 +68,7 @@ paths:
               examples:
                 notice-findAll:
                   value: "{\"message\":null,\"body\":[{\"id\":1,\"title\":\"공지사항 제\
-                    목\",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T06:26:22.274525Z\"\
+                    목\",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T07:11:23.464310Z\"\
                     }]}"
     post:
       tags:
@@ -93,7 +93,7 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 notice-create:
-                  value: "{\"message\":null,\"body\":2781530125328492655}"
+                  value: "{\"message\":null,\"body\":8015117190019776893}"
   /api/v1/stores:
     get:
       tags:
@@ -146,8 +146,8 @@ paths:
                     location\":null},{\"id\":20,\"displayedName\":\"띵지대\",\"address\"\
                     :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null}],\"\
                     pageable\":\"INSTANCE\",\"first\":true,\"last\":true,\"size\"\
-                    :20,\"number\":0,\"sort\":{\"empty\":true,\"sorted\":false,\"\
-                    unsorted\":true},\"numberOfElements\":20,\"empty\":false}}"
+                    :20,\"number\":0,\"sort\":{\"empty\":true,\"unsorted\":true,\"\
+                    sorted\":false},\"numberOfElements\":20,\"empty\":false}}"
     post:
       tags:
       - store
@@ -238,8 +238,73 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-findById:
-                  value: "{\"message\":null,\"body\":{\"id\":660660719207477631,\"\
-                    name\":\"c0374476-2565-4c63-a814-8e8ac0c778db\"}}"
+                  value: "{\"message\":null,\"body\":{\"id\":4853986537579592968,\"\
+                    name\":\"a81b3a6b-8fb4-4af4-9388-493943516812\"}}"
+  /api/v1/menu/{menuId}:
+    get:
+      tags:
+      - menu
+      summary: 메뉴 조회
+      description: 메뉴 조회
+      operationId: menu-findById
+      parameters:
+      - name: menuId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                menu-findById:
+                  value: "{\"message\":null,\"body\":{\"id\":1,\"name\":\"menu\",\"\
+                    price\":1000,\"imageAddress\":null}}"
+    delete:
+      tags:
+      - menu
+      summary: 메뉴 삭제
+      description: 메뉴 삭제
+      operationId: menu-deleteById
+      parameters:
+      - name: menuId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+    patch:
+      tags:
+      - menu
+      summary: 메뉴 수정
+      description: 메뉴 수정
+      operationId: menu-update
+      parameters:
+      - name: menuId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              menu-update:
+                value: "{\"name\":\"menu\",\"price\":1000,\"imageAddress\":null}"
+      responses:
+        "200":
+          description: "200"
   /api/v1/notices/{noticeId}:
     get:
       tags:
@@ -264,7 +329,7 @@ paths:
               examples:
                 notice-findById:
                   value: "{\"message\":null,\"body\":{\"id\":1,\"title\":\"공지사항 제목\
-                    \",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T06:26:22.647703Z\"\
+                    \",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T07:11:23.936628Z\"\
                     }}"
     delete:
       tags:
@@ -375,6 +440,62 @@ paths:
       responses:
         "204":
           description: "204"
+  /api/v1/stores/{storeId}/menu:
+    get:
+      tags:
+      - Store
+      summary: 가게의 메뉴 전체 조회
+      description: 가게의 메뉴 전체 조회
+      operationId: store-findAllMenu
+      parameters:
+      - name: storeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                store-findAllMenu:
+                  value: "{\"message\":null,\"body\":[]}"
+    post:
+      tags:
+      - Store
+      summary: 가게의 메뉴 생성
+      description: 가게의 메뉴 생성
+      operationId: menu-create
+      parameters:
+      - name: storeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              menu-create:
+                value: "{\"name\":\"menu\",\"price\":1000,\"imageAddress\":\"/eatda/public/menu/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.jpg\"\
+                  }"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                menu-create:
+                  value: "{\"message\":null,\"body\":1}"
 components:
   schemas:
     api-v1-categories-category-id486549215:
