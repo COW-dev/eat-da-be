@@ -23,7 +23,7 @@ class NoticeCommandService(
             title = newTitle
             content = newContent
         } ?: throw IllegalArgumentException()
-        
+
         repository.save(updatedNotice)
     }
 

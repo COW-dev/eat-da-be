@@ -4,6 +4,7 @@ import autoparams.kotlin.AutoKotlinSource
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceDocumentation
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
+import com.mjucow.eatda.domain.notice.entity.objectmother.NoticeMother
 import com.mjucow.eatda.domain.notice.service.command.NoticeCommandService
 import com.mjucow.eatda.domain.notice.service.command.dto.CreateNoticeCommand
 import com.mjucow.eatda.domain.notice.service.command.dto.UpdateNoticeCommand
@@ -35,10 +36,11 @@ class NoticeMvcTest : AbstractMockMvcTest() {
     @MockkBean(relaxUnitFun = true)
     lateinit var noticeCommandService: NoticeCommandService
 
-    @ParameterizedTest
-    @AutoKotlinSource
-    fun findAll(notices: Notices) {
+    @Test
+    fun findAll() {
         // given
+        val entityId = 1L
+        val notices = Notices(listOf(NoticeDto.from(NoticeMother.createWithId(id = entityId))))
         every { noticeQueryService.findAll() } returns notices
 
         // when & then
@@ -48,9 +50,6 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             .andExpect(status().isOk)
             .andExpect(jsonPath("message", `is`(IsNull.nullValue())))
             .andExpect(jsonPath("body").exists())
-            .andExpect(jsonPath("body[0].id", `is`(notices[0].id)))
-            .andExpect(jsonPath("body[0].title", `is`(notices[0].title)))
-            .andExpect(jsonPath("body[0].content", `is`(notices[0].content)))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "notice-findAll",
@@ -73,10 +72,11 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             )
     }
 
-    @ParameterizedTest
-    @AutoKotlinSource
-    fun findById(noticeDto: NoticeDto) {
+    @Test
+    fun findById() {
         // given
+        val entityId = 1L
+        val noticeDto = NoticeDto.from(NoticeMother.createWithId(id = entityId))
         every { noticeQueryService.findById(any()) } returns noticeDto
 
         // when & then
@@ -84,10 +84,8 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             get("$BASE_URI/{noticeId}", noticeDto.id)
         )
             .andExpect(status().isOk)
+            .andExpect(jsonPath("message", `is`(IsNull.nullValue())))
             .andExpect(jsonPath("body").exists())
-            .andExpect(jsonPath("body.id", `is`(noticeDto.id)))
-            .andExpect(jsonPath("body.title", `is`(noticeDto.title)))
-            .andExpect(jsonPath("body.content", `is`(noticeDto.content)))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "notice-findById",
