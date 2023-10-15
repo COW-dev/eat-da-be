@@ -19,7 +19,7 @@ class NoticeQueryServiceTest : AbstractDataTest() {
     @Autowired
     lateinit var repository: NoticeRepository
 
-    @DisplayName("id에 해당하는 공지사항이 없을 경우 예외를 반환한다")
+    @DisplayName("id에 해당하는 공지사항이 없을 경우 예외를 던진다")
     @ParameterizedTest
     @AutoKotlinSource
     fun task1(noticeId: Long) {
