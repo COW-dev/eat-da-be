@@ -19,9 +19,8 @@ class NoticeQueryService(
     }
 
     fun findById(noticeId: Long): NoticeDto {
-        val notice = repository.findByIdOrNull(noticeId)
-            ?: throw EntityNotFoundException("공지사항이 존재하지 않습니다.")
-
-        return NoticeDto.from(notice)
+        return repository.findByIdOrNull(noticeId)?.let {
+            NoticeDto.from(it)
+        } ?: throw EntityNotFoundException("공지사항이 존재하지 않습니다.")
     }
 }
