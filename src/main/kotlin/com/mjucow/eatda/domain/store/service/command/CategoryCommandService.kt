@@ -5,7 +5,6 @@ import com.mjucow.eatda.domain.store.service.command.dto.CreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.UpdateNameCommand
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import jakarta.transaction.Transactional
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -21,7 +20,7 @@ class CategoryCommandService(
     }
 
     fun updateName(id: Long, command: UpdateNameCommand) {
-        val domain = getById(id)
+        val domain = repository.getReferenceById(id)
 
         val newName = command.name.trim()
         if (domain.name == newName) {
@@ -37,9 +36,6 @@ class CategoryCommandService(
         repository.deleteById(id)
     }
 
-    private fun getById(id: Long): Category {
-        return repository.findByIdOrNull(id) ?: throw IllegalArgumentException()
-    }
     private fun checkDuplicatedName(name: String) {
         require(repository.existsByName(name).not())
     }

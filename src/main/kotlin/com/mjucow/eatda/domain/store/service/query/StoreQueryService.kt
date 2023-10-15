@@ -6,7 +6,6 @@ import com.mjucow.eatda.persistence.store.StoreRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 import org.springframework.data.domain.SliceImpl
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -26,7 +25,7 @@ class StoreQueryService(
         }
     }
 
-    fun findById(storeId: Long): StoreDetailDto? {
-        return repository.findByIdOrNull(storeId)?.let { StoreDetailDto.from(it) }
+    fun findById(storeId: Long): StoreDetailDto {
+        return StoreDetailDto.from(repository.getReferenceById(storeId))
     }
 }

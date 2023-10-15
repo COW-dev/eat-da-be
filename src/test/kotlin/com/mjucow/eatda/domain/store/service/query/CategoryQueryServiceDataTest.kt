@@ -5,6 +5,7 @@ import com.mjucow.eatda.domain.AbstractDataTest
 import com.mjucow.eatda.domain.store.entity.Category
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,17 +20,17 @@ class CategoryQueryServiceDataTest : AbstractDataTest() {
     @Autowired
     lateinit var repository: CategoryRepository
 
-    @DisplayName("id에 해당하는 카테고리가 없으면 null을 반환한다")
+    @DisplayName("id에 해당하는 카테고리가 없으면 예외를 던진다")
     @ParameterizedTest
     @AutoKotlinSource
-    fun returnNullWhenNotFoundId(id: Long) {
+    fun throwExceptionWhenNotFoundId(id: Long) {
         // given
 
         // when
-        val domain = categoryQueryService.findById(id)
+        val throwable = catchThrowable { categoryQueryService.findById(id) }
 
         // then
-        assertThat(domain).isNull()
+        assertThat(throwable).isNotNull()
     }
 
     @DisplayName("id에 해당하는 카테고리를 반환한다")

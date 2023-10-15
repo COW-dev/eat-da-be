@@ -4,8 +4,6 @@ import com.mjucow.eatda.domain.store.entity.Store
 import com.mjucow.eatda.domain.store.service.command.dto.StoreCreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.StoreUpdateCommand
 import com.mjucow.eatda.persistence.store.StoreRepository
-import jakarta.persistence.EntityNotFoundException
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -36,7 +34,7 @@ class StoreCommandService(
     }
 
     fun update(id: Long, command: StoreUpdateCommand) {
-        val store = repository.findByIdOrNull(id) ?: throw EntityNotFoundException()
+        val store = repository.getReferenceById(id)
         if (store.name != command.name) {
             checkDuplicateName(command.name)
         }
