@@ -52,7 +52,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val dto = storeQueryService.findById(storeId = store.id)
 
         // then
-        assertThat(dto!!.id).isEqualTo(store.id)
+        assertThat(dto.id).isEqualTo(store.id)
     }
 
     @DisplayName("id값이 없다면 최신 데이터를 조회한다")
