@@ -3,11 +3,17 @@ package com.mjucow.eatda.presentation.store
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceDocumentation
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
+import com.mjucow.eatda.domain.store.entity.objectmother.MenuMother
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
+import com.mjucow.eatda.domain.store.service.command.MenuCommandService
 import com.mjucow.eatda.domain.store.service.command.StoreCommandService
+import com.mjucow.eatda.domain.store.service.command.dto.MenuCreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.StoreCreateCommand
 import com.mjucow.eatda.domain.store.service.command.dto.StoreUpdateCommand
+import com.mjucow.eatda.domain.store.service.query.MenuDto
+import com.mjucow.eatda.domain.store.service.query.MenuQueryService
 import com.mjucow.eatda.domain.store.service.query.StoreQueryService
+import com.mjucow.eatda.domain.store.service.query.dto.MenuList
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDetailDto
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.presentation.AbstractMockMvcTest
@@ -32,6 +38,12 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
 
     @MockkBean(relaxUnitFun = true)
     lateinit var storeCommandService: StoreCommandService
+
+    @MockkBean(relaxUnitFun = true)
+    lateinit var menuQueryService: MenuQueryService
+
+    @MockkBean(relaxUnitFun = true)
+    lateinit var menuCommandService: MenuCommandService
 
     @Test
     fun create() {
@@ -227,6 +239,79 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                         .description("특정 가게 정보 삭제")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
+                        )
+                )
+            )
+    }
+
+    @Test
+    fun createMenu() {
+        // given
+        val entityId = 1L
+        every { menuCommandService.create(any(), any()) } returns entityId
+        val command = MenuCreateCommand(
+            name = MenuMother.NAME,
+            price = MenuMother.PRICE,
+            imageAddress = MenuMother.IMAGE_ADDRESS
+        )
+        val content = objectMapper.writeValueAsString(command)
+
+        // when & then
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.post("$BASE_URI/{storeId}/menu", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
+        )
+            .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andExpect(MockMvcResultMatchers.jsonPath("message", `is`(IsNull.nullValue())))
+            .andExpect(MockMvcResultMatchers.jsonPath("body", `is`(entityId), Long::class.java))
+            .andDo(
+                MockMvcRestDocumentationWrapper.document(
+                    identifier = "menu-create",
+                    resourceDetails = ResourceSnippetParametersBuilder()
+                        .tag("Store")
+                        .description("가게의 메뉴 생성")
+                        .pathParameters(
+                            ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
+                        )
+                        .responseFields(
+                            PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            PayloadDocumentation.fieldWithPath("body").type(JsonFieldType.NUMBER).description("가게 식별자")
+                        )
+                )
+            )
+    }
+
+    @Test
+    fun findAllMenu() {
+        // given
+        val entityId = 1L
+        val dto = MenuDto.from(MenuMother.createWithId(id = entityId))
+        every { menuQueryService.findAll(any()) } returns MenuList(listOf(dto))
+
+        // when & then
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get("$BASE_URI/{storeId}/menu", 1L)
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("message", `is`(IsNull.nullValue())))
+            .andExpect(MockMvcResultMatchers.jsonPath("body").exists())
+            .andDo(
+                MockMvcRestDocumentationWrapper.document(
+                    identifier = "store-findAllMenu",
+                    resourceDetails = ResourceSnippetParametersBuilder()
+                        .tag("Store")
+                        .description("가게의 메뉴 전체 조회")
+                        .pathParameters(
+                            ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
+                        )
+                        .responseFields(
+                            PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            PayloadDocumentation.fieldWithPath("body").type(JsonFieldType.ARRAY).description("조회된 가게 메뉴 리스트"),
+                            PayloadDocumentation.fieldWithPath("body[0].id").type(JsonFieldType.NUMBER).description("메뉴 식별자"),
+                            PayloadDocumentation.fieldWithPath("body[0].name").type(JsonFieldType.STRING).description("메뉴 이름"),
+                            PayloadDocumentation.fieldWithPath("body[0].price").type(JsonFieldType.NUMBER).description("메뉴 가격"),
+                            PayloadDocumentation.fieldWithPath("body[0].imageAddress").type(JsonFieldType.STRING).description("메뉴 이미지 주소")
                         )
                 )
             )

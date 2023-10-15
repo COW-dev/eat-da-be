@@ -14,8 +14,8 @@ class MenuCommandService(
     private val repository: MenuRepository,
     private val storeRepository: StoreRepository,
 ) {
-    fun create(command: MenuCreateCommand): Long {
-        val store = storeRepository.getReferenceById(command.storeId)
+    fun create(storeId: Long, command: MenuCreateCommand): Long {
+        val store = storeRepository.getReferenceById(storeId)
 
         val menu = Menu(
             name = command.name,
@@ -26,8 +26,8 @@ class MenuCommandService(
         return repository.save(menu).id
     }
 
-    fun update(command: MenuUpdateCommand) {
-        val menu = repository.getReferenceById(command.id).apply {
+    fun update(id: Long, command: MenuUpdateCommand) {
+        val menu = repository.getReferenceById(id).apply {
             name = command.name
             price = command.price
             imageAddress = command.imageAddress
