@@ -66,7 +66,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-create",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("가게 생성")
                         .responseFields(
                             PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
@@ -109,7 +109,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-findAllByCursor",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("커서 기반 카테고리 가게 조회")
                         .queryParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("조회한 마지막 가게 식별자").optional(),
@@ -150,7 +150,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-findById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("특정 가게 조회")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
@@ -203,7 +203,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-updateById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("특정 가게 정보 업데이트")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
@@ -235,7 +235,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-deleteById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("특정 가게 정보 삭제")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")

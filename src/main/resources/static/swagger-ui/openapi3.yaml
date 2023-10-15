@@ -23,10 +23,10 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-findAll:
-                  value: "{\"message\":null,\"body\":[{\"id\":7398367990945369557,\"\
-                    name\":\"2398912e-8b1d-44f8-939e-a6165c3ea07e\"},{\"id\":7993124867354092135,\"\
-                    name\":\"c23c3adf-5480-4d2e-bfc8-0ffce1a08618\"},{\"id\":335171977239929502,\"\
-                    name\":\"db0df761-721c-4911-aa27-4b6a6ecdebcb\"}]}"
+                  value: "{\"message\":null,\"body\":[{\"id\":5486325113359742151,\"\
+                    name\":\"6859f4e2-14e4-461d-b3c0-c967546d1de3\"},{\"id\":1901568389749687503,\"\
+                    name\":\"93893828-666d-4770-9cf8-84308863c1be\"},{\"id\":7411770755663057165,\"\
+                    name\":\"8a1854b8-6fd5-4aa8-b804-4d3c17170f11\"}]}"
     post:
       tags:
       - category
@@ -50,11 +50,107 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-create:
-                  value: "{\"message\":null,\"body\":577942185856768261}"
-  /api/v1/stores:
+                  value: "{\"message\":null,\"body\":2838394242025513366}"
+  /api/v1/notices:
+    get:
+      tags:
+      - notice
+      summary: 공지사항 전체조회
+      description: 공지사항 전체조회
+      operationId: notice-findAll
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                notice-findAll:
+                  value: "{\"message\":null,\"body\":[{\"id\":1,\"title\":\"공지사항 제\
+                    목\",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T06:26:22.274525Z\"\
+                    }]}"
     post:
       tags:
-      - Store
+      - notice
+      summary: 공지사항 생성
+      description: 공지사항 생성
+      operationId: notice-create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              notice-create:
+                value: "{\"title\":\"title\",\"content\":\"content\"}"
+      responses:
+        "201":
+          description: "201"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                notice-create:
+                  value: "{\"message\":null,\"body\":2781530125328492655}"
+  /api/v1/stores:
+    get:
+      tags:
+      - store
+      summary: 커서 기반 카테고리 가게 조회
+      description: 커서 기반 카테고리 가게 조회
+      operationId: store-findAllByCursor
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+              examples:
+                store-findAllByCursor:
+                  value: "{\"message\":null,\"body\":{\"content\":[{\"id\":1,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":2,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null},{\"\
+                    id\":3,\"displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로\
+                    \ 34\",\"imageAddress\":null,\"location\":null},{\"id\":4,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":5,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null},{\"\
+                    id\":6,\"displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로\
+                    \ 34\",\"imageAddress\":null,\"location\":null},{\"id\":7,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":8,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null},{\"\
+                    id\":9,\"displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로\
+                    \ 34\",\"imageAddress\":null,\"location\":null},{\"id\":10,\"\
+                    displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"\
+                    imageAddress\":null,\"location\":null},{\"id\":11,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":12,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null},{\"\
+                    id\":13,\"displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골\
+                    로 34\",\"imageAddress\":null,\"location\":null},{\"id\":14,\"\
+                    displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"\
+                    imageAddress\":null,\"location\":null},{\"id\":15,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":16,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null},{\"\
+                    id\":17,\"displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골\
+                    로 34\",\"imageAddress\":null,\"location\":null},{\"id\":18,\"\
+                    displayedName\":\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"\
+                    imageAddress\":null,\"location\":null},{\"id\":19,\"displayedName\"\
+                    :\"띵지대\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
+                    location\":null},{\"id\":20,\"displayedName\":\"띵지대\",\"address\"\
+                    :\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"location\":null}],\"\
+                    pageable\":\"INSTANCE\",\"first\":true,\"last\":true,\"size\"\
+                    :20,\"number\":0,\"sort\":{\"empty\":true,\"sorted\":false,\"\
+                    unsorted\":true},\"numberOfElements\":20,\"empty\":false}}"
+    post:
+      tags:
+      - store
       summary: 가게 생성
       description: 가게 생성
       operationId: store-create
@@ -142,17 +238,17 @@ paths:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
                 category-findById:
-                  value: "{\"message\":null,\"body\":{\"id\":2583496916376048931,\"\
-                    name\":\"0f8fc7a3-02bc-43f4-abce-bb360d4d7f00\"}}"
-  /api/v1/stores/{store-id}:
+                  value: "{\"message\":null,\"body\":{\"id\":660660719207477631,\"\
+                    name\":\"c0374476-2565-4c63-a814-8e8ac0c778db\"}}"
+  /api/v1/notices/{noticeId}:
     get:
       tags:
-      - store
-      summary: 특정 가게 조회
-      description: 특정 가게 조회
-      operationId: store-updateById
+      - notice
+      summary: 공지사항 단건 조회
+      description: 공지사항 단건 조회
+      operationId: notice-findById
       parameters:
-      - name: store-id
+      - name: noticeId
         in: path
         description: ""
         required: true
@@ -166,14 +262,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/api-v1-categories-category-id486549215'
               examples:
-                store-updateById:
-                  value: "{\"message\":null,\"body\":{\"id\":6,\"displayedName\":\"\
-                    명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
-                    location\":null,\"categories\":[],\"storeHours\":[]}}"
+                notice-findById:
+                  value: "{\"message\":null,\"body\":{\"id\":1,\"title\":\"공지사항 제목\
+                    \",\"content\":\"공지사항 내용\",\"createdAt\":\"2023-10-15T06:26:22.647703Z\"\
+                    }}"
+    delete:
+      tags:
+      - notice
+      summary: 공지사항 삭제
+      description: 공지사항 삭제
+      operationId: notice-delete
+      parameters:
+      - name: noticeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+    patch:
+      tags:
+      - notice
+      summary: 공지사항 수정
+      description: 공지사항 수정
+      operationId: notice-update
+      parameters:
+      - name: noticeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              notice-update:
+                value: "{\"title\":\"newTitle\",\"content\":\"newContent\"}"
+      responses:
+        "200":
+          description: "200"
   /api/v1/stores/{storeId}:
     get:
       tags:
-      - Store
+      - store
       summary: 특정 가게 조회
       description: 특정 가게 조회
       operationId: store-findById
@@ -196,6 +332,49 @@ paths:
                   value: "{\"message\":null,\"body\":{\"id\":5,\"displayedName\":\"\
                     명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"imageAddress\":null,\"\
                     location\":null,\"categories\":[],\"storeHours\":[]}}"
+    delete:
+      tags:
+      - store
+      summary: 특정 가게 정보 삭제
+      description: 특정 가게 정보 삭제
+      operationId: store-deleteById
+      parameters:
+      - name: storeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: "204"
+    patch:
+      tags:
+      - store
+      summary: 특정 가게 정보 업데이트
+      description: 특정 가게 정보 업데이트
+      operationId: store-updateById
+      parameters:
+      - name: storeId
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api-v1-categories-category-id486549215'
+            examples:
+              store-updateById:
+                value: "{\"name\":\"명지대학교\",\"address\":\"서울특별시 서대문구 거북골로 34\",\"\
+                  displayName\":\"띵지대\",\"phoneNumber\":{\"phoneNumber\":\"02-300-1656\"\
+                  },\"imageAddress\":\"/eatda/public/store/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.jpg\"\
+                  ,\"location\":{\"latitude\":37.5802219,\"longitude\":126.9226047}}"
+      responses:
+        "204":
+          description: "204"
 components:
   schemas:
     api-v1-categories-category-id486549215:
