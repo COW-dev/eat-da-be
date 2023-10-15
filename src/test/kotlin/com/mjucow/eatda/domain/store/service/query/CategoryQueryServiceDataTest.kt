@@ -43,7 +43,7 @@ class CategoryQueryServiceDataTest : AbstractDataTest() {
         val domain = categoryQueryService.findById(saved.id)
 
         // then
-        assertThat(domain!!.id).isEqualTo(saved.id)
+        assertThat(domain.id).isEqualTo(saved.id)
     }
 
     @DisplayName("카테고리가 없으면 요소가 없는 카테고리들을 반환한다")

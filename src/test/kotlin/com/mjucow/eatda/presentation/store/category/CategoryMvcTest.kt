@@ -55,7 +55,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "category-findAll",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Category")
+                        .tag("category")
                         .description("카테고리 전체조회")
                         .responseFields(
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
@@ -85,7 +85,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "category-findById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Category")
+                        .tag("category")
                         .description("카테고리 단건 조회")
                         .pathParameters(
                             parameterWithName("categoryId").description("카테고리 식별자")
@@ -121,7 +121,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "category-create",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Category")
+                        .tag("category")
                         .description("카테고리 생성")
                         .requestFields(
                             fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
@@ -147,7 +147,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "category-delete",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Category")
+                        .tag("category")
                         .description("카테고리 삭제")
                         .pathParameters(
                             parameterWithName("category-id").description("카테고리 식별자")
@@ -175,7 +175,7 @@ class CategoryMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "category-updateName",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Category")
+                        .tag("category")
                         .description("카테고리 이름 수정")
                         .pathParameters(
                             parameterWithName("category-id").description("카테고리 식별자")

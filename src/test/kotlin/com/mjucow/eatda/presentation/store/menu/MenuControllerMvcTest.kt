@@ -45,7 +45,7 @@ class MenuControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "menu-update",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Menu")
+                        .tag("menu")
                         .description("메뉴 수정")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("menuId").description("메뉴 식별자")
@@ -75,7 +75,7 @@ class MenuControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "menu-findById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Menu")
+                        .tag("menu")
                         .description("메뉴 조회")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("menuId").description("메뉴 식별자")
@@ -106,7 +106,7 @@ class MenuControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "menu-deleteById",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Menu")
+                        .tag("menu")
                         .description("메뉴 삭제")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("menuId").description("메뉴 식별자")
