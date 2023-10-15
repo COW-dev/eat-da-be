@@ -8,6 +8,7 @@ import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import com.mjucow.eatda.persistence.store.StoreRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,17 +28,17 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
     @Autowired
     lateinit var categoryRepository: CategoryRepository
 
-    @DisplayName("id에 해당하는 store가 없다면 null을 반환한다")
+    @DisplayName("id에 해당하는 store가 없다면 예외를 던진다")
     @ParameterizedTest
     @AutoKotlinSource
-    fun returnNullWhenNotExistEntity(id: Long) {
+    fun throwExceptionWhenNotExistEntity(id: Long) {
         // given
 
         // when
-        val dto = storeQueryService.findById(id)
+        val throwable = catchThrowable { storeQueryService.findById(id) }
 
         // then
-        assertThat(dto).isNull()
+        assertThat(throwable).isNotNull()
     }
 
     @DisplayName("id에 해당하는 store를 반환한다")
