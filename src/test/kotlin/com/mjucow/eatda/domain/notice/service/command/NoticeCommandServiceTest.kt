@@ -23,7 +23,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
     @Autowired
     lateinit var repository: NoticeRepository
 
-    @DisplayName("제목이 공백일 경우 예외를 반환한다")
+    @DisplayName("제목이 공백일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
     fun task1(title: String) {
@@ -38,7 +38,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("내용이 공백일 경우 예외를 반환한다")
+    @DisplayName("내용이 공백일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
     fun task2(content: String) {
@@ -53,7 +53,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("정상적인 입력일 경우 객체가 반환한다")
+    @DisplayName("정상적인 입력일 경우 객체를 반환한다")
     @Test
     fun task3() {
         // given
@@ -68,7 +68,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         Assertions.assertThat(domain).isNotNull
     }
 
-    @DisplayName("새로운 제목이 공백일 경우 예외를 반환한다")
+    @DisplayName("새로운 제목이 공백일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
     fun task4(newTitle: String) {
@@ -84,7 +84,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("새로운 내용이 공백일 경우 예외를 반환한다")
+    @DisplayName("새로운 내용이 공백일 경우 예외를 던진다")
     @ParameterizedTest
     @EmptySource
     fun task5(newContent: String) {
@@ -100,7 +100,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("수정하려는 대상이 조회되지 않을 경우 예외를 반환한다")
+    @DisplayName("수정하려는 대상이 조회되지 않을 경우 예외를 던진다")
     @Test
     fun task6() {
         // given
