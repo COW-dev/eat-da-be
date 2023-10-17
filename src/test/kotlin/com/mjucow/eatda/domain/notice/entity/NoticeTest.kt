@@ -63,7 +63,7 @@ class NoticeTest {
         Assertions.assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("정상적인 경우 객체가 생성된다")
+    @DisplayName("정상적인 값일 경우 객체가 생성된다")
     @Test
     fun task5() {
         // given
