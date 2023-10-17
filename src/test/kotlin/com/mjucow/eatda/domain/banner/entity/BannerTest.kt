@@ -13,11 +13,11 @@ class BannerTest {
     @EmptySource
     fun task1(link: String) {
         // given
-        val order = 0
+        val displayOrder = 0
         val imageAddress = "imageAddress"
 
         // when
-        val throwable = Assertions.catchThrowable { Banner(order, link, imageAddress) }
+        val throwable = Assertions.catchThrowable { Banner(displayOrder, link, imageAddress) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -27,12 +27,12 @@ class BannerTest {
     @Test
     fun task2() {
         // given
-        val order = 0
+        val displayOrder = 0
         val link = "link"
         val imageAddress = "imageAddress"
 
         // when
-        val throwable = Assertions.catchThrowable { Banner(order, link, imageAddress) }
+        val throwable = Assertions.catchThrowable { Banner(displayOrder, link, imageAddress) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -42,12 +42,12 @@ class BannerTest {
     @Test
     fun task3() {
         // given
-        val order = 0
+        val displayOrder = 0
         val link = "x".repeat(Banner.MAX_LINK_LENGTH + 1)
         val imageAddress = "imageAddress"
 
         // when
-        val throwable = Assertions.catchThrowable { Banner(order, link, imageAddress) }
+        val throwable = Assertions.catchThrowable { Banner(displayOrder, link, imageAddress) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -58,11 +58,11 @@ class BannerTest {
     @EmptySource
     fun task4(imageAddress: String) {
         // given
-        val order = 0
+        val displayOrder = 0
         val link = "https://career.programmers.co.kr/competitions/3353"
 
         // when
-        val throwable = Assertions.catchThrowable { Banner(order, link, imageAddress) }
+        val throwable = Assertions.catchThrowable { Banner(displayOrder, link, imageAddress) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -72,12 +72,12 @@ class BannerTest {
     @Test
     fun task5() {
         // given
-        val order = 0
+        val displayOrder = 0
         val link = "link"
         val imageAddress = "x".repeat(Banner.MAX_IMAGE_ADDRESS_LENGTH + 1)
 
         // when
-        val throwable = Assertions.catchThrowable { Banner(order, link, imageAddress) }
+        val throwable = Assertions.catchThrowable { Banner(displayOrder, link, imageAddress) }
 
         // then
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
@@ -87,13 +87,13 @@ class BannerTest {
     @Test
     fun task6() {
         // given
-        val order = 0
+        val displayOrder = 0
         val link = "https://career.programmers.co.kr/competitions/3353"
         val imageAddress = "imageAddress"
 
         // when
         val banner = Banner(
-            order,
+            displayOrder,
             link,
             imageAddress
         )

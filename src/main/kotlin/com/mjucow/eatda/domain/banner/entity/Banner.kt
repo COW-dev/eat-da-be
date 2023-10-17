@@ -10,19 +10,19 @@ import java.net.URL
 @Table(name = "banner")
 class Banner() : BaseEntity() {
     constructor(
-        order: Int,
+        displayOrder: Int,
         link: String,
         imageAddress: String,
     ) : this() {
-        this.order = order
+        this.displayOrder = displayOrder
         this.link = link
         this.imageAddress = imageAddress
     }
 
     @Column(nullable = false)
-    var order: Int = 0
+    var displayOrder: Int = 0
         set(value) {
-            validateOrder(value)
+            validateDisplayOrder(value)
             field = value
         }
 
@@ -46,7 +46,7 @@ class Banner() : BaseEntity() {
         }.isSuccess
     }
 
-    private fun validateOrder(order: Int) {
+    private fun validateDisplayOrder(displayOrder: Int) {
         //
     }
 

@@ -4,7 +4,7 @@
 CREATE TABLE banner
 (
     id            bigserial    NOT NULL PRIMARY KEY,
-    "order"       smallint     NOT NULL,
+    display_order smallint     NOT NULL,
     link          varchar(255) NOT NULL,
     image_address varchar(255) NOT NULL,
     created_at    timestamp    NOT NULL DEFAULT NOW(),
