@@ -5,26 +5,20 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
 import java.net.URL
+import java.time.Instant
 
 @Entity
 @Table(name = "banner")
 class Banner() : BaseEntity() {
     constructor(
-        displayOrder: Int,
         link: String,
         imageAddress: String,
+        expiredAt: Instant,
     ) : this() {
-        this.displayOrder = displayOrder
         this.link = link
         this.imageAddress = imageAddress
+        this.expiredAt = expiredAt
     }
-
-    @Column(nullable = false)
-    var displayOrder: Int = 0
-        set(value) {
-            validateDisplayOrder(value)
-            field = value
-        }
 
     @Column(nullable = false)
     var link: String = ""
@@ -40,14 +34,17 @@ class Banner() : BaseEntity() {
             field = value
         }
 
+    @Column(nullable = false)
+    var expiredAt: Instant = Instant.MIN
+        set(value) {
+            validateExpiredAt(value)
+            field = value
+        }
+
     private fun isValidUrl(url: String): Boolean {
         return runCatching {
             URL(url)
         }.isSuccess
-    }
-
-    private fun validateDisplayOrder(displayOrder: Int) {
-        //
     }
 
     private fun validateLink(link: String) {
@@ -56,6 +53,10 @@ class Banner() : BaseEntity() {
 
     private fun validateImageAddress(imageAddress: String) {
         require(imageAddress.isNotBlank() && imageAddress.length <= MAX_IMAGE_ADDRESS_LENGTH)
+    }
+
+    private fun validateExpiredAt(expiredAt: Instant) {
+        require(expiredAt.isAfter(Instant.now()) && expiredAt.isBefore(Instant.MAX))
     }
 
     companion object {
