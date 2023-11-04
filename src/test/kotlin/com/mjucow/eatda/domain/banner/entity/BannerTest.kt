@@ -111,7 +111,6 @@ class BannerTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-
     @DisplayName("정상적인 값일 경우 객체가 생성된다")
     @Test
     fun task8() {
