@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset liquibase:2
+-- changeset liquibase:4
 CREATE TABLE notice
 (
     id         bigserial   NOT NULL PRIMARY KEY,

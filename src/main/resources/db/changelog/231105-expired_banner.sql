@@ -1,7 +1,7 @@
 -- liquibase formatted sql
 
--- changeset liquibase:6
-CREATE TABLE banner
+-- changeset liquibase:7
+CREATE TABLE expired_banner
 (
     id            bigserial    NOT NULL PRIMARY KEY,
     link          varchar(255) NOT NULL,
