@@ -27,7 +27,7 @@ class NoticeCommandService(
         repository.save(updatedNotice)
     }
 
-    fun deleteById(noticeId: Long) {
+    fun delete(noticeId: Long) {
         val notice = repository.findByIdOrNull(noticeId) ?: return
 
         repository.delete(notice)

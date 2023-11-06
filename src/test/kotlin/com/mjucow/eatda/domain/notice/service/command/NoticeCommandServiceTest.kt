@@ -140,7 +140,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         // given
 
         // when
-        noticeCommandService.deleteById(noticeId)
+        noticeCommandService.delete(noticeId)
 
         // then
         Assertions.assertThat(repository.findByIdOrNull(noticeId)).isNull()
@@ -155,7 +155,7 @@ class NoticeCommandServiceTest : AbstractDataTest() {
         val notcieId = repository.save(Notice(title, content)).id
 
         // when
-        noticeCommandService.deleteById(notcieId)
+        noticeCommandService.delete(notcieId)
 
         // then
         Assertions.assertThat(repository.findByIdOrNull(notcieId)).isNull()
