@@ -13,7 +13,7 @@ class Banner() : BaseEntity() {
     constructor(
         link: String,
         imageAddress: String,
-        expiredAt: Instant,
+        expiredAt: Instant? = null,
     ) : this() {
         this.link = link
         this.imageAddress = imageAddress
@@ -37,9 +37,7 @@ class Banner() : BaseEntity() {
     @Column(nullable = false)
     var expiredAt: Instant? = null
         set(value) {
-            value?.let {
-                validateExpiredAt(value)
-            }
+            validateExpiredAt(value)
             field = value
         }
 
@@ -57,8 +55,10 @@ class Banner() : BaseEntity() {
         require(imageAddress.isNotBlank() && imageAddress.length <= MAX_IMAGE_ADDRESS_LENGTH)
     }
 
-    private fun validateExpiredAt(expiredAt: Instant) {
-        require(expiredAt.isAfter(Instant.now()) && expiredAt.isBefore(Instant.MAX))
+    private fun validateExpiredAt(expiredAt: Instant?) {
+        if (expiredAt != null) {
+            require(expiredAt.isAfter(Instant.now()) && expiredAt.isBefore(Instant.MAX))
+        }
     }
 
     companion object {
