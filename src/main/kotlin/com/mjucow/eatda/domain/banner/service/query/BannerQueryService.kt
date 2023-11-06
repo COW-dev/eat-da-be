@@ -14,8 +14,4 @@ class BannerQueryService(
     fun findAll(): Banners {
         return Banners(repository.findAllByOrderByIdDesc().map(BannerDto::from))
     }
-
-    fun findById(bannerId: Long): BannerDto {
-        return BannerDto.from(repository.getReferenceById(bannerId))
-    }
 }
