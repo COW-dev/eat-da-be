@@ -35,9 +35,11 @@ class Banner() : BaseEntity() {
         }
 
     @Column(nullable = false)
-    var expiredAt: Instant = Instant.MIN
+    var expiredAt: Instant? = null
         set(value) {
-            validateExpiredAt(value)
+            value?.let {
+                validateExpiredAt(value)
+            }
             field = value
         }
 
