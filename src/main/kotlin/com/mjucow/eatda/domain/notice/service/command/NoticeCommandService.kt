@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 class NoticeCommandService(
     private val repository: NoticeRepository,
 ) {
-    fun create(request: CreateNoticeCommand): Long {
-        return repository.save(Notice(request.title, request.content)).id
+    fun create(command: CreateNoticeCommand): Long {
+        return repository.save(Notice(command.title, command.content)).id
     }
 
     fun update(noticeId: Long, command: UpdateNoticeCommand) {
