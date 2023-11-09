@@ -5,5 +5,5 @@ import java.time.Instant
 data class CreateBannerCommand(
     val link: String,
     val imageAddress: String,
-    val expiredAt: Instant?,
+    val expiredAt: Instant? = null,
 )

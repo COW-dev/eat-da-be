@@ -28,7 +28,7 @@ class BannerCommandService(
         repository.save(updatedBanner)
     }
 
-    fun deleteById(bannerId: Long) {
+    fun delete(bannerId: Long) {
         val banner = repository.findByIdOrNull(bannerId) ?: return
 
         repository.delete(banner)
