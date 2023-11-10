@@ -82,7 +82,7 @@ class BannerTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("설정한 유효기간이 현재 시간보다 빠를 경우 예외를 던진다")
+    @DisplayName("설정한 만료일자가 현재보다 빠를 경우 예외를 던진다")
     @Test
     fun task6() {
         // given
@@ -95,7 +95,7 @@ class BannerTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("설정한 유효기간이 최대 값보다 클 경우 예외를 던진다")
+    @DisplayName("설정한 만료일자가 최대 값보다 클 경우 예외를 던진다")
     @Test
     fun task7() {
         // given
