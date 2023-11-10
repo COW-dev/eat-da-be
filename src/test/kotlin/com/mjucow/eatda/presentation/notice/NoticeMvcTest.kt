@@ -1,8 +1,8 @@
 package com.mjucow.eatda.presentation.notice
 
 import autoparams.kotlin.AutoKotlinSource
-import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
-import com.epages.restdocs.apispec.ResourceDocumentation
+import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document
+import com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
 import com.mjucow.eatda.domain.notice.entity.objectmother.NoticeMother
 import com.mjucow.eatda.domain.notice.service.command.NoticeCommandService
@@ -20,8 +20,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
@@ -51,22 +52,17 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             .andExpect(jsonPath("message", `is`(IsNull.nullValue())))
             .andExpect(jsonPath("body").exists())
             .andDo(
-                MockMvcRestDocumentationWrapper.document(
+                document(
                     identifier = "notice-findAll",
                     resourceDetails = ResourceSnippetParametersBuilder()
                         .tag("notice")
                         .description("공지사항 전체조회")
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING)
-                                .description("에러 메세지"),
-                            fieldWithPath("body").type(JsonFieldType.ARRAY)
-                                .description("공지사항 데이터들"),
-                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER)
-                                .description("공지사항 식별자"),
-                            fieldWithPath("body[].title").type(JsonFieldType.STRING)
-                                .description("공지사항 제목"),
-                            fieldWithPath("body[].content").type(JsonFieldType.STRING)
-                                .description("공지사항 내용")
+                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            fieldWithPath("body").type(JsonFieldType.ARRAY).description("공지사항 데이터"),
+                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER).description("공지사항 식별자"),
+                            fieldWithPath("body[].title").type(JsonFieldType.STRING).description("공지사항 제목"),
+                            fieldWithPath("body[].content").type(JsonFieldType.STRING).description("공지사항 내용")
                         )
                 )
             )
@@ -87,13 +83,13 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             .andExpect(jsonPath("message", `is`(IsNull.nullValue())))
             .andExpect(jsonPath("body").exists())
             .andDo(
-                MockMvcRestDocumentationWrapper.document(
+                document(
                     identifier = "notice-findById",
                     resourceDetails = ResourceSnippetParametersBuilder()
                         .tag("notice")
                         .description("공지사항 단건 조회")
                         .pathParameters(
-                            ResourceDocumentation.parameterWithName("noticeId").description("공지사항 식별자")
+                            parameterWithName("noticeId").description("공지사항 식별자")
                         )
                         .responseFields(
                             fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
@@ -110,9 +106,8 @@ class NoticeMvcTest : AbstractMockMvcTest() {
     @AutoKotlinSource
     fun create(id: Long) {
         // given
-        val createNoticeCommand = CreateNoticeCommand("title", "content")
+        val createNoticeCommand = CreateNoticeCommand(title = "title", content = "content")
         val content = objectMapper.writeValueAsString(createNoticeCommand)
-
         every { noticeCommandService.create(any()) } returns id
 
         // when & then
@@ -124,7 +119,7 @@ class NoticeMvcTest : AbstractMockMvcTest() {
             .andExpect(status().isCreated)
             .andExpect(jsonPath("body", `is`(id)))
             .andDo(
-                MockMvcRestDocumentationWrapper.document(
+                document(
                     identifier = "notice-create",
                     resourceDetails = ResourceSnippetParametersBuilder()
                         .tag("notice")
@@ -142,28 +137,6 @@ class NoticeMvcTest : AbstractMockMvcTest() {
     }
 
     @Test
-    fun delete() {
-        // given
-
-        // when & then
-        mockMvc.perform(
-            RestDocumentationRequestBuilders.delete("$BASE_URI/{noticeId}", 1)
-        )
-            .andExpect(status().isNoContent)
-            .andDo(
-                MockMvcRestDocumentationWrapper.document(
-                    identifier = "notice-delete",
-                    resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("notice")
-                        .description("공지사항 삭제")
-                        .pathParameters(
-                            ResourceDocumentation.parameterWithName("noticeId").description("공지사항 식별자")
-                        )
-                )
-            )
-    }
-
-    @Test
     fun update() {
         // given
         val id = 1L
@@ -174,25 +147,45 @@ class NoticeMvcTest : AbstractMockMvcTest() {
 
         // when & then
         mockMvc.perform(
-            RestDocumentationRequestBuilders.patch("$BASE_URI/{noticeId}", id)
+            patch("$BASE_URI/{noticeId}", id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
         )
             .andExpect(status().isOk)
             .andDo(
-                MockMvcRestDocumentationWrapper.document(
+                document(
                     identifier = "notice-update",
                     resourceDetails = ResourceSnippetParametersBuilder()
                         .tag("notice")
                         .description("공지사항 수정")
                         .pathParameters(
-                            ResourceDocumentation.parameterWithName("noticeId").description("공지사항 식별자")
+                            parameterWithName("noticeId").description("공지사항 식별자")
                         )
                         .requestFields(
-                            fieldWithPath("title").type(JsonFieldType.STRING).description("공지사항 제목")
-                        )
-                        .requestFields(
+                            fieldWithPath("title").type(JsonFieldType.STRING).description("공지사항 제목"),
                             fieldWithPath("content").type(JsonFieldType.STRING).description("공지사항 내용")
+                        )
+                )
+            )
+    }
+
+    @Test
+    fun delete() {
+        // given
+
+        // when & then
+        mockMvc.perform(
+            delete("$BASE_URI/{noticeId}", 1)
+        )
+            .andExpect(status().isNoContent)
+            .andDo(
+                document(
+                    identifier = "notice-delete",
+                    resourceDetails = ResourceSnippetParametersBuilder()
+                        .tag("notice")
+                        .description("공지사항 삭제")
+                        .pathParameters(
+                            parameterWithName("noticeId").description("공지사항 식별자")
                         )
                 )
             )
