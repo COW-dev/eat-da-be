@@ -117,7 +117,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         assertThat(repository.getReferenceById(id).name).isEqualTo(newName)
     }
 
-    @DisplayName("저장된 데이터가 없어도 삭제 된다")
+    @DisplayName("삭제하려는 대상이 없어도 예외를 던지지 않는다")
     @ParameterizedTest
     @AutoKotlinSource
     fun deleteWhenNotFound(id: Long) {
@@ -130,7 +130,7 @@ class CategoryCommandServiceDataTest : AbstractDataTest() {
         assertThat(repository.findByIdOrNull(id)).isNull()
     }
 
-    @DisplayName("저장된 데이터를 삭제 된다")
+    @DisplayName("삭제하려는 대상을 삭제한다")
     @Test
     fun deleteWhenNotFound() {
         // given

@@ -60,6 +60,6 @@ class NoticeController(
     fun deleteById(
         @PathVariable("noticeId") noticeId: Long,
     ) {
-        noticeCommandService.deleteById(noticeId)
+        noticeCommandService.delete(noticeId)
     }
 }
