@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - .github/workflows/test.yml
+      - 'src/'
+      - '**/*.kt'
+      - 'gradle.*'
 
 jobs:
   test:
