@@ -20,7 +20,7 @@ abstract class AbstractDataTest {
     companion object {
         @Container
         @ServiceConnection
-        val POSTGRESQL_CONTAINER = PostgreSQLContainer("postgres:16.0-alpine")
+        val POSTGRESQL_CONTAINER = PostgreSQLContainer("postgres:15.4-alpine")
             .withUsername("test-user")
             .withPassword("test-password")
             .withDatabaseName("test_db")!!
