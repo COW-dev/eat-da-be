@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit
 object BannerMother : EntityMother<Banner>() {
     const val LINK = "https://career.programmers.co.kr/competitions/3353"
     const val IMAGE_ADDRESS = "/banner/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.png"
-    val EXPIRED_AT: Instant? = Instant.now().plus(1, ChronoUnit.DAYS)
+    val EXPIRED_AT = Instant.now().plus(1, ChronoUnit.DAYS)!!
 
     override fun createFillInstance() = Banner(
         link = LINK,
