@@ -12,6 +12,7 @@ categories:
       - 'test'
       - 'style'
       - 'refactor'
+      - 'etc'
 
 change-template: '- $TITLE (#$NUMBER) @$AUTHOR '
 change-title-escapes: '\<*_&'
