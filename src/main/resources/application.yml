@@ -45,12 +45,23 @@ spring:
   config:
     activate:
       on-profile: prod
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
 
   datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
-      driver-class-name:
       maximum-pool-size: 25
       connection-timeout: 1100
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
+
+  jooq:
+    sql-dialect: postgres

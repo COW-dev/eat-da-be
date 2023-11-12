@@ -1,8 +1,8 @@
 
 import com.epages.restdocs.apispec.gradle.OpenApi3Task
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot")
@@ -26,6 +26,14 @@ val springMockkVersion = "${property("springMockkVersion")}"
 val autoParamsVersion = "${property("autoParamsVersion")}"
 val jacocoVersion = "${property("jacocoVersion")}"
 val jooqVersion = "${property("jooqVersion")}"
+
+tasks.withType<Jar> {
+    enabled = false
+}
+
+tasks.withType<BootJar> {
+    enabled = true
+}
 
 java {
     sourceCompatibility = JavaVersion.valueOf("VERSION_$javaVersion")
