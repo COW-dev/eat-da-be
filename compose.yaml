@@ -14,5 +14,18 @@ services:
       - "15432:5432"
     restart: always
 
+  server:
+    image: eatda-docker-test:0.0.2
+    container_name: server
+    environment:
+      PROFILE: prod
+      DB_URL: jdbc:postgresql://db:5432/eatda
+      DB_USERNAME: local
+      DB_PASSWORD: local
+    ports:
+      - "18080:8080"
+    depends_on:
+      - db
+
 volumes:
   postgres:
