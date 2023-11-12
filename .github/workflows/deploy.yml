@@ -48,8 +48,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: ${{ secrets.AWS_REGION }
-          role-to-assume: ${{ secrets.AWS_ARN_ROLE_TO_ASSUME }
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ARN_ROLE_TO_ASSUME }}
 
       - name: Add GitHub IP to AWS
         run: |
