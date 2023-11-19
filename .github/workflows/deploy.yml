@@ -71,9 +71,7 @@ jobs:
             sudo docker rm - f $(docker ps -qa)
             sudo docker pull eatda/api-server:latest
             sudo docker stop $(sudo docker ps -aq)
-            sudo docker run -d eatda/api-server:latest \
-              --name api-server \
-              -p 8080:8080 \
+            sudo docker run -p 8080:8080 -d eatda/api-server:latest --name api-server
 
       - name: Remove IP FROM security group
         run: |
