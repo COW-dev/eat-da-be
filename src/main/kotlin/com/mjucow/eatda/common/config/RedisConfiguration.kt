@@ -11,14 +11,10 @@ import org.springframework.data.redis.core.StringRedisTemplate
 
 @Configuration
 class RedisConfiguration(
-    private val redisProperties: RedisProperties
+    private val redisProperties: RedisProperties,
 ) {
-    init {
-        println(redisProperties)
-    }
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
-        println("redisConnectionFactory")
         return LettuceConnectionFactory(
             RedisStandaloneConfiguration(redisProperties.host, redisProperties.port)
         )
@@ -26,7 +22,6 @@ class RedisConfiguration(
 
     @Bean
     fun stringRedisTemplate(redisConnectionFactory: RedisConnectionFactory): StringRedisTemplate {
-        println("StringRedisTemplate")
         return StringRedisTemplate().apply {
             connectionFactory = redisConnectionFactory
         }
