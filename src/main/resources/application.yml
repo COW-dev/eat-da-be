@@ -39,6 +39,12 @@ spring:
 
   jooq:
     sql-dialect: postgres
+
+  data:
+    redis:
+      host: localhost
+      port: 16379
+
 ---
 
 spring:
@@ -62,6 +68,11 @@ spring:
       keepalive-time: 30000
       validation-timeout: 1000
       max-lifetime: 600000
+
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
 
   jooq:
     sql-dialect: postgres

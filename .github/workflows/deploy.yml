@@ -38,6 +38,8 @@ jobs:
             DB_URL=${{ secrets.DB_URL }} 
             DB_USERNAME=${{ secrets.DB_USERNAME }} 
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            REDIS_URL=${{ secrets.REDIS_URL }} 
+            REDIS_PORT=${{ secrets.REDIS_PORT }}
           tags: |
             eatda/api-server:latest
 
