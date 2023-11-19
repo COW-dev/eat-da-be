@@ -24,7 +24,6 @@ services:
       DB_PASSWORD: local
     ports:
       - "18080:8080"
-    restart: always
     depends_on:
       - db
       - cache
