@@ -12,11 +12,13 @@ import org.testcontainers.containers.GenericContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
-@Import(value = [
-    RedisProperties::class,
-    RedisConfiguration::class,
-    PropertiesConfiguration::class,
-])
+@Import(
+    value = [
+        RedisProperties::class,
+        RedisConfiguration::class,
+        PropertiesConfiguration::class
+    ]
+)
 @DataRedisTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
