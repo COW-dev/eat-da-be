@@ -27,8 +27,7 @@ class PopularStoreCacheService(
 
     fun setStore(key: String, storeId: Long) {
         val ops = redisTemplate.opsForZSet()
-        val count = ops.score(key, storeId) ?: 0.0
-        ops.add(key, storeId.toString(), count + 1)
+        ops.incrementScore(key, storeId.toString(), 1.0)
     }
 
     /**
