@@ -20,12 +20,12 @@ class PopularStoreQueryService(
             val popularStores = cache.getStoresSortByPopular(searchKey)
             val stores = storeRepository.findAllByIdInOrderByIdDesc(popularStores.map { it.storeId })
             val popularStoreDtos = PopularStoreDtos(
-                popularStores = popularStores.map { ps ->
-                    PopularStoreDto.of(ps, stores.first { it.id == ps.storeId })
+                popularStores = popularStores.mapNotNull { ps ->
+                    val entity = stores.firstOrNull { it.id == ps.storeId }
+                    if (entity != null) PopularStoreDto.of(ps, entity) else null
                 }
             )
 
-            cache.delete(cachedPopularStoresKey)
             cachedPopularStoresKey = searchKey
             cachedPopularStoresValue = popularStoreDtos
         }
