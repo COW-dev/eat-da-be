@@ -34,7 +34,6 @@ class PopularStoreCacheService(
         redisTemplate
             .opsForZSet()
             .incrementScore(key, storeId.toString(), 1.0)
-
     }
 
     fun delete(key: String) {
@@ -60,7 +59,7 @@ class PopularStoreCacheService(
         val unitMinute = localDateTime.minute / UNIT_MINUTE
 
         val areaKey = "$formatDateHour-$unitMinute"
-        return "${PREFIX}-${areaKey}"
+        return "$PREFIX-$areaKey"
     }
 
     companion object {

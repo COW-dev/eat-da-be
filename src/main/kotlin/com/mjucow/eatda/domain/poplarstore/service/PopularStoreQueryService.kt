@@ -14,7 +14,7 @@ class PopularStoreQueryService(
     private var cachedPopularStoresKey: String = ""
     private var cachedPopularStoresValue: PopularStoreDtos = PopularStoreDtos(emptyList())
 
-    fun getPopularStores(searchAt: Instant = Instant.now()) : PopularStoreDtos {
+    fun getPopularStores(searchAt: Instant = Instant.now()): PopularStoreDtos {
         val searchKey = cache.createSearchKey(searchAt)
         if (searchKey != cachedPopularStoresKey) {
             val popularStores = cache.getStoresSortByPopular(searchKey)

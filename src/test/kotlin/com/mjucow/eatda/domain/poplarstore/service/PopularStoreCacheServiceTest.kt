@@ -110,7 +110,7 @@ class PopularStoreCacheServiceTest : AbstractCacheTest() {
         val storedAt = LocalDateTime.of(2023, 2, 3, 1, 1).toInstant(ZoneOffset.UTC)
         val searchKey = cacheService.createSearchKey(storedAt.plusSeconds(UNIT_MINUTE * 60))
         val cachedStoreSize = (MAX_POPULAR_STORE_SIZE * 2).toInt()
-        repeat(cachedStoreSize) {storeId ->
+        repeat(cachedStoreSize) { storeId ->
             repeat(storeId) {
                 cacheService.setStore(storedAt, storeId.toLong())
             }
