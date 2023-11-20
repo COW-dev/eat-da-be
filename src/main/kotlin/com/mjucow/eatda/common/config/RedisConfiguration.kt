@@ -29,7 +29,6 @@ class RedisConfiguration(
 
     @Bean
     fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
-        println("redisTemplate")
         return RedisTemplate<String, Any>().apply {
             connectionFactory = redisConnectionFactory
         }

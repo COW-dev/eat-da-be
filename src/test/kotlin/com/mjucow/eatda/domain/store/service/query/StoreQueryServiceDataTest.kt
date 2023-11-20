@@ -2,15 +2,19 @@ package com.mjucow.eatda.domain.store.service.query
 
 import autoparams.kotlin.AutoKotlinSource
 import com.mjucow.eatda.domain.AbstractDataTest
+import com.mjucow.eatda.domain.poplarstore.service.PopularStoreCommandService
 import com.mjucow.eatda.domain.store.entity.Category
 import com.mjucow.eatda.domain.store.entity.Store
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import com.mjucow.eatda.persistence.store.StoreRepository
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.junit5.MockKExtension
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
@@ -18,7 +22,11 @@ import org.springframework.data.domain.Pageable
 import java.util.stream.IntStream
 
 @Import(value = [StoreQueryService::class])
+@ExtendWith(MockKExtension::class)
 class StoreQueryServiceDataTest : AbstractDataTest() {
+    @MockkBean(relaxUnitFun = true)
+    lateinit var popularStoreCommandService: PopularStoreCommandService
+
     @Autowired
     lateinit var storeQueryService: StoreQueryService
 

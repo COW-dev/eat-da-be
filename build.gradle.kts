@@ -212,7 +212,8 @@ tasks.jacocoTestCoverageVerification {
                 "com.mjucow.eatda.EatdaApplicationKt",
                 "*.common.*",
                 "*.dto.*",
-                "com.mjucow.eatda.jooq.*"
+                "com.mjucow.eatda.jooq.*",
+                "*.Companion"
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.mjucow.eatda.domain.store.service.query
 
+import com.mjucow.eatda.domain.poplarstore.service.PopularStoreCommandService
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDetailDto
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.persistence.store.StoreRepository
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class StoreQueryService(
     val repository: StoreRepository,
+    val popularStoreCommandService: PopularStoreCommandService,
 ) {
     fun findAllByCategoryAndCursor(id: Long? = null, categoryId: Long? = null, page: Pageable): Slice<StoreDto> {
         return if (categoryId == null) {
@@ -26,6 +28,8 @@ class StoreQueryService(
     }
 
     fun findById(storeId: Long): StoreDetailDto {
+        // FIXME(async): findById가 popular store command 과정에서 실패하지 않도록 비동기 호출 처리
+        popularStoreCommandService.setStore(storeId)
         return StoreDetailDto.from(repository.getReferenceById(storeId))
     }
 }
