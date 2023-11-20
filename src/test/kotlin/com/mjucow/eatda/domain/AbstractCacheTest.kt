@@ -19,7 +19,7 @@ import org.testcontainers.utility.DockerImageName
 @ActiveProfiles("test")
 abstract class AbstractCacheTest {
     companion object {
-        const val REDIS_PORT = 6379
+        private const val REDIS_PORT = 6379
 
         @Container
         @ServiceConnection(name = "redis")
