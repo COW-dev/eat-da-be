@@ -13,7 +13,8 @@ spring:
       enabled: true
 
     datasource:
-        url: jdbc:tc:postgresql:///test-database
+        driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+        url: jdbc:tc:postgresql:15.4-alpine://test-database
 
     data:
       redis:
