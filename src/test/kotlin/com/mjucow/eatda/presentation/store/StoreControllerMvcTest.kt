@@ -269,7 +269,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "menu-create",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("가게의 메뉴 생성")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")
@@ -300,7 +300,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-findAllMenu",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("Store")
+                        .tag("store")
                         .description("가게의 메뉴 전체 조회")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("storeId").description("가게 식별자")

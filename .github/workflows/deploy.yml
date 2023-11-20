@@ -20,7 +20,7 @@ jobs:
           cache: "gradle"
 
       - name: Build with Gradle
-        run: ./gradlew clean build --no-daemon --exclude-task test
+        run: ./gradlew clean openapi3 build --no-daemon --exclude-task test
 
       - name: Login To DockerHub
         uses: docker/login-action@v3
@@ -38,6 +38,8 @@ jobs:
             DB_URL=${{ secrets.DB_URL }} 
             DB_USERNAME=${{ secrets.DB_USERNAME }} 
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            REDIS_URL=${{ secrets.REDIS_URL }} 
+            REDIS_PORT=${{ secrets.REDIS_PORT }}
           tags: |
             eatda/api-server:latest
 
@@ -69,9 +71,7 @@ jobs:
             sudo docker rm - f $(docker ps -qa)
             sudo docker pull eatda/api-server:latest
             sudo docker stop $(sudo docker ps -aq)
-            sudo docker run -d eatda/api-server:latest \
-              --name api-server \
-              -p 8080:8080 \
+            sudo docker run -p 8080:8080 -d eatda/api-server:latest --name api-server
 
       - name: Remove IP FROM security group
         run: |

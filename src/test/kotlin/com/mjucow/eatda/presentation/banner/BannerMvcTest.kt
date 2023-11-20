@@ -129,9 +129,9 @@ class BannerMvcTest : AbstractMockMvcTest() {
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    identifier = "baennr-update",
+                    identifier = "banner-update",
                     resourceDetails = ResourceSnippetParametersBuilder()
-                        .tag("baennr")
+                        .tag("banner")
                         .description("배너 수정")
                         .pathParameters(
                             ResourceDocumentation.parameterWithName("baennrId").description("배너 식별자")

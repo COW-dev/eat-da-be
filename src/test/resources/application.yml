@@ -15,4 +15,9 @@ spring:
     datasource:
         url: jdbc:tc:postgresql:///test-database
 
+    data:
+      redis:
+        host: 127.0.0.1
+        port: 6379
+
 logging.config: classpath:logback-test.xml
