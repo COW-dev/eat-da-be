@@ -72,7 +72,6 @@ spring:
   data:
     redis:
       host: ${REDIS_URL}
-      port: ${REDIS_PORT}
 
   jooq:
     sql-dialect: postgres
