@@ -28,8 +28,9 @@ class StoreQueryService(
     }
 
     fun findById(storeId: Long): StoreDetailDto {
+        val entity = repository.getReferenceById(storeId)
         // FIXME(async): findById가 popular store command 과정에서 실패하지 않도록 비동기 호출 처리
         popularStoreCommandService.setStore(storeId)
-        return StoreDetailDto.from(repository.getReferenceById(storeId))
+        return StoreDetailDto.from(entity)
     }
 }
