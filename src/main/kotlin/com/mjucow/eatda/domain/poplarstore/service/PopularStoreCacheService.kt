@@ -30,6 +30,10 @@ class PopularStoreCacheService(
         ops.incrementScore(createKey(storedAt), storeId.toString(), 1.0)
     }
 
+    fun delete(key: String) {
+        redisTemplate.delete(key)
+    }
+
     /**
      * 검색 키는 이전 AreaKey를 생성한다.
      */

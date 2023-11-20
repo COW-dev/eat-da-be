@@ -25,6 +25,7 @@ class PopularStoreQueryService(
                 }
             )
 
+            cache.delete(cachedPopularStoresKey)
             cachedPopularStoresKey = searchKey
             cachedPopularStoresValue = popularStoreDtos
         }
