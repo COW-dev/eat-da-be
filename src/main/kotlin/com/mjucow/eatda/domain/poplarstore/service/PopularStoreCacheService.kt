@@ -3,6 +3,7 @@ package com.mjucow.eatda.domain.poplarstore.service
 import com.mjucow.eatda.domain.poplarstore.entity.PopularStore
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -13,9 +14,8 @@ class PopularStoreCacheService(
     private val redisTemplate: StringRedisTemplate,
 ) {
     fun getStoresSortByPopular(key: String): List<PopularStore> {
-        val reverseRangeWithScores = redisTemplate.opsForZSet()
+        return redisTemplate.opsForZSet()
             .reverseRangeWithScores(key, 0, MAX_SIZE - 1)
-        return reverseRangeWithScores
             ?.mapNotNull {
                 if (it.value != null && it.score != null) {
                     PopularStore(it.value!!.toLong(), it.score!!.toLong())
@@ -27,8 +27,14 @@ class PopularStoreCacheService(
     }
 
     fun setStore(storedAt: Instant, storeId: Long) {
-        val ops = redisTemplate.opsForZSet()
-        ops.incrementScore(createKey(storedAt), storeId.toString(), 1.0)
+        val key = createKey(storedAt)
+        if (redisTemplate.hasKey(key).not()) {
+            redisTemplate.expire(key, Duration.ofMinutes(2 * UNIT_MINUTE))
+        }
+        redisTemplate
+            .opsForZSet()
+            .incrementScore(key, storeId.toString(), 1.0)
+
     }
 
     fun delete(key: String) {
