@@ -17,7 +17,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(PopularStoreController::class)
-class PopularStoreControllerTest: AbstractMockMvcTest() {
+class PopularStoreControllerTest : AbstractMockMvcTest() {
     @MockkBean(relaxUnitFun = true)
     lateinit var popularStoreQueryService: PopularStoreQueryService
 
@@ -53,7 +53,7 @@ class PopularStoreControllerTest: AbstractMockMvcTest() {
                             PayloadDocumentation.fieldWithPath("body.popularStores[].location").type(JsonFieldType.OBJECT).description("가게 위치 정보"),
                             PayloadDocumentation.fieldWithPath("body.popularStores[].location.latitude").type(JsonFieldType.STRING).description("가게 위치 위도"),
                             PayloadDocumentation.fieldWithPath("body.popularStores[].location.longitude").type(JsonFieldType.STRING).description("가게 위치 경도"),
-                            PayloadDocumentation.fieldWithPath("body.popularStores[].count").type(JsonFieldType.NUMBER).description("가게 조회수"),
+                            PayloadDocumentation.fieldWithPath("body.popularStores[].count").type(JsonFieldType.NUMBER).description("가게 조회수")
                         )
                 )
             )
@@ -62,5 +62,4 @@ class PopularStoreControllerTest: AbstractMockMvcTest() {
     companion object {
         const val BASE_URI = "/api/v1/stores/popular"
     }
-
 }

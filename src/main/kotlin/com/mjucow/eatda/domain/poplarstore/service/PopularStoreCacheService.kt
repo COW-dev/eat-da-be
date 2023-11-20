@@ -15,15 +15,8 @@ class PopularStoreCacheService(
 ) {
     fun getStoresSortByPopular(key: String): List<PopularStore> {
         return redisTemplate.opsForZSet()
-            .reverseRangeWithScores(key, 0, MAX_SIZE - 1)
-            ?.mapNotNull {
-                if (it.value != null && it.score != null) {
-                    PopularStore(it.value!!.toLong(), it.score!!.toLong())
-                } else {
-                    null
-                }
-            } ?: emptyList<PopularStore>()
-            .sortedByDescending { it.count }
+            .reverseRangeWithScores(key, 0, MAX_SIZE - 1)!!
+            .map { PopularStore(it.value!!.toLong(), it.score!!.toLong()) }
     }
 
     fun setStore(storedAt: Instant, storeId: Long) {
@@ -34,10 +27,6 @@ class PopularStoreCacheService(
         redisTemplate
             .opsForZSet()
             .incrementScore(key, storeId.toString(), 1.0)
-    }
-
-    fun delete(key: String) {
-        redisTemplate.delete(key)
     }
 
     /**
