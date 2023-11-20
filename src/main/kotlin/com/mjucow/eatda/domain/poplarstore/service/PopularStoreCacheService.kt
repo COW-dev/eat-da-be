@@ -13,8 +13,9 @@ class PopularStoreCacheService(
     private val redisTemplate: StringRedisTemplate,
 ) {
     fun getStoresSortByPopular(key: String): List<PopularStore> {
-        return redisTemplate.opsForZSet()
-            .rangeWithScores(key, 0, MAX_SIZE)
+        val reverseRangeWithScores = redisTemplate.opsForZSet()
+            .reverseRangeWithScores(key, 0, MAX_SIZE - 1)
+        return reverseRangeWithScores
             ?.mapNotNull {
                 if (it.value != null && it.score != null) {
                     PopularStore(it.value!!.toLong(), it.score!!.toLong())
