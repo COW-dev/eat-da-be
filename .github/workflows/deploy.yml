@@ -20,7 +20,7 @@ jobs:
           cache: "gradle"
 
       - name: Build with Gradle
-        run: ./gradlew clean build --no-daemon --exclude-task test
+        run: ./gradlew clean openapi3 build --no-daemon --exclude-task test
 
       - name: Login To DockerHub
         uses: docker/login-action@v3
