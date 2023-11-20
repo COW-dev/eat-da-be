@@ -15,9 +15,9 @@ class PopularStoreQueryService(
     private var cachedPopularStoresValue: PopularStoreDtos = PopularStoreDtos(emptyList())
 
     fun getPopularStores(searchAt: Instant = Instant.now()) : PopularStoreDtos {
-        val areaKey = cache.createKey(searchAt)
-        if (areaKey != cachedPopularStoresKey) {
-            val popularStores = cache.getStoresSortByPopular(areaKey)
+        val searchKey = cache.createSearchKey(searchAt)
+        if (searchKey != cachedPopularStoresKey) {
+            val popularStores = cache.getStoresSortByPopular(searchKey)
             val stores = storeRepository.findAllByIdInOrderByIdDesc(popularStores.map { it.storeId })
             val popularStoreDtos = PopularStoreDtos(
                 popularStores = popularStores.map { ps ->
@@ -25,7 +25,7 @@ class PopularStoreQueryService(
                 }
             )
 
-            cachedPopularStoresKey = areaKey
+            cachedPopularStoresKey = searchKey
             cachedPopularStoresValue = popularStoreDtos
         }
 

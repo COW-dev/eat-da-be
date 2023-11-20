@@ -8,7 +8,6 @@ class PopularStoreCommandService(
     private val cache: PopularStoreCacheService,
 ) {
     fun setStore(storeId: Long) {
-        val key = cache.createKey(Instant.now())
-        cache.setStore(key, storeId)
+        cache.setStore(Instant.now(), storeId)
     }
 }

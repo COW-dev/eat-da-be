@@ -25,9 +25,16 @@ class PopularStoreCacheService(
             .sortedByDescending { it.count }
     }
 
-    fun setStore(key: String, storeId: Long) {
+    fun setStore(storedAt: Instant, storeId: Long) {
         val ops = redisTemplate.opsForZSet()
-        ops.incrementScore(key, storeId.toString(), 1.0)
+        ops.incrementScore(createKey(storedAt), storeId.toString(), 1.0)
+    }
+
+    /**
+     * 검색 키는 이전 AreaKey를 생성한다.
+     */
+    fun createSearchKey(searchAt: Instant): String {
+        return createKey(searchAt.minusSeconds(UNIT_MINUTE * 60))
     }
 
     /**
@@ -35,8 +42,8 @@ class PopularStoreCacheService(
      * prefix: yyyyMMdd-hh- ex) 20231119-23
      * area-number: 0,1,2,3 (unit minute = 15)
      */
-    fun createKey(searchAt: Instant): String {
-        val localDateTime = LocalDateTime.ofInstant(searchAt, ZoneId.of("Asia/Seoul"))
+    private fun createKey(createdAt: Instant): String {
+        val localDateTime = LocalDateTime.ofInstant(createdAt, ZoneId.of("Asia/Seoul"))
 
         val formatDateHour = localDateTime.format(DEFAULT_FORMATTER)
         val unitMinute = localDateTime.minute / UNIT_MINUTE
@@ -47,8 +54,8 @@ class PopularStoreCacheService(
 
     companion object {
         val DEFAULT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd-HH")!!
-        const val UNIT_MINUTE = 15
         const val PREFIX = "POPULAR_STORE"
+        const val UNIT_MINUTE = 15L
         const val MAX_SIZE = 10L
     }
 }
