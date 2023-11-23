@@ -1,5 +1,6 @@
 package com.mjucow.eatda.domain
 
+import com.mjucow.eatda.AbstractSpringContextTest
 import com.mjucow.eatda.common.config.JacksonConfiguration
 import com.mjucow.eatda.common.config.JooqContextConfiguration
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -13,5 +14,4 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-abstract class AbstractDataTest {
-}
+abstract class AbstractDataTest: AbstractSpringContextTest()

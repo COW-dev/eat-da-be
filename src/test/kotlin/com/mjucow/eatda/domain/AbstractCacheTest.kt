@@ -1,5 +1,6 @@
 package com.mjucow.eatda.domain
 
+import com.mjucow.eatda.AbstractSpringContextTest
 import com.mjucow.eatda.common.config.RedisConfiguration
 import com.mjucow.eatda.common.properties.RedisProperties
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
@@ -17,7 +18,7 @@ import org.testcontainers.utility.DockerImageName
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-abstract class AbstractCacheTest {
+abstract class AbstractCacheTest: AbstractSpringContextTest() {
     companion object {
         private const val REDIS_PORT = 6379
 

@@ -7,5 +7,4 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Testcontainers
 @ActiveProfiles("test")
-abstract class AbstractApplicationTest {
-}
+abstract class AbstractApplicationTest: AbstractSpringContextTest()
