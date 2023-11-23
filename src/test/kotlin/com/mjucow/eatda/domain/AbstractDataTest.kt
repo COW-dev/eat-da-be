@@ -14,4 +14,4 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-abstract class AbstractDataTest: AbstractSpringContextTest()
+abstract class AbstractDataTest : AbstractSpringContextTest()

@@ -18,7 +18,7 @@ import org.testcontainers.utility.DockerImageName
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-abstract class AbstractCacheTest: AbstractSpringContextTest() {
+abstract class AbstractCacheTest : AbstractSpringContextTest() {
     companion object {
         private const val REDIS_PORT = 6379
 
