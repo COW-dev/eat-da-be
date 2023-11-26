@@ -1,4 +1,3 @@
-
 import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
@@ -130,7 +129,7 @@ tasks.withType<Test> {
 
 tasks.test {
     extensions.configure(JacocoTaskExtension::class) {
-        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+        setDestinationFile(file("$buildDir/jacoco/jacoco.exec"))
     }
 
     finalizedBy(tasks.jacocoTestReport)
