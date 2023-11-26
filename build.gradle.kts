@@ -213,7 +213,8 @@ tasks.jacocoTestCoverageVerification {
                 "*.common.*",
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",
-                "*.Companion"
+                "*.Companion",
+                "com.mjucow.eatda.common.config.WebConfig"
             )
         }
     }
