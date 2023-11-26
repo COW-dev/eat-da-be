@@ -21,7 +21,7 @@ class WebConfig : WebMvcConfigurer {
                 HttpMethod.DELETE.name(),
                 HttpMethod.PATCH.name(),
                 HttpMethod.HEAD.name(),
-                HttpMethod.OPTIONS.name(),
+                HttpMethod.OPTIONS.name()
             )
             .allowedHeaders("*")
             .allowCredentials(true)
