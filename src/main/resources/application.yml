@@ -4,6 +4,10 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: validate
+  task:
+    scheduling:
+      pool:
+        size: 1
 
   web.resources.add-mappings: false
   liquibase:
@@ -56,6 +60,10 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none
+  task:
+    scheduling:
+      pool:
+        size: 5
 
   datasource:
     driver-class-name: org.postgresql.Driver
