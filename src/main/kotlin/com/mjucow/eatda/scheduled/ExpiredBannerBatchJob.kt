@@ -44,14 +44,12 @@ class ExpiredBannerBatchJob(
     }
 
     private fun expiredBannerBulkInsert(expireTargetBanners: List<ExpiredTargetBanner>) {
-        val expiredBanners = ArrayList<ExpiredBannerRecord>()
-        expireTargetBanners.forEach { banner ->
-            val expiredBannerRecord = ExpiredBannerRecord().apply {
+        val expiredBanners = expireTargetBanners.map { banner ->
+            ExpiredBannerRecord().apply {
                 this.link = banner.link
                 this.imageAddress = banner.imageAddress
                 this.expiredAt = banner.expiredAt
             }
-            expiredBanners.add(expiredBannerRecord)
         }
         db.batchInsert(expiredBanners).execute()
     }
