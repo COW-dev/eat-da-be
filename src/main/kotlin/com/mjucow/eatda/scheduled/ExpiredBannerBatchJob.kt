@@ -10,7 +10,6 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-
 @Component
 class ExpiredBannerBatchJob(
     private val db: DSLContext,
@@ -35,8 +34,9 @@ class ExpiredBannerBatchJob(
         return db
             .select(BANNER.ID, BANNER.LINK, BANNER.IMAGE_ADDRESS, BANNER.EXPIRED_AT)
             .from(BANNER)
-            .where(BANNER.EXPIRED_AT.isNotNull
-                .and(BANNER.EXPIRED_AT.lessOrEqual(LocalDateTime.ofInstant(now, ZONE_ID)))
+            .where(
+                BANNER.EXPIRED_AT.isNotNull
+                    .and(BANNER.EXPIRED_AT.lessOrEqual(LocalDateTime.ofInstant(now, ZONE_ID)))
             )
             .fetch()
             .into(ExpiredTargetBanner::class.java)
@@ -45,7 +45,7 @@ class ExpiredBannerBatchJob(
 
     private fun expiredBannerBulkInsert(expireTargetBanners: List<ExpiredTargetBanner>) {
         val expiredBanners = ArrayList<ExpiredBannerRecord>()
-        expireTargetBanners.forEach {banner ->
+        expireTargetBanners.forEach { banner ->
             val expiredBannerRecord = ExpiredBannerRecord().apply {
                 this.link = banner.link
                 this.imageAddress = banner.imageAddress
@@ -61,11 +61,11 @@ class ExpiredBannerBatchJob(
         db.deleteFrom(BANNER).where(BANNER.ID.`in`(deletedBannerIds)).execute()
     }
 
-    data class ExpiredTargetBanner (
+    data class ExpiredTargetBanner(
         val id: Long,
         val link: String,
         val imageAddress: String,
-        val expiredAt: LocalDateTime
+        val expiredAt: LocalDateTime,
     )
 
     companion object {

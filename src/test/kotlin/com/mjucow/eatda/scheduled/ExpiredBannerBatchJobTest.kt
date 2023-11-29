@@ -67,7 +67,6 @@ class ExpiredBannerBatchJobTest : AbstractDataTest() {
         val createdExpiredBanners = findAllExpiredBanner()
         Assertions.assertThat(createdExpiredBanners).hasSize(count)
         Assertions.assertThat(bannerRepository.findAll()).isEmpty()
-
     }
 
     private fun findAllExpiredBanner(): List<ExpiredBannerRecord> {
