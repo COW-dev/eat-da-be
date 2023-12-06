@@ -14,14 +14,14 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(exception: IllegalArgumentException): ApiResponse<Unit> {
-        log.warn(exception.stackTraceToString())
+        log.warn(exception.message)
         return ApiResponse.error(exception.message)
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException::class)
     fun handleEntityNotFoundException(exception: EntityNotFoundException): ApiResponse<Unit> {
-        log.warn(exception.stackTraceToString())
+        log.warn(exception.message)
         return ApiResponse.error(exception.message)
     }
 
