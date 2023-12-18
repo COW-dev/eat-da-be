@@ -23,7 +23,6 @@ import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNull
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.data.domain.SliceImpl
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
@@ -91,7 +90,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
             )
         }.toList()
 
-        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns SliceImpl(storeDtos)
+        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns storeDtos
 
         // when & then
         mockMvc.perform(

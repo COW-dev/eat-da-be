@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
-import org.springframework.data.domain.Pageable
 import java.util.stream.IntStream
 
 @Import(JacksonConfiguration::class)
@@ -41,12 +40,11 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize)
+            size = pageSize
         )
 
         // then
-        assertThat(result).hasSize(pageSize).allMatch { it > minStoreId }
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result).hasSize(pageSize + 1).allMatch { it > minStoreId }
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터 적음")
@@ -67,12 +65,11 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize)
+            size = pageSize
         )
 
         // then
         assertThat(result).hasSize(dataSize).allMatch { it >= minStoreId }
-        assertThat(result.hasNext()).isFalse()
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터 없음")
@@ -85,7 +82,7 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize)
+            size = pageSize
         )
 
         // then
@@ -109,13 +106,12 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize),
+            size = pageSize,
             id = maxStoreId
         )
 
         // then
-        assertThat(result).hasSize(pageSize).allMatch { it < maxStoreId }
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result).hasSize(pageSize + 1).allMatch { it < maxStoreId }
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 O, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터 적음")
@@ -136,13 +132,12 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize),
+            size = pageSize,
             id = minStoreId + dataSize
         )
 
         // then
         assertThat(result).hasSize(dataSize).allMatch { it < minStoreId + dataSize }
-        assertThat(result.hasNext()).isFalse()
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 O, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터 없음")
@@ -155,7 +150,7 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         // when
         val result = storeCustomRepositoryImpl.findIdsByCategoryIdOrderByIdDesc(
             categoryId = category.id,
-            page = Pageable.ofSize(pageSize),
+            size = pageSize,
             id = Long.MAX_VALUE
         )
 
@@ -175,13 +170,12 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
 
         // when
         val result = storeCustomRepositoryImpl.findAllByIdLessThanOrderByIdDesc(
-            page = Pageable.ofSize(pageSize),
+            size = pageSize,
             id = maxStoreId + 1
         )
 
         // then
-        assertThat(result.content.size).isEqualTo(pageSize)
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result.size).isEqualTo(pageSize + 1)
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 O, 카테고리 식별자 X, 페이지 크기 대비 실제 데이터 적음")
@@ -198,13 +192,12 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
 
         // when
         val result = storeCustomRepositoryImpl.findAllByIdLessThanOrderByIdDesc(
-            page = Pageable.ofSize(pageSize),
+            size = pageSize,
             id = maxStoreId + 1
         )
 
         // then
-        assertThat(result.content.size).isEqualTo(dataSize)
-        assertThat(result.hasNext()).isFalse()
+        assertThat(result.size).isEqualTo(dataSize)
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 O, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터")
@@ -215,7 +208,7 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
 
         // when
         val result = storeCustomRepositoryImpl.findAllByIdLessThanOrderByIdDesc(
-            page = Pageable.ofSize(pageSize)
+            size = pageSize
         )
 
         // then
