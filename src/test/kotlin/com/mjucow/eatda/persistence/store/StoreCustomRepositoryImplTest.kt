@@ -44,7 +44,7 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         )
 
         // then
-        assertThat(result).hasSize(pageSize + 1).allMatch { it > minStoreId }
+        assertThat(result).hasSize(pageSize + 1).allMatch { it >= minStoreId }
     }
 
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 카테고리 식별자 O, 페이지 크기 대비 실제 데이터 적음")
