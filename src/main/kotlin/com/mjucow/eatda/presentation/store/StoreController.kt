@@ -52,7 +52,7 @@ class StoreController(
 
         val contents = results.subList(0, min(pageSize, results.size))
         val hasNext = results.size > pageSize
-        val nextCursor = if (hasNext) results.last().id.toString() else null
+        val nextCursor = if (hasNext) contents.last().id.toString() else null
         return ApiResponse.success(CursorPage(contents, hasNext, nextCursor))
     }
 
