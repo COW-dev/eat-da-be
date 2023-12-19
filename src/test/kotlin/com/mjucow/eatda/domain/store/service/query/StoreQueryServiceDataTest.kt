@@ -18,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Import
-import org.springframework.data.domain.Pageable
 import java.util.stream.IntStream
 
 @Import(value = [StoreQueryService::class])
@@ -71,16 +70,15 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val latestId = IntStream.range(0, pageSize * 2).mapToLong {
             repository.save(Store(name = "validName$it", address = StoreMother.ADDRESS)).id
         }.max().asLong
-        val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(size = pageSize)
 
         // then
         assertThat(result).anyMatch { it.id == latestId }
     }
 
-    @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기만큼만 조회된다")
+    @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기 + 1만큼만 조회된다")
     @Test
     fun findAllByCursorWithPage() {
         // given
@@ -88,14 +86,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         repeat(Store.MAX_NAME_LENGTH) {
             repository.save(Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS))
         }
-        val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = (pageSize * 2).toLong(), page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = (pageSize * 2).toLong(), size = pageSize)
 
         // then
-        assertThat(result.content.size).isEqualTo(pageSize)
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result.size).isEqualTo(pageSize + 1)
     }
 
     @DisplayName("조회할 결과가 일부라면 일부만 조회된다")
@@ -105,26 +101,24 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val store = StoreMother.create()
         val storeId = repository.save(store).id
         val pageSize = 10
-        val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = storeId + 1, page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = storeId + 1, size = pageSize)
 
         // then
-        assertThat(result.content.size).isLessThan(pageSize)
-        assertThat(result.hasNext()).isFalse()
+        assertThat(result.size).isLessThan(pageSize)
     }
 
     @DisplayName("조회할 데이터가 없다면 empty를 반환한다")
     @Test
     fun findEmptyResult() {
         // given
+        val pageSize = 10
         val store = StoreMother.create()
         repository.save(store)
-        val page = Pageable.ofSize(10)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = store.id, page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(id = store.id, size = pageSize)
 
         // then
         assertThat(result).isEmpty()
@@ -141,16 +135,15 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
             store.addCategory(category)
             repository.saveAndFlush(store).id
         }.max().asLong
-        val page = Pageable.ofSize(pageSize)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, page = page)
+        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, size = pageSize)
 
         // then
         assertThat(result).anyMatch { it.id == latestId }
     }
 
-    @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기만큼만 조회된다: 특정 카테고리")
+    @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기 + 1만큼만 조회된다: 특정 카테고리")
     @Test
     fun categoryTest2() {
         // given
@@ -161,17 +154,15 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
             store.addCategory(category)
             repository.saveAndFlush(store)
         }
-        val page = Pageable.ofSize(pageSize)
 
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
-            page = page
+            size = pageSize
         )
 
         // then
-        assertThat(result.content.size).isEqualTo(pageSize)
-        assertThat(result.hasNext()).isTrue()
+        assertThat(result.size).isEqualTo(pageSize + 1)
     }
 
     @DisplayName("조회할 결과가 일부라면 일부만 조회된다: 특정 카테고리")
@@ -183,18 +174,16 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         store.addCategory(category)
         val storeId = repository.save(store).id
         val pageSize = 10
-        val page = Pageable.ofSize(pageSize)
 
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
             id = storeId + 1,
-            page = page
+            size = pageSize
         )
 
         // then
-        assertThat(result.content.size).isLessThan(pageSize)
-        assertThat(result.hasNext()).isFalse()
+        assertThat(result.size).isLessThan(pageSize)
     }
 
     @DisplayName("조회할 데이터가 없다면 empty를 반환한다: 특정 카테고리")
@@ -205,13 +194,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val store = StoreMother.create()
         store.addCategory(category)
         repository.save(store)
-        val page = Pageable.ofSize(10)
 
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
             id = store.id,
-            page = page
+            size = 10
         )
 
         // then
