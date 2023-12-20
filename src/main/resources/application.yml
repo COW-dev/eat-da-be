@@ -84,3 +84,20 @@ spring:
 
   jooq:
     sql-dialect: postgres
+
+
+springdoc:
+
+  swagger-ui:
+    groups-order: DESC
+    operations-sorter: alpha
+    path: /
+    enabled: false
+
+  packages-to-scan: com.mjucow.eatda.presentation
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+  api-docs:
+    groups:
+      enabled: true

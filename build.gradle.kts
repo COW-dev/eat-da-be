@@ -1,4 +1,4 @@
-import com.epages.restdocs.apispec.gradle.OpenApi3Task
+//import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
 import org.springframework.boot.gradle.tasks.bundling.BootJar
@@ -7,7 +7,7 @@ plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.epages.restdocs-api-spec")
+//    id("com.epages.restdocs-api-spec")
     id("nu.studer.jooq")
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -52,6 +52,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // springDoc
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     // convert
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -137,18 +140,18 @@ tasks.register<Copy>("copyOasToSwagger") {
     into("src/main/resources/static/swagger-ui/.")
     dependsOn("openapi3")
 }
+//
+//tasks.withType<OpenApi3Task> {
+//    finalizedBy("copyOasToSwagger")
+//}
 
-tasks.withType<OpenApi3Task> {
-    finalizedBy("copyOasToSwagger")
-}
-
-openapi3 {
-    setServer("http://localhost:8080")
-    title = "Eatda API Documentation"
-    description = "Eatda(잇다) 서비스의 API 명세서입니다."
-    version = "0.0.1"
-    format = "yaml"
-}
+//openapi3 {
+//    setServer("http://localhost:8080")
+//    title = "Eatda API Documentation"
+//    description = "Eatda(잇다) 서비스의 API 명세서입니다."
+//    version = "0.0.1"
+//    format = "yaml"
+//}
 
 jacoco {
     toolVersion = jacocoVersion

@@ -1,3 +1,7 @@
 package com.mjucow.eatda.domain.store.service.command.dto
 
-data class CreateCommand(val name: String)
+import io.swagger.v3.oas.annotations.media.Schema
+
+data class CreateCommand(
+    @Schema(description = "생성할 카테고리 이름", example = "validName")
+    val name: String)
