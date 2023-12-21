@@ -7,7 +7,6 @@ plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
-//    id("com.epages.restdocs-api-spec")
     id("nu.studer.jooq")
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -134,24 +133,6 @@ tasks.test {
 
     finalizedBy(tasks.jacocoTestReport)
 }
-
-// tasks.register<Copy>("copyOasToSwagger") {
-//    from("$buildDir/api-spec/openapi3.yaml")
-//    into("src/main/resources/static/swagger-ui/.")
-//    dependsOn("openapi3")
-// }
-//
-// tasks.withType<OpenApi3Task> {
-//    finalizedBy("copyOasToSwagger")
-// }
-
-// openapi3 {
-//    setServer("http://localhost:8080")
-//    title = "Eatda API Documentation"
-//    description = "Eatda(잇다) 서비스의 API 명세서입니다."
-//    version = "0.0.1"
-//    format = "yaml"
-// }
 
 jacoco {
     toolVersion = jacocoVersion
