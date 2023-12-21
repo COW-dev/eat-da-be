@@ -335,7 +335,7 @@ paths:
       - menu
       summary: 메뉴 조회
       description: 메뉴 조회
-      operationId: menu-findById뉴
+      operationId: menu-findById
       parameters:
       - name: menuId
         in: path
