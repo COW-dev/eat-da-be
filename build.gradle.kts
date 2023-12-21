@@ -213,7 +213,7 @@ tasks.jacocoTestCoverageVerification {
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",
                 "*.Companion",
-                "*.*ApiPresentationKt.*"
+                "*.ApiPresentation.DefaultImpls"
             )
         }
     }
