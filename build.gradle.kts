@@ -135,11 +135,11 @@ tasks.test {
     finalizedBy(tasks.jacocoTestReport)
 }
 
-//tasks.register<Copy>("copyOasToSwagger") {
+// tasks.register<Copy>("copyOasToSwagger") {
 //    from("$buildDir/api-spec/openapi3.yaml")
 //    into("src/main/resources/static/swagger-ui/.")
 //    dependsOn("openapi3")
-//}
+// }
 //
 // tasks.withType<OpenApi3Task> {
 //    finalizedBy("copyOasToSwagger")

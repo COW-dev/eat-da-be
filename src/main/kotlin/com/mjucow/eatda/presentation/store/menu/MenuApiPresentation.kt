@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
 @Tag(name = "메뉴 API", description = "메뉴를 관리해주는 API")
-interface Menu {
+interface MenuApiPresentation {
     @Operation(summary = "메뉴 조회", description = "메뉴를 조회합니다.")
     fun findById(id: Long): ApiResponse<MenuDto>
 

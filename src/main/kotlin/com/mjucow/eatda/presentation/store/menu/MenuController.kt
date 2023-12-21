@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 class MenuController(
     private val queryService: MenuQueryService,
     private val commandService: MenuCommandService,
-) : Menu {
+) : MenuApiPresentation {
     @GetMapping("/{menuId}")
     @ResponseStatus(HttpStatus.OK)
     override fun findById(@PathVariable("menuId") id: Long): ApiResponse<MenuDto> {

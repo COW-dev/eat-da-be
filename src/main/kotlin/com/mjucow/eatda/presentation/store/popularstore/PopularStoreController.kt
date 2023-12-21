@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class PopularStoreController(
     private val queryService: PopularStoreQueryService,
-) : PopularStore {
+) : PopularStoreApiPresentation {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     override fun findAllPopularStore(): ApiResponse<PopularStoreDtos> {

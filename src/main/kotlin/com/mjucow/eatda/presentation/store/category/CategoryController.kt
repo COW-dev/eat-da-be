@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 class CategoryController(
     val categoryQueryService: CategoryQueryService,
     val categoryCommandService: CategoryCommandService,
-) : Category {
+) : CategoryApiPresentation {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     override fun findAll(): ApiResponse<Categories> {

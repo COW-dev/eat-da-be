@@ -32,7 +32,7 @@ class StoreController(
     val storeCommandService: StoreCommandService,
     val menuQueryService: MenuQueryService,
     val menuCommandService: MenuCommandService,
-) : Store {
+) : StoreApiPresentation {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     override fun create(@RequestBody command: StoreCreateCommand): ApiResponse<Long> {

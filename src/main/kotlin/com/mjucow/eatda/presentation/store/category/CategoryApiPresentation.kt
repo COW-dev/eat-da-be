@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
 @Tag(name = "카테고리 API", description = "카테고리를 관리하는 API")
-interface Category {
+interface CategoryApiPresentation {
     @Operation(summary = "카테고리 전체조회", description = "모든 카테고리를 조회합니다.")
     fun findAll(): ApiResponse<Categories>
 

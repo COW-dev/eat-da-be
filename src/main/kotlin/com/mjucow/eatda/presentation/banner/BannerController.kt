@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 class BannerController(
     private val bannerQueryService: BannerQueryService,
     private val bannerCommandService: BannerCommandService,
-) : Banner {
+) : BannerApiPresentation {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     override fun create(

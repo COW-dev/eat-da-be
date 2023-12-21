@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
 @Tag(name = "가게 API", description = "가게를 관리해주는 API")
-interface Store {
+interface StoreApiPresentation {
 
     @Operation(summary = "가게 생성", description = "가게를 생성합니다.")
     fun create(command: StoreCreateCommand): ApiResponse<Long>

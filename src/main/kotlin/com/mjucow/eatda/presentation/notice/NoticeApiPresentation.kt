@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
 @Tag(name = "공지사항 API", description = "공지사항을 관리해주는 API")
-interface Notice {
+interface NoticeApiPresentation {
 
     @Operation(summary = "공지사항 생성", description = "공지사항을 생성합니다.")
     fun create(command: CreateNoticeCommand): ApiResponse<Long>

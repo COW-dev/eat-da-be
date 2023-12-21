@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 
 @Tag(name = "배너 API", description = "배너 목록을 관리해주는 API")
-interface Banner {
+interface BannerApiPresentation {
 
     @Operation(summary = "배너 생성", description = "배너를 생성합니다.")
     fun create(command: CreateBannerCommand): ApiResponse<Long>

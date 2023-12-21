@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 class NoticeController(
     private val noticeQueryService: NoticeQueryService,
     private val noticeCommandService: NoticeCommandService,
-) : Notice {
+) : NoticeApiPresentation {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
