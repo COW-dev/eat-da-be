@@ -12,12 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 @ApiResponse(
     responseCode = "200",
     description = "성공",
-    content = [Content(
-        mediaType = "application/json",
-        examples = [
-            ExampleObject(
-                name = "example",
-                value = """
+    content = [
+        Content(
+            mediaType = "application/json",
+            examples = [
+                ExampleObject(
+                    name = "example",
+                    value = """
         {
             "message": null,
             "body": {
@@ -73,8 +74,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
             }
         }
                 """
-            )
-        ]
-    )]
+                )
+            ]
+        )
+    ]
 )
 annotation class StoreDtosApiResponse()

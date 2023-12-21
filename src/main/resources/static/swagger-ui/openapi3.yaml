@@ -328,7 +328,7 @@ paths:
               examples:
                 category-findById:
                   value: "{\"message\":null,\"body\":{\"id\":4631017781137326803,\"\
-                    name\":\"뉴ef8845e-4089-41a4-a393-d00aa8386d85\"}}"
+                    name\":\"3ef8845e-4089-41a4-a393-d00aa8386d85\"}}"
   /api/v1/menu/{menuId}:
     get:
       tags:
