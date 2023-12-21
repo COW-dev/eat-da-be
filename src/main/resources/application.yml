@@ -18,6 +18,24 @@ logging.config: classpath:logback/logback-${spring.profiles.active}.xml
 
 ---
 
+springdoc:
+
+  swagger-ui:
+    groups-order: DESC
+    operations-sorter: alpha
+
+
+  packages-to-scan: com.mjucow.eatda.presentation
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+  api-docs:
+    path: /swagger-new-ui
+    groups:
+      enabled: true
+
+---
+
 spring:
   config:
     activate:
@@ -84,20 +102,3 @@ spring:
 
   jooq:
     sql-dialect: postgres
-
-
-springdoc:
-
-  swagger-ui:
-    groups-order: DESC
-    operations-sorter: alpha
-    path: /
-    enabled: false
-
-  packages-to-scan: com.mjucow.eatda.presentation
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-
-  api-docs:
-    groups:
-      enabled: true
