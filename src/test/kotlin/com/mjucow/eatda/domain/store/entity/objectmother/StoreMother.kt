@@ -3,6 +3,8 @@ package com.mjucow.eatda.domain.store.entity.objectmother
 import com.mjucow.eatda.common.objectmother.EntityMother
 import com.mjucow.eatda.common.vo.PhoneNumber
 import com.mjucow.eatda.common.vo.Point
+import com.mjucow.eatda.common.vo.deseializer.Latitude
+import com.mjucow.eatda.common.vo.deseializer.Longitude
 import com.mjucow.eatda.domain.store.entity.Store
 
 object StoreMother : EntityMother<Store>() {
@@ -11,7 +13,7 @@ object StoreMother : EntityMother<Store>() {
     const val DISPLAY_NAME = "띵지대"
     const val IMAGE_ADDRESS = "/eatda/public/store/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.jpg"
     val PHONE_NUMBER = PhoneNumber("02-300-1656")
-    val LOCATION = Point(latitude = 37.5802219, longitude = 126.9226047)
+    val LOCATION = Point(latitude = Latitude(37.5802219), Longitude(126.9226047))
 
     override fun createDefaultInstance() = Store(NAME, ADDRESS)
 
