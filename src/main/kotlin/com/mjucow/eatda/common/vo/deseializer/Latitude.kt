@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JvmInline
 value class Latitude(
     @JsonProperty(value = "latitude")
-    val value : Double
-){
+    val value: Double,
+) {
     init {
         if (value < -90 || value > 90) {
             throw IllegalArgumentException()
