@@ -23,7 +23,7 @@ interface StoreApiPresentation {
     fun findAllByCategoryIdAndCursor(
         storeId: Long?,
         categoryId: Long?,
-        pageSize: Int = 20,
+        pageSize: Int?,
     ): ApiResponse<CursorPage<StoreDto>>
 
     @Operation(summary = "특정 가게 조회", description = "특정 가게 하나를 조회합니다.")

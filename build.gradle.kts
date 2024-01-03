@@ -1,4 +1,3 @@
-// import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
 import org.springframework.boot.gradle.tasks.bundling.BootJar

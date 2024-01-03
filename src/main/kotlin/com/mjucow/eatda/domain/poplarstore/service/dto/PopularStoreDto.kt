@@ -14,12 +14,12 @@ data class PopularStoreDto(
     val displayedName: String,
     @Schema(name = "address", example = "서울특별시 서대문구 거북골로 34")
     val address: String,
-    @Schema(name = "phoneNumber", example = "02-300-1656")
     @JsonUnwrapped
     val phoneNumber: PhoneNumber? = null,
     @Schema(name = "imageAddress", example = "/eatda/public/store/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.jpg")
     val imageAddress: String? = null,
     val location: Point? = null,
+    @Schema(name = "count", example = "1")
     val count: Long,
 ) {
     companion object {
