@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class SwaggerConfig {
     @Bean
-    fun swaggerApi() = OpenAPI()
+    fun swaggerApi(): OpenAPI = OpenAPI()
         .components(Components())
         .info(
             Info()
