@@ -13,12 +13,19 @@ class StoreQueryService(
     val repository: StoreRepository,
     val popularStoreCommandService: PopularStoreCommandService,
 ) {
-    fun findAllByCategoryAndCursor(id: Long? = null, categoryId: Long? = null, size: Int): List<StoreDto> {
+    fun findAllByCategoryAndCursor(cursor: Long? = null, categoryId: Long? = null, size: Int): List<StoreDto> {
         return if (categoryId == null) {
-            repository.findAllByIdLessThanOrderByIdDesc(size, id).map(StoreDto::from)
+            repository.findAllByIdLessThanOrderByIdDesc(
+                size = size,
+                id = cursor
+            ).map(StoreDto::from)
         } else {
             // FIXME(cache): store 캐시 처리 이후 store 조회 개선하기
-            val storeIds = repository.findIdsByCategoryIdOrderByIdDesc(categoryId, size, id)
+            val storeIds = repository.findIdsByCategoryIdOrderByIdDesc(
+                categoryId = categoryId,
+                size = size,
+                id = cursor
+            )
             repository.findAllByIdInOrderByIdDesc(storeIds).map(StoreDto::from)
         }
     }

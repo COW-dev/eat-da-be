@@ -68,7 +68,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // given
         val pageSize = 2
         val latestId = IntStream.range(0, pageSize * 2).mapToLong {
-            repository.save(Store(name = "validName$it", address = StoreMother.ADDRESS)).id
+            repository.save(
+                Store(
+                    name = "validName$it",
+                    address = StoreMother.ADDRESS
+                )
+            ).id
         }.max().asLong
 
         // when
@@ -84,11 +89,19 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // given
         val pageSize = Store.MAX_NAME_LENGTH - 1
         repeat(Store.MAX_NAME_LENGTH) {
-            repository.save(Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS))
+            repository.save(
+                Store(
+                    name = "x".repeat(it + 1),
+                    address = StoreMother.ADDRESS
+                )
+            )
         }
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = (pageSize * 2).toLong(), size = pageSize)
+        val result = storeQueryService.findAllByCategoryAndCursor(
+            cursor = (pageSize * 2).toLong(),
+            size = pageSize
+        )
 
         // then
         assertThat(result.size).isEqualTo(pageSize + 1)
@@ -103,7 +116,10 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val pageSize = 10
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = storeId + 1, size = pageSize)
+        val result = storeQueryService.findAllByCategoryAndCursor(
+            cursor = storeId + 1,
+            size = pageSize
+        )
 
         // then
         assertThat(result.size).isLessThan(pageSize)
@@ -118,7 +134,10 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         repository.save(store)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(id = store.id, size = pageSize)
+        val result = storeQueryService.findAllByCategoryAndCursor(
+            cursor = store.id,
+            size = pageSize
+        )
 
         // then
         assertThat(result).isEmpty()
@@ -137,7 +156,10 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         }.max().asLong
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, size = pageSize)
+        val result = storeQueryService.findAllByCategoryAndCursor(
+            categoryId = category.id,
+            size = pageSize
+        )
 
         // then
         assertThat(result).anyMatch { it.id == latestId }
@@ -178,7 +200,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
-            id = storeId + 1,
+            cursor = storeId + 1,
             size = pageSize
         )
 
@@ -198,7 +220,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // when
         val result = storeQueryService.findAllByCategoryAndCursor(
             categoryId = category.id,
-            id = store.id,
+            cursor = store.id,
             size = 10
         )
 

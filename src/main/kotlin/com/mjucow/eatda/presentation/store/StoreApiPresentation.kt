@@ -21,7 +21,7 @@ interface StoreApiPresentation {
     @Operation(summary = "커서 기반 카테고리 가게 조회", description = "커서를 기반으로 가게를 조회합니다.")
     @StoreDtosApiResponse
     fun findAllByCategoryIdAndCursor(
-        storeId: Long?,
+        cursor: Long?,
         categoryId: Long?,
         pageSize: Int,
     ): ApiResponse<CursorPage<StoreDto>>

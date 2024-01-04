@@ -43,11 +43,11 @@ class StoreController(
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     override fun findAllByCategoryIdAndCursor(
-        @RequestParam("storeId", required = false) storeId: Long?,
+        @RequestParam("cursor", required = false) cursor: Long?,
         @RequestParam("categoryId", required = false) categoryId: Long?,
         @RequestParam("pageSize", required = false, defaultValue = "20") pageSize: Int,
     ): ApiResponse<CursorPage<StoreDto>> {
-        val results = storeQueryService.findAllByCategoryAndCursor(storeId, categoryId, pageSize)
+        val results = storeQueryService.findAllByCategoryAndCursor(cursor, categoryId, pageSize)
 
         val contents = results.subList(0, min(pageSize, results.size))
         val hasNext = results.size > pageSize
