@@ -23,10 +23,11 @@ import org.springframework.web.bind.annotation.RestController
 class NoticeController(
     private val noticeQueryService: NoticeQueryService,
     private val noticeCommandService: NoticeCommandService,
-) {
+) : NoticeApiPresentation {
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(
+    override fun create(
         @RequestBody command: CreateNoticeCommand,
     ): ApiResponse<Long> {
         return ApiResponse.success(noticeCommandService.create(command))
@@ -34,13 +35,13 @@ class NoticeController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAll(): ApiResponse<Notices> {
+    override fun findAll(): ApiResponse<Notices> {
         return ApiResponse.success(noticeQueryService.findAll())
     }
 
     @GetMapping("/{noticeId}")
     @ResponseStatus(HttpStatus.OK)
-    fun findById(
+    override fun findById(
         @PathVariable("noticeId") noticeId: Long,
     ): ApiResponse<NoticeDto> {
         return ApiResponse.success(noticeQueryService.findById(noticeId))
@@ -48,7 +49,7 @@ class NoticeController(
 
     @PatchMapping("/{noticeId}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(
+    override fun update(
         @PathVariable("noticeId") noticeId: Long,
         @RequestBody command: UpdateNoticeCommand,
     ) {
@@ -57,7 +58,7 @@ class NoticeController(
 
     @DeleteMapping("/{noticeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(
+    override fun deleteById(
         @PathVariable("noticeId") noticeId: Long,
     ) {
         noticeCommandService.delete(noticeId)

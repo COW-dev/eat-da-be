@@ -1,4 +1,3 @@
-import com.epages.restdocs.apispec.gradle.OpenApi3Task
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jooq.meta.jaxb.Logging
 import org.springframework.boot.gradle.tasks.bundling.BootJar
@@ -7,7 +6,6 @@ plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.epages.restdocs-api-spec")
     id("nu.studer.jooq")
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -53,11 +51,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // springDoc
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+
     // convert
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    // container
-    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
     // database
     runtimeOnly("org.postgresql:postgresql")
@@ -135,24 +133,6 @@ tasks.test {
     finalizedBy(tasks.jacocoTestReport)
 }
 
-tasks.register<Copy>("copyOasToSwagger") {
-    from("$buildDir/api-spec/openapi3.yaml")
-    into("src/main/resources/static/swagger-ui/.")
-    dependsOn("openapi3")
-}
-
-tasks.withType<OpenApi3Task> {
-    finalizedBy("copyOasToSwagger")
-}
-
-openapi3 {
-    setServer("http://localhost:8080")
-    title = "Eatda API Documentation"
-    description = "Eatda(잇다) 서비스의 API 명세서입니다."
-    version = "0.0.1"
-    format = "yaml"
-}
-
 jacoco {
     toolVersion = jacocoVersion
 }
@@ -209,6 +189,7 @@ tasks.jacocoTestCoverageVerification {
             // 커버리지 체크를 제외할 클래스들
             excludes = listOf(
                 "com.mjucow.eatda.EatdaApplicationKt",
+                "*.*ApiPresentation.*",
                 "*.common.*",
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",

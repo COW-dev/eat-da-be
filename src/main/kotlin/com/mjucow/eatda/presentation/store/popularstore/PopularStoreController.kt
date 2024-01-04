@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class PopularStoreController(
     private val queryService: PopularStoreQueryService,
-) {
+) : PopularStoreApiPresentation {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAllPopularStore(): ApiResponse<PopularStoreDtos> {
+    override fun findAllPopularStore(): ApiResponse<PopularStoreDtos> {
         return ApiResponse.success(queryService.getPopularStores())
     }
 }
