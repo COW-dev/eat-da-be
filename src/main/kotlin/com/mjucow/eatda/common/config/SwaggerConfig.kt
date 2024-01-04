@@ -15,6 +15,6 @@ class SwaggerConfig {
             Info()
                 .title("Eatda API Documentation")
                 .description("Eatda(잇다) 서비스의 API 명세서입니다.")
-                .version("0.1.7")
+                .version("0.1.8")
         )
 }

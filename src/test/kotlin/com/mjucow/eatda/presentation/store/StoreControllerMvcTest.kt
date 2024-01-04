@@ -49,7 +49,10 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
         // given
         val entityId = 1L
         every { storeCommandService.create(any()) } returns entityId
-        val command = StoreCreateCommand(name = StoreMother.NAME, address = StoreMother.ADDRESS)
+        val command = StoreCreateCommand(
+            name = StoreMother.NAME,
+            address = StoreMother.ADDRESS
+        )
         val content = objectMapper.writeValueAsString(command)
 
         // when & then
@@ -95,7 +98,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
         // when & then
         mockMvc.perform(
             RestDocumentationRequestBuilders.get(
-                "$BASE_URI?storeId={storeId}&size={size}&categoryId={categoryId}",
+                "$BASE_URI?cursor={cursor}&size={size}&categoryId={categoryId}",
                 storeDtos.size + 1,
                 pageSize,
                 null
@@ -114,7 +117,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                         .tag("store")
                         .description("커서 기반 카테고리 가게 조회")
                         .queryParameters(
-                            ResourceDocumentation.parameterWithName("storeId").description("조회한 마지막 가게 식별자").optional(),
+                            ResourceDocumentation.parameterWithName("cursor").description("조회한 마지막 가게 식별자").optional(),
                             ResourceDocumentation.parameterWithName("categoryId").description("조회하는 가게의 카테고리의 식별자").optional(),
                             ResourceDocumentation.parameterWithName("size").description("조회할 페이지 사이즈").optional()
                         )
@@ -154,7 +157,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
         // when & then
         mockMvc.perform(
             RestDocumentationRequestBuilders.get(
-                "$BASE_URI?storeId={storeId}&size={size}&categoryId={categoryId}",
+                "$BASE_URI?cursor={cursor}&size={size}&categoryId={categoryId}",
                 storeDtos.size + 1,
                 pageSize,
                 1
