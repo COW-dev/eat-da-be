@@ -23,16 +23,18 @@ import org.springframework.web.bind.annotation.RestController
 class CategoryController(
     val categoryQueryService: CategoryQueryService,
     val categoryCommandService: CategoryCommandService,
-) {
+) : CategoryApiPresentation {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAll(): ApiResponse<Categories> {
+    override fun findAll(): ApiResponse<Categories> {
         return ApiResponse.success(categoryQueryService.findAll())
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody command: CreateCommand): ApiResponse<Long> {
+    override fun create(
+        @RequestBody command: CreateCommand,
+    ): ApiResponse<Long> {
         val id = categoryCommandService.create(command)
 
         return ApiResponse.success(id)
@@ -40,19 +42,19 @@ class CategoryController(
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    fun findById(@PathVariable("categoryId") id: Long): ApiResponse<CategoryDto> {
+    override fun findById(@PathVariable("categoryId") id: Long): ApiResponse<CategoryDto> {
         return ApiResponse.success(categoryQueryService.findById(id))
     }
 
     @DeleteMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable("categoryId") id: Long) {
+    override fun deleteById(@PathVariable("categoryId") id: Long) {
         categoryCommandService.delete(id)
     }
 
     @PatchMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateNameById(
+    override fun updateNameById(
         @PathVariable("categoryId") id: Long,
         @RequestBody command: UpdateNameCommand,
     ) {

@@ -20,22 +20,22 @@ import org.springframework.web.bind.annotation.RestController
 class MenuController(
     private val queryService: MenuQueryService,
     private val commandService: MenuCommandService,
-) {
+) : MenuApiPresentation {
     @GetMapping("/{menuId}")
     @ResponseStatus(HttpStatus.OK)
-    fun findById(@PathVariable("menuId") id: Long): ApiResponse<MenuDto> {
+    override fun findById(@PathVariable("menuId") id: Long): ApiResponse<MenuDto> {
         return ApiResponse.success(queryService.findById(id))
     }
 
     @PatchMapping("/{menuId}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateById(@PathVariable("menuId") id: Long, @RequestBody command: MenuUpdateCommand) {
+    override fun updateById(@PathVariable("menuId") id: Long, @RequestBody command: MenuUpdateCommand) {
         commandService.update(id, command)
     }
 
     @DeleteMapping("/{menuId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable("menuId") id: Long) {
+    override fun deleteById(@PathVariable("menuId") id: Long) {
         commandService.delete(id)
     }
 }

@@ -32,58 +32,58 @@ class StoreController(
     val storeCommandService: StoreCommandService,
     val menuQueryService: MenuQueryService,
     val menuCommandService: MenuCommandService,
-) {
-
+) : StoreApiPresentation {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody command: StoreCreateCommand): ApiResponse<Long> {
+    override fun create(@RequestBody command: StoreCreateCommand): ApiResponse<Long> {
         val id = storeCommandService.create(command = command)
         return ApiResponse.success(id)
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAllByCategoryIdAndCursor(
+    override fun findAllByCategoryIdAndCursor(
         @RequestParam("storeId", required = false) storeId: Long?,
         @RequestParam("categoryId", required = false) categoryId: Long?,
-        @RequestParam("size", required = false) pageSize: Int = 20,
+        @RequestParam("pageSize", required = false, defaultValue = "20") pageSize: Int,
     ): ApiResponse<CursorPage<StoreDto>> {
         val results = storeQueryService.findAllByCategoryAndCursor(storeId, categoryId, pageSize)
 
         val contents = results.subList(0, min(pageSize, results.size))
         val hasNext = results.size > pageSize
         val nextCursor = if (hasNext) contents.last().id.toString() else null
+
         return ApiResponse.success(CursorPage(contents, hasNext, nextCursor))
     }
 
     @GetMapping("/{storeId}")
     @ResponseStatus(HttpStatus.OK)
-    fun findById(@PathVariable("storeId") id: Long): ApiResponse<StoreDetailDto> {
+    override fun findById(@PathVariable("storeId") id: Long): ApiResponse<StoreDetailDto> {
         val dto = storeQueryService.findById(id)
         return ApiResponse.success(dto)
     }
 
     @PatchMapping("/{storeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun updateById(@PathVariable("storeId") id: Long, @RequestBody command: StoreUpdateCommand) {
+    override fun updateById(@PathVariable("storeId") id: Long, @RequestBody command: StoreUpdateCommand) {
         storeCommandService.update(id, command)
     }
 
     @DeleteMapping("/{storeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteById(@PathVariable("storeId") id: Long) {
+    override fun deleteById(@PathVariable("storeId") id: Long) {
         storeCommandService.delete(id)
     }
 
     @GetMapping("/{storeId}/menu")
     @ResponseStatus(HttpStatus.OK)
-    fun findAllMenu(@PathVariable("storeId") id: Long): ApiResponse<MenuList> {
+    override fun findAllMenu(@PathVariable("storeId") id: Long): ApiResponse<MenuList> {
         return ApiResponse.success(menuQueryService.findAll(id))
     }
 
     @PostMapping("/{storeId}/menu")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createMenu(
+    override fun createMenu(
         @PathVariable("storeId") id: Long,
         @RequestBody menuCreateCommand: MenuCreateCommand,
     ): ApiResponse<Long> {
