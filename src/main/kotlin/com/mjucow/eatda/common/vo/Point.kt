@@ -1,7 +1,5 @@
 package com.mjucow.eatda.common.vo
 
-import com.mjucow.eatda.common.vo.deseializer.Latitude
-import com.mjucow.eatda.common.vo.deseializer.Longitude
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
