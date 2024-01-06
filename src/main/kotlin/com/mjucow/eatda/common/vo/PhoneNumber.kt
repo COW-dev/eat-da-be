@@ -22,6 +22,6 @@ data class PhoneNumber(
     }
 
     companion object {
-        val NUMBER_REGEX = Regex("^0\\d{1,3}[-)]\\d{3,4}-\\d{4}\$")
+        val NUMBER_REGEX = Regex("^0\\d{1,2}[-)]\\d{3,4}-\\d{4}\$")
     }
 }
