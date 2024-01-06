@@ -1,4 +1,4 @@
-package com.mjucow.eatda.common.vo.deseializer
+package com.mjucow.eatda.common.vo
 
 import com.fasterxml.jackson.annotation.JsonProperty
 @JvmInline
