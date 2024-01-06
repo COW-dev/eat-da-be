@@ -5,7 +5,7 @@ import com.mjucow.eatda.common.vo.Point
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class StoreUpdateCommand(
-    @Schema(name = "Store Name", example = "명지대학교")
+    @Schema(name = "name", example = "명지대학교")
     val name: String,
     @Schema(name = "address", example = "서울특별시 서대문구 거북골로 34")
     val address: String,
