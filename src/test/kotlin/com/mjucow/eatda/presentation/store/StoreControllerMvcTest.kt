@@ -23,7 +23,6 @@ import org.hamcrest.core.Is.`is`
 import org.hamcrest.core.IsNull
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.data.domain.SliceImpl
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.JsonFieldType
@@ -50,7 +49,10 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
         // given
         val entityId = 1L
         every { storeCommandService.create(any()) } returns entityId
-        val command = StoreCreateCommand(name = StoreMother.NAME, address = StoreMother.ADDRESS)
+        val command = StoreCreateCommand(
+            name = StoreMother.NAME,
+            address = StoreMother.ADDRESS
+        )
         val content = objectMapper.writeValueAsString(command)
 
         // when & then
@@ -91,12 +93,12 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
             )
         }.toList()
 
-        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns SliceImpl(storeDtos)
+        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns storeDtos
 
         // when & then
         mockMvc.perform(
             RestDocumentationRequestBuilders.get(
-                "$BASE_URI?storeId={storeId}&size={size}&categoryId={categoryId}",
+                "$BASE_URI?cursor={cursor}&size={size}&categoryId={categoryId}",
                 storeDtos.size + 1,
                 pageSize,
                 null
@@ -105,6 +107,9 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("message", `is`(IsNull.nullValue())))
             .andExpect(MockMvcResultMatchers.jsonPath("body").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.contents").isArray())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.hasNext").isBoolean())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.nextCursor", `is`(IsNull.nullValue())))
             .andDo(
                 MockMvcRestDocumentationWrapper.document(
                     identifier = "store-findAllByCursor",
@@ -112,7 +117,7 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                         .tag("store")
                         .description("커서 기반 카테고리 가게 조회")
                         .queryParameters(
-                            ResourceDocumentation.parameterWithName("storeId").description("조회한 마지막 가게 식별자").optional(),
+                            ResourceDocumentation.parameterWithName("cursor").description("조회한 마지막 가게 식별자").optional(),
                             ResourceDocumentation.parameterWithName("categoryId").description("조회하는 가게의 카테고리의 식별자").optional(),
                             ResourceDocumentation.parameterWithName("size").description("조회할 페이지 사이즈").optional()
                         )
@@ -130,6 +135,40 @@ class StoreControllerMvcTest : AbstractMockMvcTest() {
                         )
                 )
             )
+    }
+
+    @Test
+    fun findAllByCursor2() {
+        // given
+        val pageSize = 20
+        val storeDtos = IntStream.range(0, pageSize * 2).mapToObj {
+            StoreDto(
+                id = (it + 1).toLong(),
+                displayedName = StoreMother.DISPLAY_NAME,
+                address = StoreMother.ADDRESS,
+                phoneNumber = null,
+                imageAddress = null,
+                location = null
+            )
+        }.toList()
+
+        every { storeQueryService.findAllByCategoryAndCursor(any(), any(), any()) } returns storeDtos
+
+        // when & then
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get(
+                "$BASE_URI?cursor={cursor}&size={size}&categoryId={categoryId}",
+                storeDtos.size + 1,
+                pageSize,
+                1
+            )
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("message", `is`(IsNull.nullValue())))
+            .andExpect(MockMvcResultMatchers.jsonPath("body").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.contents").isArray())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.hasNext").isBoolean())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.nextCursor").isString)
     }
 
     @Test

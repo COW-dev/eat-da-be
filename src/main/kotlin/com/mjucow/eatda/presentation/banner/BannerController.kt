@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController
 class BannerController(
     private val bannerQueryService: BannerQueryService,
     private val bannerCommandService: BannerCommandService,
-) {
+) : BannerApiPresentation {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(
+    override fun create(
         @RequestBody command: CreateBannerCommand,
     ): ApiResponse<Long> {
         return ApiResponse.success(bannerCommandService.create(command))
@@ -33,13 +33,13 @@ class BannerController(
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun findAll(): ApiResponse<Banners> {
+    override fun findAll(): ApiResponse<Banners> {
         return ApiResponse.success(bannerQueryService.findAll())
     }
 
     @PatchMapping("/{bannerId}")
     @ResponseStatus(HttpStatus.OK)
-    fun update(
+    override fun update(
         @PathVariable("bannerId") bannerId: Long,
         @RequestBody command: UpdateBannerCommand,
     ) {
@@ -48,7 +48,7 @@ class BannerController(
 
     @DeleteMapping("/{bannerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(
+    override fun delete(
         @PathVariable("bannerId") bannerId: Long,
     ) {
         return bannerCommandService.delete(bannerId)

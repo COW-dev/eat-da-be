@@ -3,6 +3,7 @@ package com.mjucow.eatda.common.vo
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.mjucow.eatda.common.vo.deseializer.PhoneNumberDeserializer
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 
@@ -15,6 +16,7 @@ import jakarta.persistence.Embeddable
 data class PhoneNumber(
     @JsonProperty(value = "phoneNumber")
     @Column(name = "phone_number")
+    @Schema(name = "phoneNumber", example = "02-300-1656")
     val value: String,
 ) {
     init {
