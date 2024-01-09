@@ -3,32 +3,32 @@ package com.mjucow.eatda.common.vo
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.api.Test
 class LatitudeTest : VOTest {
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
     @MethodSource("validValues")
-    fun createInstanceWhenValidLatitude(value : Double){
-        //given
+    fun createInstanceWhenValidLatitude(value: Double) {
+        // given
 
-        //when
+        // when
         val sut = Latitude(value)
-        //then
+        // then
         assertThat(sut).isNotNull
     }
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
     @MethodSource("invalidValues")
-    fun throwExceptionWhenInvalidNumber(value : Double){
-        //given
+    fun throwExceptionWhenInvalidNumber(value: Double) {
+        // given
 
-        //when
-        val throwable =catchThrowable{ Latitude(value)}
-        //then
+        // when
+        val throwable = catchThrowable { Latitude(value) }
+        // then
         assertThat(throwable).isNotNull
     }
 
@@ -46,8 +46,8 @@ class LatitudeTest : VOTest {
         @JvmStatic
         fun invalidValues(): List<Double> {
             return listOf(
-              100.0,
-              -100.0
+                100.0,
+                -100.0
             )
         }
     }
