@@ -175,3 +175,5 @@ gradle-app.setting
 *.hprof
 
 redis/
+
+.run

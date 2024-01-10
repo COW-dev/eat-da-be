@@ -63,6 +63,9 @@ dependencies {
     jooqGenerator("org.jooq:jooq-meta-extensions-liquibase")
     jooqGenerator("org.liquibase:liquibase-core")
 
+    // aws
+    implementation("software.amazon.awssdk:s3:2.22.12")
+
     // test
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:testcontainers:$testContainerVersion")
