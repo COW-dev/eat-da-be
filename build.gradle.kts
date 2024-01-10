@@ -196,7 +196,8 @@ tasks.jacocoTestCoverageVerification {
                 "*.common.*",
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",
-                "*.Companion"
+                "*.Companion",
+                "*.s3.*"
             )
         }
     }
