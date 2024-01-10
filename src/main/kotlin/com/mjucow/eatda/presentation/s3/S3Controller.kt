@@ -15,10 +15,17 @@ class S3Controller(
 ) {
 
     @GetMapping("/presigned-url")
-    fun createPresignedUrl(
+    fun getPutPresignedUrl(
         @RequestParam key: String,
         @RequestParam contentType: String,
     ): ApiResponse<PresignedUrlDto> {
-        return ApiResponse.success(PresignedUrlDto(s3Service.createPresignedUrl(key, contentType)))
+        return ApiResponse.success(
+            PresignedUrlDto(
+                s3Service.createPutPresignedUrl(
+                    key = key,
+                    contentType = contentType
+                )
+            )
+        )
     }
 }
