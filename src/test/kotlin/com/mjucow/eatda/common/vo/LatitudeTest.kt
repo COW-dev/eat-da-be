@@ -5,12 +5,13 @@ import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
+
 class LatitudeTest : VOTest {
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
-    @MethodSource("validValues")
+    @ValueSource(doubles = [-90.0, -89.0, 89.0, 90.0])
     fun createInstanceWhenValidLatitude(value: Double) {
         // given
 
@@ -22,7 +23,7 @@ class LatitudeTest : VOTest {
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
-    @MethodSource("invalidValues")
+    @ValueSource(doubles = [-Double.MAX_VALUE,-91.0, 91.0,Double.MAX_VALUE])
     fun throwExceptionWhenInvalidNumber(value: Double) {
         // given
 
@@ -30,26 +31,6 @@ class LatitudeTest : VOTest {
         val throwable = catchThrowable { Latitude(value) }
         // then
         assertThat(throwable).isNotNull
-    }
-
-    companion object {
-        @JvmStatic
-        fun validValues(): List<Double> {
-            return listOf(
-                40.42,
-                10.0,
-                -76.0,
-                0.0
-            )
-        }
-
-        @JvmStatic
-        fun invalidValues(): List<Double> {
-            return listOf(
-                100.0,
-                -100.0
-            )
-        }
     }
 
     @Test

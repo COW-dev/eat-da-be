@@ -8,8 +8,13 @@ value class Latitude(
     val value: Double,
 ) {
     init {
-        if (value < -90 || value > 90) {
+        if (LATITUDE_MIN > value ||  LATITUDE_MAX < value) {
             throw IllegalArgumentException()
         }
+    }
+
+    companion object{
+        private const val LATITUDE_MIN = -90.0
+        private const val LATITUDE_MAX = 90.0
     }
 }
