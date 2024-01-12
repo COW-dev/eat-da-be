@@ -23,7 +23,7 @@ class LatitudeTest : VOTest {
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
-    @ValueSource(doubles = [-Double.MAX_VALUE,-91.0, 91.0,Double.MAX_VALUE])
+    @ValueSource(doubles = [-Double.MAX_VALUE, -91.0, 91.0, Double.MAX_VALUE])
     fun throwExceptionWhenInvalidNumber(value: Double) {
         // given
 

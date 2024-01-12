@@ -45,5 +45,4 @@ class LongitudeTest : VOTest {
         // then
         assertThat(isEqaulsAndSameHashcode).isTrue()
     }
-
 }
