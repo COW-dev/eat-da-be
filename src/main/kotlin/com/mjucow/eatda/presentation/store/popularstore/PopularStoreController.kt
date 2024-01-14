@@ -31,7 +31,7 @@ class PopularStoreController(
         cacheService.setStore(Instant.now(), storeId.toLong())
     }
 
-    @PostMapping("/cache/{storeId}")
+    @GetMapping("/cache/{storeId}")
     @ResponseStatus(HttpStatus.OK)
     fun getRedis(@PathVariable storeId: String): ApiResponse<RedisCache?> {
         val key = cacheService.createSearchKey(Instant.now())
