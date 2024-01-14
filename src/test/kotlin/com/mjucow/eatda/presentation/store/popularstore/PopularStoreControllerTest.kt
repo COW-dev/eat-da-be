@@ -2,6 +2,7 @@ package com.mjucow.eatda.presentation.store.popularstore
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import com.epages.restdocs.apispec.ResourceSnippetParametersBuilder
+import com.mjucow.eatda.domain.poplarstore.service.PopularStoreCacheService
 import com.mjucow.eatda.domain.poplarstore.service.PopularStoreQueryService
 import com.mjucow.eatda.domain.poplarstore.service.dto.PopularStoreDtos
 import com.mjucow.eatda.presentation.AbstractMockMvcTest
@@ -18,6 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @WebMvcTest(PopularStoreController::class)
 class PopularStoreControllerTest : AbstractMockMvcTest() {
+    @MockkBean(relaxUnitFun = true)
+    lateinit var cacheService: PopularStoreCacheService
+
     @MockkBean(relaxUnitFun = true)
     lateinit var popularStoreQueryService: PopularStoreQueryService
 
