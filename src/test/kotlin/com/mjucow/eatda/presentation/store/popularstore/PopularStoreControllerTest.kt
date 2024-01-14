@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 class PopularStoreControllerTest : AbstractMockMvcTest() {
     @MockkBean(relaxUnitFun = true)
     lateinit var cacheService: PopularStoreCacheService
+
     @MockkBean(relaxUnitFun = true)
     lateinit var popularStoreQueryService: PopularStoreQueryService
 

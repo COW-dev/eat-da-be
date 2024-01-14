@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="EatdaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
     <option name="ACTIVE_PROFILES" value="local" />
-    <module name="eatda.main" />
+    <module name="eat-da-be.eatda.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.mjucow.eatda.EatdaApplicationKt" />
     <method v="2">
       <option name="Make" enabled="true" />
