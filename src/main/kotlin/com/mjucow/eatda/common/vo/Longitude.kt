@@ -12,8 +12,9 @@ value class Longitude(
             throw IllegalArgumentException()
         }
     }
+
     companion object {
-        private const val LONGITUDE_MIN = 0.0
-        private const val LONGITUDE_MAX = 180.0
+        const val LONGITUDE_MIN = 124.0
+        const val LONGITUDE_MAX = 132.0
     }
 }

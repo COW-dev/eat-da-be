@@ -14,7 +14,7 @@ value class Latitude(
     }
 
     companion object {
-        private const val LATITUDE_MIN = -90.0
-        private const val LATITUDE_MAX = 90.0
+        const val LATITUDE_MIN = 33.0
+        const val LATITUDE_MAX = 43.0
     }
 }
