@@ -13,8 +13,6 @@ class LongitudeTest : VOTest {
     @ParameterizedTest
     @ValueSource(doubles = [Longitude.LONGITUDE_MIN, 125.0, 131.0, Longitude.LONGITUDE_MAX])
     fun createInstanceWhenValidLatitude(value: Double) {
-        // given
-
         // when
         val sut = Longitude(value)
         // then
@@ -25,8 +23,6 @@ class LongitudeTest : VOTest {
     @ParameterizedTest
     @ValueSource(doubles = [-Double.MAX_VALUE, Longitude.LONGITUDE_MIN - 1, Longitude.LONGITUDE_MAX + 1, Double.MAX_VALUE])
     fun throwExceptionWhenInvalidNumber(value: Double) {
-        // given
-
         // when
         val throwable = catchThrowable { Longitude(value) }
         // then

@@ -13,8 +13,6 @@ class PhoneNumberTest : VOTest {
     @ParameterizedTest
     @MethodSource("validNumbers")
     fun createInstanceWhenValidNumbers(number: String) {
-        // given
-
         // when
         val sut = PhoneNumber(number)
 
@@ -26,14 +24,13 @@ class PhoneNumberTest : VOTest {
     @ParameterizedTest
     @MethodSource("invalidNumbers")
     fun throwExceptionWhenInvalidNumber(number: String) {
-        // given
-
         // when
         val throwable = catchThrowable { PhoneNumber(number) }
 
         // then
         assertThat(throwable).isNotNull
     }
+
     companion object {
         @JvmStatic
         fun validNumbers(): List<String> {
