@@ -11,7 +11,7 @@ class LatitudeTest : VOTest {
 
     @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
     @ParameterizedTest
-    @ValueSource(doubles = [-90.0, -89.0, 89.0, 90.0])
+    @ValueSource(doubles = [Latitude.LATITUDE_MIN, 34.0, 42.0, Latitude.LATITUDE_MAX])
     fun createInstanceWhenValidLatitude(value: Double) {
         // given
 
@@ -21,9 +21,9 @@ class LatitudeTest : VOTest {
         assertThat(sut).isNotNull
     }
 
-    @DisplayName("위도의 범위가 올바르면 객체가 생성된다.")
+    @DisplayName("위도의 범위가 올바르지않으면 에외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(doubles = [-Double.MAX_VALUE, -91.0, 91.0, Double.MAX_VALUE])
+    @ValueSource(doubles = [-Double.MAX_VALUE, Latitude.LATITUDE_MIN - 1, Latitude.LATITUDE_MAX + 1, Double.MAX_VALUE])
     fun throwExceptionWhenInvalidNumber(value: Double) {
         // given
 
