@@ -36,7 +36,7 @@ class LongitudeTest : VOTest {
     @Test
     override fun returnEqualsTrueAndSameHashcodeWhenSameValue() {
         // given
-        val value = 20.0
+        val value = 125.0
         val standardInstance = Longitude(value)
         val sameValueInstance = Longitude(value)
         // when
