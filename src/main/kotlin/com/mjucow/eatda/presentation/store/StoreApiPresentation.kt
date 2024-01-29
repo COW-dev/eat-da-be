@@ -8,7 +8,6 @@ import com.mjucow.eatda.domain.store.service.query.dto.MenuList
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDetailDto
 import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.presentation.common.ApiResponse
-import com.mjucow.eatda.presentation.common.example.StoreDtosApiResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 
@@ -19,7 +18,6 @@ interface StoreApiPresentation {
     fun create(command: StoreCreateCommand): ApiResponse<Long>
 
     @Operation(summary = "커서 기반 카테고리 가게 조회", description = "커서를 기반으로 가게를 조회합니다.")
-    @StoreDtosApiResponse
     fun findAllByCategoryIdAndCursor(
         cursor: Long?,
         categoryId: Long?,
