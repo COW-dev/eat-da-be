@@ -33,7 +33,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         MenuMother.store = storeRepository.save(StoreMother.create { it.name = "default" })
     }
 
-    @DisplayName("storeId에 해당하는 store가 없다면 에외를 던진다")
+    @DisplayName("storeId에 해당하는 store가 없다면 예외를 던진다")
     @Test
     fun test1() {
         // given
@@ -67,7 +67,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         assertThat(repository.getReferenceById(menuId)).isNotNull()
     }
 
-    @DisplayName("id에 해당하는 menu가 없다면 에외를 던진다")
+    @DisplayName("id에 해당하는 menu가 없다면 예외를 던진다")
     @Test
     fun test3() {
         // given
@@ -84,7 +84,7 @@ class MenuCommandServiceTest : AbstractDataTest() {
         assertThat(throwable).isNotNull()
     }
 
-    @DisplayName("정상적인 값이 들어오면 메뉴의 정보가 변경 된다")
+    @DisplayName("정상적인 값이 들어오면 메뉴의 정보가 변경된다")
     @Test
     fun test4() {
         // given
