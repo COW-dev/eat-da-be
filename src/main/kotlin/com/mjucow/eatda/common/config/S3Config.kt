@@ -3,11 +3,13 @@ package com.mjucow.eatda.common.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 
 @Configuration
+@Profile("prod")
 class S3Config(
     @Value("\${aws.s3.credentials.access-key}")
     private val accessKey: String,

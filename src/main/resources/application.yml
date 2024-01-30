@@ -65,13 +65,6 @@ spring:
       host: localhost
       port: 16379
 
-aws:
-  s3:
-    credentials:
-      access-key: ${S3_ACCESS_KEY}
-      secret-key: ${S3_SECRET_KEY}
-    bucket: ${S3_BUCKET}
-
 ---
 
 spring:

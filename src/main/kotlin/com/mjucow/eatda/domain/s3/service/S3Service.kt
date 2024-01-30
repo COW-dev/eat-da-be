@@ -1,6 +1,7 @@
 package com.mjucow.eatda.domain.s3.service
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
@@ -11,6 +12,7 @@ import java.net.URL
 import java.time.Duration
 
 @Service
+@Profile("prod")
 class S3Service(
     private val s3Presigner: S3Presigner,
     @Value("\${aws.s3.bucket}")
