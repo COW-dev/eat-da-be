@@ -42,7 +42,9 @@ class Curation() : BaseEntity() {
         joinColumns = [JoinColumn(name = "store_id")],
         inverseJoinColumns = [JoinColumn(name = "curation_id")]
     )
-    val mutableStores: MutableList<Store> = mutableListOf()
+    val mutableStores: MutableSet<Store> = mutableSetOf()
+
+    fun getStores(): Set<Store> = mutableStores.toSet()
 
     fun addStore(store: Store) {
         mutableStores.add(store)
