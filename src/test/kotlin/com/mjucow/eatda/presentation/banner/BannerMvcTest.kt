@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @WebMvcTest(BannerController::class)
 class BannerMvcTest : AbstractMockMvcTest() {
     @MockkBean(relaxUnitFun = true)
-    lateinit var banneerQueryService: BannerQueryService
+    lateinit var bannerQueryService: BannerQueryService
 
     @MockkBean(relaxUnitFun = true)
     lateinit var bannerCommandService: BannerCommandService
@@ -43,7 +43,7 @@ class BannerMvcTest : AbstractMockMvcTest() {
         // given
         val entityId = 1L
         val banners = Banners(listOf(BannerDto.from(BannerMother.createWithId(id = entityId))))
-        every { banneerQueryService.findAll() } returns banners
+        every { bannerQueryService.findAll() } returns banners
 
         // when & then
         mockMvc.perform(
@@ -59,12 +59,17 @@ class BannerMvcTest : AbstractMockMvcTest() {
                         .tag("banner")
                         .description("배너 전체 조회")
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("에러 메세지"),
                             fieldWithPath("body").type(JsonFieldType.ARRAY).description("배너 데이터"),
-                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER).description("배너 식별자"),
-                            fieldWithPath("body[].link").type(JsonFieldType.STRING).description("배너 링크 주소"),
-                            fieldWithPath("body[].imageAddress").type(JsonFieldType.STRING).description("배너 이미지"),
-                            fieldWithPath("body[].expiredAt").type(JsonFieldType.STRING).description("배너 만료일자")
+                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER)
+                                .description("배너 식별자"),
+                            fieldWithPath("body[].link").type(JsonFieldType.STRING)
+                                .description("배너 링크 주소"),
+                            fieldWithPath("body[].imageAddress").type(JsonFieldType.STRING)
+                                .description("배너 이미지"),
+                            fieldWithPath("body[].expiredAt").type(JsonFieldType.STRING)
+                                .description("배너 만료일자")
                         )
                 )
             )
@@ -97,13 +102,18 @@ class BannerMvcTest : AbstractMockMvcTest() {
                         .tag("banner")
                         .description("배너 생성")
                         .requestFields(
-                            fieldWithPath("link").type(JsonFieldType.STRING).description("배너 링크 주소"),
-                            fieldWithPath("imageAddress").type(JsonFieldType.STRING).description("배너 이미지"),
-                            fieldWithPath("expiredAt").type(JsonFieldType.STRING).description("배너 만료일자")
+                            fieldWithPath("link").type(JsonFieldType.STRING)
+                                .description("배너 링크 주소"),
+                            fieldWithPath("imageAddress").type(JsonFieldType.STRING)
+                                .description("배너 이미지"),
+                            fieldWithPath("expiredAt").type(JsonFieldType.STRING)
+                                .description("배너 만료일자")
                         )
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
-                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 배너 식별자")
+                            fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("에러 메세지"),
+                            fieldWithPath("body").type(JsonFieldType.NUMBER)
+                                .description("생성된 배너 식별자")
                         )
                 )
             )
@@ -134,12 +144,16 @@ class BannerMvcTest : AbstractMockMvcTest() {
                         .tag("banner")
                         .description("배너 수정")
                         .pathParameters(
-                            ResourceDocumentation.parameterWithName("baennrId").description("배너 식별자")
+                            ResourceDocumentation.parameterWithName("baennrId")
+                                .description("배너 식별자")
                         )
                         .requestFields(
-                            fieldWithPath("link").type(JsonFieldType.STRING).description("배너 링크 주소"),
-                            fieldWithPath("imageAddress").type(JsonFieldType.STRING).description("배너 이미지"),
-                            fieldWithPath("expiredAt").type(JsonFieldType.STRING).description("배너 만료일자")
+                            fieldWithPath("link").type(JsonFieldType.STRING)
+                                .description("배너 링크 주소"),
+                            fieldWithPath("imageAddress").type(JsonFieldType.STRING)
+                                .description("배너 이미지"),
+                            fieldWithPath("expiredAt").type(JsonFieldType.STRING)
+                                .description("배너 만료일자")
                         )
                 )
             )
