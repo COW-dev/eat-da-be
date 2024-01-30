@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class S3Controller(
     private val s3Service: S3Service,
-) {
+) : S3ApiPresentation {
 
     @GetMapping("/presigned-url")
-    fun getPutPresignedUrl(
+    override fun getPutPresignedUrl(
         @RequestParam key: String,
         @RequestParam contentType: String,
     ): ApiResponse<PresignedUrlDto> {
