@@ -1,5 +1,6 @@
 package com.mjucow.eatda.presentation.curation
 
+import com.mjucow.eatda.domain.curation.service.command.dto.AddStoreCommand
 import com.mjucow.eatda.domain.curation.service.command.dto.CreateCurationCommand
 import com.mjucow.eatda.domain.curation.service.command.dto.UpdateCurationCommand
 import com.mjucow.eatda.domain.curation.service.query.dto.Curations
@@ -23,4 +24,8 @@ interface CurationApiPresentation {
     @Operation(summary = "큐레이션 삭제", description = "큐레이션을 삭제합니다.")
     @Parameter(name = "id", description = "삭제할 큐레이션의 ID")
     fun delete(id: Long)
+
+    @Operation(summary = "큐레이션 가게 추가", description = "큐레이션에 가게를 추가합니다.")
+    @Parameter(name = "id", description = "큐레이션의 ID")
+    fun addStore(id: Long, command: AddStoreCommand): ApiResponse<Long>
 }

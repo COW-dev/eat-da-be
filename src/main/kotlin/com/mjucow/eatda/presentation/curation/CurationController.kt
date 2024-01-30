@@ -1,6 +1,7 @@
 package com.mjucow.eatda.presentation.curation
 
 import com.mjucow.eatda.domain.curation.service.command.CurationCommandService
+import com.mjucow.eatda.domain.curation.service.command.dto.AddStoreCommand
 import com.mjucow.eatda.domain.curation.service.command.dto.CreateCurationCommand
 import com.mjucow.eatda.domain.curation.service.command.dto.UpdateCurationCommand
 import com.mjucow.eatda.domain.curation.service.query.CurationQueryService
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -25,7 +27,7 @@ class CurationController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    override fun create(command: CreateCurationCommand): ApiResponse<Long> {
+    override fun create(@RequestBody command: CreateCurationCommand): ApiResponse<Long> {
         return ApiResponse.success(curationCommandService.create(command))
     }
 
@@ -39,7 +41,7 @@ class CurationController(
     @ResponseStatus(HttpStatus.OK)
     override fun update(
         @PathVariable("curationId") id: Long,
-        command: UpdateCurationCommand,
+        @RequestBody command: UpdateCurationCommand,
     ) {
         return curationCommandService.update(id, command)
     }
@@ -48,5 +50,14 @@ class CurationController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     override fun delete(@PathVariable("curationId") id: Long) {
         return curationCommandService.delete(id)
+    }
+
+    @PostMapping("/{curationId}/store")
+    @ResponseStatus(HttpStatus.CREATED)
+    override fun addStore(
+        @PathVariable("curationId") id: Long,
+        @RequestBody command: AddStoreCommand,
+    ): ApiResponse<Long> {
+        return ApiResponse.success(curationCommandService.addStore(id, command))
     }
 }
