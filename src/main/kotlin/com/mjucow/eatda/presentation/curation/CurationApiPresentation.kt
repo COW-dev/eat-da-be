@@ -18,14 +18,14 @@ interface CurationApiPresentation {
     fun findAll(): ApiResponse<Curations>
 
     @Operation(summary = "큐레이션 수정", description = "큐레이션의 내용을 수정합니다.")
-    @Parameter(name = "id", description = "수정할 큐레이션의 ID")
+    @Parameter(name = "curationId", description = "수정할 큐레이션의 ID")
     fun update(id: Long, command: UpdateCurationCommand)
 
     @Operation(summary = "큐레이션 삭제", description = "큐레이션을 삭제합니다.")
-    @Parameter(name = "id", description = "삭제할 큐레이션의 ID")
+    @Parameter(name = "curationId", description = "삭제할 큐레이션의 ID")
     fun delete(id: Long)
 
     @Operation(summary = "큐레이션 가게 추가", description = "큐레이션에 가게를 추가합니다.")
-    @Parameter(name = "id", description = "큐레이션의 ID")
+    @Parameter(name = "curationId", description = "큐레이션의 ID")
     fun addStore(id: Long, command: AddStoreCommand): ApiResponse<Long>
 }
