@@ -7,6 +7,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.s3.presigner.S3Presigner
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest
+import java.net.URL
 import java.time.Duration
 
 @Service
@@ -16,7 +17,7 @@ class S3Service(
     private val bucket: String,
 ) {
 
-    fun createPutPresignedUrl(key: String, contentType: String): String {
+    fun createPutPresignedUrl(key: String, contentType: String): URL {
         val putObjectRequest = PutObjectRequest
             .builder()
             .bucket(bucket)
@@ -26,14 +27,14 @@ class S3Service(
 
         val presignRequest = PutObjectPresignRequest
             .builder()
-            .signatureDuration(Duration.ofMinutes(PUT_DURATION_MINUTES))
+            .signatureDuration(Duration.ofMinutes(UPLOAD_DURATION_MINUTES))
             .putObjectRequest(putObjectRequest)
             .build()
 
-        return s3Presigner.presignPutObject(presignRequest).url().toString()
+        return s3Presigner.presignPutObject(presignRequest).url()
     }
 
-    fun createGetPresignedUrl(key: String): String {
+    fun createGetPresignedUrl(key: String): URL {
         val getObjectRequest = GetObjectRequest
             .builder()
             .bucket(bucket)
@@ -42,15 +43,15 @@ class S3Service(
 
         val presignRequest = GetObjectPresignRequest
             .builder()
-            .signatureDuration(Duration.ofHours(GET_DURATION_HOURS))
+            .signatureDuration(Duration.ofHours(DOWNLOAD_DURATION_HOURS))
             .getObjectRequest(getObjectRequest)
             .build()
 
-        return s3Presigner.presignGetObject(presignRequest).url().toString()
+        return s3Presigner.presignGetObject(presignRequest).url()
     }
 
     companion object {
-        const val PUT_DURATION_MINUTES = 3L
-        const val GET_DURATION_HOURS = 24L
+        const val UPLOAD_DURATION_MINUTES = 3L
+        const val DOWNLOAD_DURATION_HOURS = 24L
     }
 }
