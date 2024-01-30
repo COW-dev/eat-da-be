@@ -31,7 +31,7 @@ class BannerQueryServiceTest : AbstractDataTest() {
 
     @DisplayName("전체 배너를 반환한다")
     @Test
-    fun returnCategories() {
+    fun task2() {
         // given
         repository.save(BannerMother.create())
 

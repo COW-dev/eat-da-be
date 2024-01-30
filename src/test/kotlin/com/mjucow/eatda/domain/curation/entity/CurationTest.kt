@@ -56,7 +56,7 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = CurationMother.TITLE,
-                description = description,
+                description = description
             )
         }
 
@@ -74,7 +74,7 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = CurationMother.TITLE,
-                description = description,
+                description = description
             )
         }
 
