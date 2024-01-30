@@ -197,7 +197,8 @@ tasks.jacocoTestCoverageVerification {
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",
                 "*.Companion",
-                "*.s3.*"
+                "*.s3.*",
+                "*.popularstore.*" // FIXME: redis 이슈 해결 후 제거'[
             )
         }
     }

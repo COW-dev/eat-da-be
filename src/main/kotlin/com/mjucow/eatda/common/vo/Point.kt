@@ -11,10 +11,6 @@ import jakarta.persistence.Embeddable
     example = """{"latitude": 37.5802219, "longitude": 126.9226047}"""
 )
 data class Point(
-
-    @Column(name = "location_latitude")
-    val latitude: Double,
-
-    @Column(name = "location_longitude")
-    val longitude: Double,
+    @Column(name = "location_latitude") val latitude: Latitude,
+    @Column(name = "location_longitude") val longitude: Longitude,
 )
