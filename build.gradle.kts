@@ -63,6 +63,9 @@ dependencies {
     jooqGenerator("org.jooq:jooq-meta-extensions-liquibase")
     jooqGenerator("org.liquibase:liquibase-core")
 
+    // aws
+    implementation("software.amazon.awssdk:s3:2.22.12")
+
     // test
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:testcontainers:$testContainerVersion")
@@ -194,7 +197,8 @@ tasks.jacocoTestCoverageVerification {
                 "*.dto.*",
                 "com.mjucow.eatda.jooq.*",
                 "*.Companion",
-                "*.popularstore.*" // FIXME: redis 이슈 해결 후 제거'[
+                "*.s3.*",
+                "*.popularstore.*" // FIXME: redis 이슈 해결 후 제거
             )
         }
     }
