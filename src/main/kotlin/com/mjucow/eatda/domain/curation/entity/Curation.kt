@@ -36,6 +36,9 @@ class Curation() : BaseEntity() {
             field = value
         }
 
+    @Column(nullable = false)
+    var imageAddress: String = ""
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JoinTable(
         name = "curation_store",

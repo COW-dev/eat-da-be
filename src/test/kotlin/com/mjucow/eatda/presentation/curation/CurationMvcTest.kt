@@ -12,6 +12,9 @@ import com.mjucow.eatda.domain.curation.service.command.dto.UpdateCurationComman
 import com.mjucow.eatda.domain.curation.service.query.CurationQueryService
 import com.mjucow.eatda.domain.curation.service.query.dto.CurationDto
 import com.mjucow.eatda.domain.curation.service.query.dto.Curations
+import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
+import com.mjucow.eatda.domain.store.service.query.StoreQueryService
+import com.mjucow.eatda.domain.store.service.query.dto.StoreDto
 import com.mjucow.eatda.presentation.AbstractMockMvcTest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -26,6 +29,7 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.util.stream.IntStream
 
 @WebMvcTest(CurationController::class)
 class CurationMvcTest : AbstractMockMvcTest() {
@@ -34,6 +38,9 @@ class CurationMvcTest : AbstractMockMvcTest() {
 
     @MockkBean(relaxUnitFun = true)
     lateinit var curationCommandService: CurationCommandService
+
+    @MockkBean(relaxUnitFun = true)
+    lateinit var storeQueryService: StoreQueryService
 
     @Test
     fun findAll() {
@@ -76,6 +83,103 @@ class CurationMvcTest : AbstractMockMvcTest() {
                         )
                 )
             )
+    }
+
+    @Test
+    fun findAllByCurationAndCursor_1() {
+        // given
+        val curationId = 1L
+        val pageSize = 20
+        val storeDtos = IntStream.range(0, 20).mapToObj {
+            StoreDto(
+                id = (it + 1).toLong(),
+                displayedName = StoreMother.DISPLAY_NAME,
+                address = StoreMother.ADDRESS,
+                phoneNumber = null,
+                imageAddress = null,
+                location = null
+            )
+        }.toList()
+
+        every { storeQueryService.findAllByCurationAndCursor(any(), any(), any()) } returns storeDtos
+
+        // when & then
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get(
+                "$BASE_URI/{curationId}/stores?cursor={cursor}&pageSize={pageSize}",
+                curationId,
+                storeDtos.size + 1,
+                pageSize
+            )
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("message", Is.`is`(IsNull.nullValue())))
+            .andExpect(MockMvcResultMatchers.jsonPath("body").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.contents").isArray())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.hasNext").isBoolean())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.nextCursor", Is.`is`(IsNull.nullValue())))
+            .andDo(
+                MockMvcRestDocumentationWrapper.document(
+                    identifier = "store-findAllByCursor",
+                    resourceDetails = ResourceSnippetParametersBuilder()
+                        .tag("store")
+                        .description("커서 기반 큐레이션 가게 조회")
+                        .queryParameters(
+                            ResourceDocumentation.parameterWithName("categoryId").description("조회하는 가게의 큐레이션의 식별자").optional(),
+                            ResourceDocumentation.parameterWithName("pageSize").description("조회할 페이지 사이즈").optional()
+                        )
+                        .pathParameters(
+                            ResourceDocumentation.parameterWithName("cursor").description("조회한 마지막 가게 식별자").optional()
+                        )
+                        .responseFields(
+                            PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            PayloadDocumentation.fieldWithPath("body").type(JsonFieldType.ARRAY).description("조회된 가게 리스트"),
+                            PayloadDocumentation.fieldWithPath("body[0].id").type(JsonFieldType.NUMBER).description("가게 식별자"),
+                            PayloadDocumentation.fieldWithPath("body[0].displayedName").type(JsonFieldType.STRING).description("보여지는 이름"),
+                            PayloadDocumentation.fieldWithPath("body[0].address").type(JsonFieldType.STRING).description("가게 주소"),
+                            PayloadDocumentation.fieldWithPath("body[0].phoneNumber").type(JsonFieldType.STRING).description("가게 연락처"),
+                            PayloadDocumentation.fieldWithPath("body[0].imageAddress").type(JsonFieldType.STRING).description("가게 이미지 주소"),
+                            PayloadDocumentation.fieldWithPath("body[0].location").type(JsonFieldType.OBJECT).description("가게 위치 정보"),
+                            PayloadDocumentation.fieldWithPath("body[0].location.latitude").type(JsonFieldType.STRING).description("가게 위치 위도"),
+                            PayloadDocumentation.fieldWithPath("body[0].location.longitude").type(JsonFieldType.STRING).description("가게 위치 경도")
+                        )
+                )
+            )
+    }
+
+    @Test
+    fun findAllByCurationAndCursor_2() {
+        // given
+        val curationId = 1L
+        val pageSize = 20
+        val storeDtos = IntStream.range(0, pageSize * 2).mapToObj {
+            StoreDto(
+                id = (it + 1).toLong(),
+                displayedName = StoreMother.DISPLAY_NAME,
+                address = StoreMother.ADDRESS,
+                phoneNumber = null,
+                imageAddress = null,
+                location = null
+            )
+        }.toList()
+
+        every { storeQueryService.findAllByCurationAndCursor(any(), any(), any()) } returns storeDtos
+
+        // when & then
+        mockMvc.perform(
+            RestDocumentationRequestBuilders.get(
+                "$BASE_URI/{curationId}/stores?cursor={cursor}&pageSize={pageSize}",
+                curationId,
+                storeDtos.size + 1,
+                pageSize
+            )
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("message", Is.`is`(IsNull.nullValue())))
+            .andExpect(MockMvcResultMatchers.jsonPath("body").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.contents").isArray())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.hasNext").isBoolean())
+            .andExpect(MockMvcResultMatchers.jsonPath("body.nextCursor").isString)
     }
 
     @ParameterizedTest
