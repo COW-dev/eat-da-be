@@ -17,9 +17,11 @@ class Curation() : BaseEntity() {
     constructor(
         title: String,
         description: String,
+        imageAddress: String,
     ) : this() {
         this.title = title
         this.description = description
+        this.imageAddress = imageAddress
     }
 
     @Column(nullable = false)
