@@ -188,7 +188,8 @@ class CurationMvcTest : AbstractMockMvcTest() {
         // given
         val createCurationCommand = CreateCurationCommand(
             title = CurationMother.TITLE,
-            description = CurationMother.DESCRIPTION
+            description = CurationMother.DESCRIPTION,
+            imageAddress = CurationMother.IMAGE_ADDRESS
         )
         val content = objectMapper.writeValueAsString(createCurationCommand)
         every { curationCommandService.create(any()) } returns id
@@ -230,7 +231,9 @@ class CurationMvcTest : AbstractMockMvcTest() {
         val id = 1L
         val updateCurationCommand = UpdateCurationCommand(
             title = CurationMother.TITLE,
-            description = CurationMother.DESCRIPTION
+            description = CurationMother.DESCRIPTION,
+            imageAddress = CurationMother.IMAGE_ADDRESS
+
         )
         val content = objectMapper.writeValueAsString(updateCurationCommand)
 

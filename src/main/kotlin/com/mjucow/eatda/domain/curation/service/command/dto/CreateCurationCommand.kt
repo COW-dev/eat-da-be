@@ -7,4 +7,6 @@ data class CreateCurationCommand(
     val title: String,
     @Schema(name = "description", example = "큐레이션 설명")
     val description: String,
+    @Schema(name = "imageAddress", example = "store/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.png")
+    val imageAddress: String,
 )
