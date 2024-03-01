@@ -26,17 +26,14 @@ class StoreQueryService(
         }
     }
 
-    fun findAllByCurationAndCursor(cursor: Long? = null, curationId: Long? = null, size: Int): List<StoreDto> {
-        return if (curationId == null) {
-            findAllByCursor(cursor, size)
-        } else {
-            val storeIds = repository.findIdsByCurationIdOrderByIdDesc(
-                curationId = curationId,
-                size = size,
-                id = cursor
-            )
-            repository.findAllByIdInOrderByIdDesc(storeIds).map(StoreDto::from)
-        }
+    fun findAllByCurationAndCursor(cursor: Long? = null, curationId: Long, size: Int): List<StoreDto> {
+        val storeIds = repository.findIdsByCurationIdOrderByIdDesc(
+            curationId = curationId,
+            size = size,
+            id = cursor
+        )
+
+        return repository.findAllByIdInOrderByIdDesc(storeIds).map(StoreDto::from)
     }
 
     fun findById(storeId: Long): StoreDetailDto {

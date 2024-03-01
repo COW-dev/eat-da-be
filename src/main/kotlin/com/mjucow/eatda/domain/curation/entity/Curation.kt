@@ -44,8 +44,8 @@ class Curation() : BaseEntity() {
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JoinTable(
         name = "curation_store",
-        joinColumns = [JoinColumn(name = "store_id")],
-        inverseJoinColumns = [JoinColumn(name = "curation_id")]
+        joinColumns = [JoinColumn(name = "curation_id")],
+        inverseJoinColumns = [JoinColumn(name = "store_id")]
     )
     val mutableStores: MutableSet<Store> = mutableSetOf()
 
