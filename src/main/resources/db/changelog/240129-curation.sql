@@ -14,5 +14,5 @@ CREATE TABLE curation_store (
     curation_id bigint      NOT NULL REFERENCES curation,
     store_id    bigint      NOT NULL REFERENCES store,
     created_at  timestamp   NOT NULL DEFAULT NOW(),
-    updated_at    timestamp    NOT NULL DEFAULT NOW()
+    updated_at    timestamp    NOT NULL
 );

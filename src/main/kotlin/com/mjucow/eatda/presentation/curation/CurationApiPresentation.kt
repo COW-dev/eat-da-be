@@ -21,7 +21,7 @@ interface CurationApiPresentation {
     @Operation(summary = "큐레이션 전체 조회", description = "모든 큐레이션를 조회합니다.")
     fun findAll(): ApiResponse<Curations>
 
-    @Operation(summary = "큐레이션별 가게 전체 조회", description = "한 큐레이션에 있는 모든 가게를 조회합니다.")
+    @Operation(summary = "큐레이션별 가게 전체 조회", description = "특정 큐레이션에 있는 모든 가게를 조회합니다.")
     fun findAllStoresByCurationId(
         @PathVariable("curationId") id: Long,
         @RequestParam("cursor", required = false) cursor: Long?,
