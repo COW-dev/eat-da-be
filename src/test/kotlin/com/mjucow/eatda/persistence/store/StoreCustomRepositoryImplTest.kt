@@ -220,7 +220,6 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
         assertThat(result).isEmpty()
     }
 
-
     @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 큐레이션 식별자 O, 페이지 크기 대비 실제 데이터 많음")
     @Test
     fun test41() {

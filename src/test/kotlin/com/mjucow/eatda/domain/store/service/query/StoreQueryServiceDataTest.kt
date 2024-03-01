@@ -200,7 +200,6 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         assertThat(result).isEmpty()
     }
 
-
     @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기 + 1만큼만 조회된다: 특정 큐레이션")
     @Test
     fun curationTest1() {
