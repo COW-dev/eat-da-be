@@ -34,7 +34,8 @@ class CurationCommandServiceTest : AbstractDataTest() {
         // given
         val command = CreateCurationCommand(
             title = CurationMother.TITLE,
-            description = CurationMother.DESCRIPTION
+            description = CurationMother.DESCRIPTION,
+            imageAddress = CurationMother.IMAGE_ADDRESS
         )
 
         // when
@@ -51,9 +52,11 @@ class CurationCommandServiceTest : AbstractDataTest() {
         val curation = repository.save(CurationMother.create())
         val updatedTitle = CurationMother.TITLE + "x"
         val updatedDescription = CurationMother.DESCRIPTION + "x"
+        val updatedImageAddress = CurationMother.IMAGE_ADDRESS + "x"
         val command = UpdateCurationCommand(
             title = updatedTitle,
-            description = updatedDescription
+            description = updatedDescription,
+            imageAddress = updatedImageAddress
         )
 
         // when
@@ -117,7 +120,8 @@ class CurationCommandServiceTest : AbstractDataTest() {
         val id = curationCommandService.create(
             CreateCurationCommand(
                 title = CurationMother.TITLE,
-                description = CurationMother.DESCRIPTION
+                description = CurationMother.DESCRIPTION,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         )
         val command = AddStoreCommand(storeId)
@@ -136,7 +140,8 @@ class CurationCommandServiceTest : AbstractDataTest() {
         val id = curationCommandService.create(
             CreateCurationCommand(
                 title = CurationMother.TITLE,
-                description = CurationMother.DESCRIPTION
+                description = CurationMother.DESCRIPTION,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         )
         val storeId = storeRepository.save(StoreMother.create()).id

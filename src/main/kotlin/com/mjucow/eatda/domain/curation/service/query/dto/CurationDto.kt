@@ -13,6 +13,8 @@ data class CurationDto(
     val title: String,
     @Schema(name = "description", example = "점심 특선 메뉴를 판매하는 음식점들이에요.")
     val description: String,
+    @Schema(name = "imageAddress", example = "store/232D8241-C6A9-4AD9-B0EA-56F6DD24BADF.png")
+    val imageAddress: String,
     @JsonUnwrapped val stores: Stores? = null,
 ) {
 
@@ -22,6 +24,7 @@ data class CurationDto(
                 id = domain.id,
                 title = domain.title,
                 description = domain.description,
+                imageAddress = domain.imageAddress,
                 stores = Stores(domain.getStores().map(StoreDto::from))
             )
         }

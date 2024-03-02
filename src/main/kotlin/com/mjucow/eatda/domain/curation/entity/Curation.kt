@@ -17,9 +17,11 @@ class Curation() : BaseEntity() {
     constructor(
         title: String,
         description: String,
+        imageAddress: String,
     ) : this() {
         this.title = title
         this.description = description
+        this.imageAddress = imageAddress
     }
 
     @Column(nullable = false)
@@ -36,11 +38,14 @@ class Curation() : BaseEntity() {
             field = value
         }
 
+    @Column(nullable = false)
+    var imageAddress: String = ""
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JoinTable(
         name = "curation_store",
-        joinColumns = [JoinColumn(name = "store_id")],
-        inverseJoinColumns = [JoinColumn(name = "curation_id")]
+        joinColumns = [JoinColumn(name = "curation_id")],
+        inverseJoinColumns = [JoinColumn(name = "store_id")]
     )
     val mutableStores: MutableSet<Store> = mutableSetOf()
 

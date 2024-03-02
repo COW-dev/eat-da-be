@@ -20,7 +20,8 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = title,
-                description = CurationMother.DESCRIPTION
+                description = CurationMother.DESCRIPTION,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         }
 
@@ -38,7 +39,8 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = title,
-                description = CurationMother.DESCRIPTION
+                description = CurationMother.DESCRIPTION,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         }
 
@@ -56,7 +58,8 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = CurationMother.TITLE,
-                description = description
+                description = description,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         }
 
@@ -74,7 +77,8 @@ class CurationTest {
         val throwable = Assertions.catchThrowable {
             Curation(
                 title = CurationMother.TITLE,
-                description = description
+                description = description,
+                imageAddress = CurationMother.IMAGE_ADDRESS
             )
         }
 
@@ -120,7 +124,8 @@ class CurationTest {
         // when
         val curation = Curation(
             title = CurationMother.TITLE,
-            description = CurationMother.DESCRIPTION
+            description = CurationMother.DESCRIPTION,
+            imageAddress = CurationMother.IMAGE_ADDRESS
         )
 
         // then

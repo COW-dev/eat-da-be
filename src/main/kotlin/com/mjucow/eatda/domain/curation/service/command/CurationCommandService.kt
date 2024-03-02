@@ -18,14 +18,15 @@ class CurationCommandService(
 
 ) {
     fun create(command: CreateCurationCommand): Long {
-        return repository.save(Curation(command.title, command.description)).id
+        return repository.save(Curation(command.title, command.description, command.imageAddress)).id
     }
 
     fun update(id: Long, command: UpdateCurationCommand) {
-        val (newTitle, newDescription) = command
+        val (newTitle, newDescription, newImageAddress) = command
         val updatedCuration = repository.getReferenceById(id).apply {
             title = newTitle
             description = newDescription
+            imageAddress = newImageAddress
         }
 
         repository.save(updatedCuration)
