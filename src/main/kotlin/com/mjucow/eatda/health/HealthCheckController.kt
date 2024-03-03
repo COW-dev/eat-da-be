@@ -15,5 +15,4 @@ class HealthCheckController {
     fun healthCheck(): String {
         return "ok"
     }
-
 }
