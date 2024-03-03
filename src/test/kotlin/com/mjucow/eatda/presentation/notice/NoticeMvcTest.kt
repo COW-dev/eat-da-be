@@ -58,11 +58,15 @@ class NoticeMvcTest : AbstractMockMvcTest() {
                         .tag("notice")
                         .description("공지사항 전체조회")
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
+                            fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("에러 메세지"),
                             fieldWithPath("body").type(JsonFieldType.ARRAY).description("공지사항 데이터"),
-                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER).description("공지사항 식별자"),
-                            fieldWithPath("body[].title").type(JsonFieldType.STRING).description("공지사항 제목"),
-                            fieldWithPath("body[].content").type(JsonFieldType.STRING).description("공지사항 내용")
+                            fieldWithPath("body[].id").type(JsonFieldType.NUMBER)
+                                .description("공지사항 식별자"),
+                            fieldWithPath("body[].title").type(JsonFieldType.STRING)
+                                .description("공지사항 제목"),
+                            fieldWithPath("body[].content").type(JsonFieldType.STRING)
+                                .description("공지사항 내용")
                         )
                 )
             )
@@ -92,11 +96,16 @@ class NoticeMvcTest : AbstractMockMvcTest() {
                             parameterWithName("noticeId").description("공지사항 식별자")
                         )
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
-                            fieldWithPath("body").type(JsonFieldType.OBJECT).description("공지사항 데이터"),
-                            fieldWithPath("body.id").type(JsonFieldType.NUMBER).description("공지사항 식별자"),
-                            fieldWithPath("body.title").type(JsonFieldType.STRING).description("공지사항 제목"),
-                            fieldWithPath("body.content").type(JsonFieldType.STRING).description("공지사항 내용")
+                            fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("에러 메세지"),
+                            fieldWithPath("body").type(JsonFieldType.OBJECT)
+                                .description("공지사항 데이터"),
+                            fieldWithPath("body.id").type(JsonFieldType.NUMBER)
+                                .description("공지사항 식별자"),
+                            fieldWithPath("body.title").type(JsonFieldType.STRING)
+                                .description("공지사항 제목"),
+                            fieldWithPath("body.content").type(JsonFieldType.STRING)
+                                .description("공지사항 내용")
                         )
                 )
             )
@@ -125,12 +134,16 @@ class NoticeMvcTest : AbstractMockMvcTest() {
                         .tag("notice")
                         .description("공지사항 생성")
                         .requestFields(
-                            fieldWithPath("title").type(JsonFieldType.STRING).description("공지사항 제목"),
-                            fieldWithPath("content").type(JsonFieldType.STRING).description("공지사항 내용")
+                            fieldWithPath("title").type(JsonFieldType.STRING)
+                                .description("공지사항 제목"),
+                            fieldWithPath("content").type(JsonFieldType.STRING)
+                                .description("공지사항 내용")
                         )
                         .responseFields(
-                            fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메세지"),
-                            fieldWithPath("body").type(JsonFieldType.NUMBER).description("생성된 공지사항 식별자")
+                            fieldWithPath("message").type(JsonFieldType.STRING)
+                                .description("에러 메세지"),
+                            fieldWithPath("body").type(JsonFieldType.NUMBER)
+                                .description("생성된 공지사항 식별자")
                         )
                 )
             )
@@ -162,8 +175,10 @@ class NoticeMvcTest : AbstractMockMvcTest() {
                             parameterWithName("noticeId").description("공지사항 식별자")
                         )
                         .requestFields(
-                            fieldWithPath("title").type(JsonFieldType.STRING).description("공지사항 제목"),
-                            fieldWithPath("content").type(JsonFieldType.STRING).description("공지사항 내용")
+                            fieldWithPath("title").type(JsonFieldType.STRING)
+                                .description("공지사항 제목"),
+                            fieldWithPath("content").type(JsonFieldType.STRING)
+                                .description("공지사항 내용")
                         )
                 )
             )

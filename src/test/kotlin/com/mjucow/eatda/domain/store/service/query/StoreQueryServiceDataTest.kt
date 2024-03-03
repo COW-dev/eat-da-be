@@ -2,10 +2,12 @@ package com.mjucow.eatda.domain.store.service.query
 
 import autoparams.kotlin.AutoKotlinSource
 import com.mjucow.eatda.domain.AbstractDataTest
+import com.mjucow.eatda.domain.curation.entity.Curation
 import com.mjucow.eatda.domain.poplarstore.service.PopularStoreCommandService
 import com.mjucow.eatda.domain.store.entity.Category
 import com.mjucow.eatda.domain.store.entity.Store
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
+import com.mjucow.eatda.persistence.curation.CurationRepository
 import com.mjucow.eatda.persistence.store.CategoryRepository
 import com.mjucow.eatda.persistence.store.StoreRepository
 import com.ninjasquad.springmockk.MockkBean
@@ -34,6 +36,9 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
 
     @Autowired
     lateinit var categoryRepository: CategoryRepository
+
+    @Autowired
+    lateinit var curationRepository: CurationRepository
 
     @DisplayName("id에 해당하는 store가 없다면 예외를 던진다")
     @ParameterizedTest
@@ -98,10 +103,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         }
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            cursor = (pageSize * 2).toLong(),
-            size = pageSize
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(cursor = (pageSize * 2).toLong(), size = pageSize)
 
         // then
         assertThat(result.size).isEqualTo(pageSize + 1)
@@ -116,10 +118,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val pageSize = 10
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            cursor = storeId + 1,
-            size = pageSize
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(cursor = storeId + 1, size = pageSize)
 
         // then
         assertThat(result.size).isLessThan(pageSize)
@@ -134,10 +133,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         repository.save(store)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            cursor = store.id,
-            size = pageSize
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(cursor = store.id, size = pageSize)
 
         // then
         assertThat(result).isEmpty()
@@ -178,10 +174,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         }
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            categoryId = category.id,
-            size = pageSize
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, size = pageSize)
 
         // then
         assertThat(result.size).isEqualTo(pageSize + 1)
@@ -198,11 +191,7 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         val pageSize = 10
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            categoryId = category.id,
-            cursor = storeId + 1,
-            size = pageSize
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, cursor = storeId + 1, size = pageSize)
 
         // then
         assertThat(result.size).isLessThan(pageSize)
@@ -218,11 +207,60 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         repository.save(store)
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(
-            categoryId = category.id,
-            cursor = store.id,
-            size = 10
-        )
+        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, cursor = store.id, size = 10)
+
+        // then
+        assertThat(result).isEmpty()
+    }
+
+    @DisplayName("데이터가 페이지 크기보다 크다면 페이지 크기 + 1만큼만 조회된다: 특정 큐레이션")
+    @Test
+    fun curationTest1() {
+        // given
+        val curation = curationRepository.save(Curation("test", "test", "test"))
+        val pageSize = Store.MAX_NAME_LENGTH - 1
+        repeat(Store.MAX_NAME_LENGTH) {
+            val store = Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS)
+            curation.addStore(store)
+            repository.saveAndFlush(store)
+            curationRepository.saveAndFlush(curation)
+        }
+
+        // when
+        val result = storeQueryService.findAllByCurationAndCursor(curationId = curation.id, size = pageSize)
+
+        // then
+        assertThat(result.size).isEqualTo(pageSize + 1)
+    }
+
+    @DisplayName("조회할 결과가 일부라면 일부만 조회된다: 특정 큐레이션")
+    @Test
+    fun curationTest2() {
+        // given
+        val curation = curationRepository.save(Curation("test", "test", "test"))
+        val store = StoreMother.create()
+        curation.addStore(store)
+        val storeId = repository.save(store).id
+        val pageSize = 10
+
+        // when
+        val result = storeQueryService.findAllByCurationAndCursor(curationId = curation.id, cursor = storeId + 1, size = pageSize)
+
+        // then
+        assertThat(result.size).isLessThan(pageSize)
+    }
+
+    @DisplayName("조회할 데이터가 없다면 empty를 반환한다: 특정 큐레이션")
+    @Test
+    fun curationTes3() {
+        // given
+        val curation = curationRepository.save(Curation("test", "test", "test"))
+        val store = StoreMother.create()
+        curation.addStore(store)
+        repository.save(store)
+
+        // when
+        val result = storeQueryService.findAllByCurationAndCursor(curationId = curation.id, cursor = store.id, size = 10)
 
         // then
         assertThat(result).isEmpty()

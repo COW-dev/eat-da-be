@@ -1,24 +1,24 @@
 spring:
-    jpa:
-        hibernate:
-            ddl-auto: validate
-        properties:
-          hibernate:
-            format_sql: true
-            show_sql: true
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
-        database: postgresql
-    liquibase:
-      change-log: classpath:/db/changelog-master.yml
-      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+  liquibase:
+    change-log: classpath:/db/changelog-master.yml
+    enabled: true
 
-    datasource:
-        driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-        url: jdbc:tc:postgresql:15.4-alpine://test-database
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:15.4-alpine://test-database
 
-    data:
-      redis:
-        host: 127.0.0.1
-        port: 6379
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
 
 logging.config: classpath:logback-test.xml

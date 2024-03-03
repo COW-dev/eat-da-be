@@ -25,7 +25,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("이름이 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("이름이 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNameLengthGreaterThanMaxLength() {
         // given
@@ -38,7 +38,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("보이는 이름이 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("보이는 이름이 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenDisplayNameLengthGreaterThanMaxLength() {
         // given
@@ -68,7 +68,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("새로운 이름이 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("새로운 이름이 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNewNameLengthGreaterThanMaxLength() {
         // given
@@ -82,7 +82,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("새로운 보이는 이름이 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("새로운 보이는 이름이 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNewDisplayNameLengthGreaterThanMaxLength() {
         // given
@@ -134,7 +134,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("새로운 주소가 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("새로운 주소가 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNewAddressLengthGreaterThanMaxLength() {
         // given
@@ -225,7 +225,7 @@ class StoreTest {
         assertThat(throwable).isInstanceOf(RuntimeException::class.java)
     }
 
-    @DisplayName("새로운 주소가 최소 길이 이상일 경우 에외를 던진다")
+    @DisplayName("새로운 주소가 최소 길이 이상일 경우 예외를 던진다")
     @Test
     fun throwExceptionWhenNewImageAddressLengthGreaterThanMaxLength() {
         // given

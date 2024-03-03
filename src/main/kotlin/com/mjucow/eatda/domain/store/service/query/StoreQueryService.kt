@@ -14,10 +14,7 @@ class StoreQueryService(
 ) {
     fun findAllByCategoryAndCursor(cursor: Long? = null, categoryId: Long? = null, size: Int): List<StoreDto> {
         return if (categoryId == null) {
-            repository.findAllByIdLessThanOrderByIdDesc(
-                size = size,
-                id = cursor
-            ).map(StoreDto::from)
+            findAllByCursor(cursor, size)
         } else {
             // FIXME(cache): store 캐시 처리 이후 store 조회 개선하기
             val storeIds = repository.findIdsByCategoryIdOrderByIdDesc(
@@ -29,11 +26,28 @@ class StoreQueryService(
         }
     }
 
+    fun findAllByCurationAndCursor(cursor: Long? = null, curationId: Long, size: Int): List<StoreDto> {
+        val storeIds = repository.findIdsByCurationIdOrderByIdDesc(
+            curationId = curationId,
+            size = size,
+            id = cursor
+        )
+
+        return repository.findAllByIdInOrderByIdDesc(storeIds).map(StoreDto::from)
+    }
+
     fun findById(storeId: Long): StoreDetailDto {
         val entity = repository.getReferenceById(storeId)
         // FIXME(async): findById가 popular store command 과정에서 실패하지 않도록 비동기 호출 처리
         // TODO: Redis 이슈 해결 후 주석 제거
 //        popularStoreCommandService.setStore(storeId)
         return StoreDetailDto.from(entity)
+    }
+
+    private fun findAllByCursor(cursor: Long?, size: Int): List<StoreDto> {
+        return repository.findAllByIdLessThanOrderByIdDesc(
+            size = size,
+            id = cursor
+        ).map(StoreDto::from)
     }
 }

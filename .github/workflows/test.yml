@@ -30,10 +30,16 @@ jobs:
       # Gradle test를 실행
       - name: Test with Gradle
         run: ./gradlew clean testCoverage --no-daemon
+        env:
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
+          S3_BUCKET: ${{ secrets.S3_TEST_BUCKET }}
 
       # Report upload
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          flags: '!**/s3/*'
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           file: ./build/reports/jacoco/test/jacocoTestReport.xml

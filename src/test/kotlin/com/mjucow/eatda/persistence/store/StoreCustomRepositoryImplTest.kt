@@ -2,9 +2,11 @@ package com.mjucow.eatda.persistence.store
 
 import com.mjucow.eatda.common.config.JacksonConfiguration
 import com.mjucow.eatda.domain.AbstractDataTest
+import com.mjucow.eatda.domain.curation.entity.Curation
 import com.mjucow.eatda.domain.store.entity.Category
 import com.mjucow.eatda.domain.store.entity.Store
 import com.mjucow.eatda.domain.store.entity.objectmother.StoreMother
+import com.mjucow.eatda.persistence.curation.CurationRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -19,6 +21,9 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
 
     @Autowired
     lateinit var categoryRepository: CategoryRepository
+
+    @Autowired
+    lateinit var curationRepository: CurationRepository
 
     @Autowired
     lateinit var storeRepository: StoreRepository
@@ -208,6 +213,72 @@ class StoreCustomRepositoryImplTest : AbstractDataTest() {
 
         // when
         val result = storeCustomRepositoryImpl.findAllByIdLessThanOrderByIdDesc(
+            size = pageSize
+        )
+
+        // then
+        assertThat(result).isEmpty()
+    }
+
+    @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 큐레이션 식별자 O, 페이지 크기 대비 실제 데이터 많음")
+    @Test
+    fun test41() {
+        // given
+        val pageSize = 5
+        val curation = curationRepository.saveAndFlush(Curation("test", "test", "test"))
+
+        val minStoreId = IntStream.range(0, pageSize + 1).mapToLong {
+            val store = Store(name = "name$it", address = StoreMother.ADDRESS)
+            val updated = storeRepository.saveAndFlush(store)
+            curation.addStore(updated)
+            storeRepository.saveAndFlush(updated).id
+        }.min().asLong
+
+        // when
+        val result = storeCustomRepositoryImpl.findIdsByCurationIdOrderByIdDesc(
+            curationId = curation.id,
+            size = pageSize
+        )
+
+        // then
+        assertThat(result).hasSize(pageSize + 1).allMatch { it >= minStoreId }
+    }
+
+    @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 큐레이션 식별자 O, 페이지 크기 대비 실제 데이터 적음")
+    @Test
+    fun test42() {
+        // given
+        val pageSize = 5
+        val dataSize = 3
+        val curation = curationRepository.saveAndFlush(Curation("test", "test", "test"))
+
+        val minStoreId = IntStream.range(0, dataSize).mapToLong {
+            val store = Store(name = "name$it", address = StoreMother.ADDRESS)
+            val updated = storeRepository.saveAndFlush(store)
+            curation.addStore(updated)
+            storeRepository.saveAndFlush(updated).id
+        }.min().asLong
+
+        // when
+        val result = storeCustomRepositoryImpl.findIdsByCurationIdOrderByIdDesc(
+            curationId = curation.id,
+            size = pageSize
+        )
+
+        // then
+        assertThat(result).hasSize(dataSize).allMatch { it >= minStoreId }
+    }
+
+    @DisplayName("커버 방식의 가게 조회: 마지막 조회한 가게 식별자 X, 큐레이션 식별자 O, 페이지 크기 대비 실제 데이터 없음")
+    @Test
+    fun test43() {
+        // given
+        val pageSize = 5
+        val curation = curationRepository.saveAndFlush(Curation("test", "test", "test"))
+
+        // when
+        val result = storeCustomRepositoryImpl.findIdsByCurationIdOrderByIdDesc(
+            curationId = curation.id,
             size = pageSize
         )
 
