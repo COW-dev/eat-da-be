@@ -73,7 +73,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // given
         val pageSize = 2
         val latestId = IntStream.range(0, pageSize * 2).mapToLong {
-            repository.save(Store(name = "validName$it", address = StoreMother.ADDRESS)).id
+            repository.save(
+                Store(
+                    name = "validName$it",
+                    address = StoreMother.ADDRESS
+                )
+            ).id
         }.max().asLong
 
         // when
@@ -89,7 +94,12 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         // given
         val pageSize = Store.MAX_NAME_LENGTH - 1
         repeat(Store.MAX_NAME_LENGTH) {
-            repository.save(Store(name = "x".repeat(it + 1), address = StoreMother.ADDRESS))
+            repository.save(
+                Store(
+                    name = "x".repeat(it + 1),
+                    address = StoreMother.ADDRESS
+                )
+            )
         }
 
         // when
@@ -142,7 +152,10 @@ class StoreQueryServiceDataTest : AbstractDataTest() {
         }.max().asLong
 
         // when
-        val result = storeQueryService.findAllByCategoryAndCursor(categoryId = category.id, size = pageSize)
+        val result = storeQueryService.findAllByCategoryAndCursor(
+            categoryId = category.id,
+            size = pageSize
+        )
 
         // then
         assertThat(result).anyMatch { it.id == latestId }
