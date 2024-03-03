@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class SwaggerConfig(
-    @Value("\${swagger.api-url}")
+    @Value("\${swagger.api-url:http://localhost:8080}")
     val apiUrl: String,
 ) {
     @Bean
