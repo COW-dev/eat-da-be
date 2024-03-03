@@ -42,6 +42,7 @@ jobs:
             S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}
             S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}
             S3_BUCKET=${{ secrets.S3_BUCKET }}
+            API_URL=${{ secrets.API_URL }}
           tags: |
             eatda/api-server:latest
 
@@ -73,7 +74,7 @@ jobs:
             sudo docker rm - f $(docker ps -qa)
             sudo docker pull eatda/api-server:latest
             sudo docker stop $(sudo docker ps -aq)
-            sudo docker run -p 8080:8080 -d eatda/api-server:latest --name api-server
+            sudo docker run -p 80:8080 -d eatda/api-server:latest --name api-server
 
       - name: Remove IP FROM security group
         run: |
