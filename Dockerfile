@@ -11,6 +11,7 @@ ARG DB_PASSWORD
 ARG S3_ACCESS_KEY
 ARG S3_SECRET_KEY
 ARG S3_BUCKET
+ARG API_URL
 
 COPY ${JAR_FILE} app.jar
 
@@ -21,5 +22,6 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 ENV S3_ACCESS_KEY=${S3_ACCESS_KEY}
 ENV S3_SECRET_KEY=${S3_SECRET_KEY}
 ENV S3_BUCKET=${S3_BUCKET}
+ENV API_URL=${API_URL}
 
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "-Djava.security.egd=file:/dev/./urandom", "/app.jar"]
